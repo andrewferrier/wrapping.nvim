@@ -17,6 +17,10 @@ way. At the moment, this just changes `textwidth` and `wrap/nowrap`.
 * `set g:wrapping_softhard_textwidth_for_hard=NNN` - column at which text is
   wrapped by default in hard wrapping mode. Defaults to 79.
 
+* `set g:wrapping_softhard_default_hard='soft'|'hard'` - set to either 'hard'
+  or 'soft', determines which is the default for newly-loaded files. This is
+  'hard' by default if not set.
+
 ## Installation
 
 Use a vim package manager. If you don't have one,
