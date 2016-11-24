@@ -28,8 +28,8 @@ function! s:HardWrapMode()
     echo "Hard wrapping options enabled."
 endfunction
 
-nnoremap <Leader>ws :call <SID>SoftWrapMode()<CR>
-nnoremap <Leader>wh :call <SID>HardWrapMode()<CR>
+command! -bar SoftWrapMode call <SID>SoftWrapMode()
+command! -bar HardWrapMode call <SID>HardWrapMode()
 
 if g:wrapping_softhard_default_hard == 'hard'
     let &textwidth=g:wrapping_softhard_textwidth_for_hard

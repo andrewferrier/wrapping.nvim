@@ -12,6 +12,17 @@ This plugin makes it easy to quickly flip between the two when files are open,
 setting the relevant vim settings to make it "natural" to edit the file that
 way. At the moment, this just changes `textwidth` and `wrap/nowrap`.
 
+## Minimal Configuration
+
+As well as installing the plugin (see 'Installation' below), you will also
+like to have some keybindings for the `SoftWrapMode` and `HardWrapMode`
+commands, which flip between the different types of wrapping. This should
+probably look roughly like this in your vim configuration (change the keys
+themselves to your preference):
+
+    nnoremap <Leader>ws :SoftWrapMode<CR>
+    nnoremap <Leader>wh :HardWrapMode<CR>
+
 ## Settings
 
 * `set g:wrapping_softhard_textwidth_for_hard=NNN` - column at which text is
