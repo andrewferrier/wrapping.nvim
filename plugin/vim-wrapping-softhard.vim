@@ -5,20 +5,24 @@ let g:loaded_wrapping_softhard = 1
 
 set linebreak " Only relevant when wrapping is turned on
 
-function! s:SoftWrapMode()
+function! s:SoftWrapMode(displaymessage)
     " Effectively disable textwidth (setting it to 0 makes it act like 79 for gqxx)
     setlocal textwidth=999999
     setlocal wrap
-    echo "Soft wrapping options enabled."
+    if a:displaymessage
+        echo "Soft wrapping options enabled."
+    endif
 endfunction
 
-function! s:HardWrapMode()
+function! s:HardWrapMode(displaymessage)
     setlocal textwidth=78
     setlocal nowrap
-    echo "Hard wrapping options enabled."
+    if a:displaymessage
+        echo "Hard wrapping options enabled."
+    endif
 endfunction
 
-nnoremap <Leader>ws :call <SID>SoftWrapMode()<CR>
-nnoremap <Leader>wh :call <SID>HardWrapMode()<CR>
+nnoremap <Leader>ws :call <SID>SoftWrapMode(1)<CR>
+nnoremap <Leader>wh :call <SID>HardWrapMode(1)<CR>
 
-:call <SID>HardWrapMode()
+:call <SID>HardWrapMode(0)
