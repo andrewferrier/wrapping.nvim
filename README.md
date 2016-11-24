@@ -1,4 +1,4 @@
-## vim-wrapping-softhard
+# vim-wrapping-softhard
 
 This is a Vim plugin designed to make it easy to flip between 'soft' and
 'hard' wrapping when editing text-like files. Typically one comes across
@@ -10,7 +10,12 @@ ending is "hard" wrapped using the author's preference for line length
 
 This plugin makes it easy to quickly flip between the two when files are open,
 setting the relevant vim settings to make it "natural" to edit the file that
-way.
+way. At the moment, this just changes `textwidth` and `wrap/nowrap`.
+
+## Settings
+
+* `set g:wrapping_softhard_textwidth_for_hard=NNN` - column at which text is
+  wrapped by default in hard wrapping mode. Defaults to 79.
 
 ## Installation
 
