@@ -13,6 +13,8 @@ if !exists('g:wrapping_softhard_default_hard')
     let g:wrapping_softhard_default_hard='hard'
 endif
 
+" TODO: Assert that g:wrapping_softhard_default_hard is either 'hard' or 'soft'
+
 set linebreak " Only relevant when wrapping is turned on
 
 function! s:SoftWrapMode()
@@ -28,8 +30,33 @@ function! s:HardWrapMode()
     echo "Hard wrapping options enabled."
 endfunction
 
+function! s:ToggleWrapMode()
+    if exists('b:wrapmode')
+        if b:wrapmode == 'hard'
+            let b:wrapmode = 'soft'
+        else
+            let b:wrapmode = 'hard'
+        endif
+    else
+        " This seems the wrong way round, but we are toggling away from what
+        " *was* the default.
+        if g:wrapping_softhard_default_hard == 'hard'
+            let b:wrapmode = 'soft'
+        else
+            let b:wrapmode = 'hard'
+        endif
+    endif
+
+    if b:wrapmode == 'hard'
+        call <SID>HardWrapMode()
+    else
+        call <SID>SoftWrapMode()
+    endif
+endfunction
+
 command! -bar SoftWrapMode call <SID>SoftWrapMode()
 command! -bar HardWrapMode call <SID>HardWrapMode()
+command! -bar ToggleWrapMode call <SID>ToggleWrapMode()
 
 if g:wrapping_softhard_default_hard == 'hard'
     let &textwidth=g:wrapping_softhard_textwidth_for_hard

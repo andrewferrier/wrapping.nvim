@@ -22,6 +22,7 @@ themselves to your preference):
 
     nnoremap <Leader>ws :SoftWrapMode<CR>
     nnoremap <Leader>wh :HardWrapMode<CR>
+    nnoremap <Leader>wt :ToggleWrapMode<CR>
 
 ## Settings
 
