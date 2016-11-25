@@ -33,6 +33,17 @@ themselves to your preference):
   or 'soft', determines which is the default for newly-loaded files. This is
   'hard' by default if not set.
 
+* `set g:wrapping_softhard_autodetermine=0|1` - this determines whether
+  softhard will (1) or will not (0) attempt to automatically determine if a
+  file, when being opened, should be treated with soft or hard line endings
+  and switch modes automatically. Defaults to on.
+
+* `set g:wrapping_softhard_line_length_compensator=N.N` - when determining
+  automatic modes, the plugin will calculate the average line length, and
+  multiply it by this factor. If that's less than
+  g:wrapping_softhard_textwidth_for_hard, hard lines will be used, otherwise
+  soft. This factor is 0.6 by default.
+
 ## Installation
 
 Use a vim package manager. If you don't have one,
