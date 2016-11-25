@@ -13,7 +13,10 @@ if !exists('g:wrapping_softhard_default_hard')
     let g:wrapping_softhard_default_hard='hard'
 endif
 
-" TODO: Assert that g:wrapping_softhard_default_hard is either 'hard' or 'soft'
+if g:wrapping_softhard_default_hard != 'hard' && g:wrapping_softhard_default_hard != 'soft'
+    :echoerr g:wrapping_softhard_default_hard . " is not a valid value for g:wrapping_softhard_default_hard"
+    finish
+endif
 
 set linebreak " Only relevant when wrapping is turned on
 
