@@ -21,6 +21,10 @@ if !exists('g:wrapping_softhard_autodetermine')
     let g:wrapping_softhard_autodetermine=1
 endif
 
+if !exists('g:wrapping_softhard_integrate_airline')
+    let g:wrapping_softhard_integrate_airline=1
+endif
+
 if g:wrapping_softhard_default_hard != 'hard' && g:wrapping_softhard_default_hard != 'soft'
     :echoerr g:wrapping_softhard_default_hard . " is not a valid value for g:wrapping_softhard_default_hard"
     finish
@@ -52,26 +56,26 @@ function! s:HardWrapMode()
 endfunction
 
 function! s:ToggleWrapMode()
-    if exists('b:wrapmode')
-        if b:wrapmode == 'hard'
-            let b:wrapmode = 'soft'
-        else
-            let b:wrapmode = 'hard'
-        endif
+    let s:currentmode = <SID>GetCurrentMode()
+
+    if s:currentmode == 'hard'
+        let b:wrapmode = 'soft'
     else
-        " This seems the wrong way round, but we are toggling away from what
-        " *was* the default.
-        if g:wrapping_softhard_default_hard == 'hard'
-            let b:wrapmode = 'soft'
-        else
-            let b:wrapmode = 'hard'
-        endif
+        let b:wrapmode = 'hard'
     endif
 
     if b:wrapmode == 'hard'
         call <SID>HardWrapMode()
     else
         call <SID>SoftWrapMode()
+    endif
+endfunction
+
+function s:GetCurrentMode()
+    if exists('b:wrapmode')
+        return b:wrapmode
+    else
+        return g:wrapping_softhard_default_hard
     endif
 endfunction
 
@@ -99,4 +103,24 @@ if g:wrapping_softhard_default_hard == 'hard'
 else
     let &textwidth=s:VERY_LONG_TEXTWIDTH_FOR_SOFT
     set wrap
+endif
+
+if exists('g:loaded_airline') && g:loaded_airline && g:wrapping_softhard_integrate_airline
+    function! SoftHardApply(...)
+        let w:airline_section_y = get(w:, 'airline_section_y', g:airline_section_y)
+        let w:airline_section_y .= ' %{GetHardSoftAirline()}'
+    endfunction
+
+    function! GetHardSoftAirline()
+        let s:currentmode = <SID>GetCurrentMode()
+
+        if s:currentmode == 'hard'
+            return '(H)'
+        else
+            return '(s)'
+        endif
+    endfunction
+
+    call airline#parts#define_raw('GHSA', '%{GetHardSoftAirline()}')
+    call airline#add_statusline_func('SoftHardApply')
 endif

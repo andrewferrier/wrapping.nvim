@@ -44,6 +44,13 @@ themselves to your preference):
   g:wrapping_softhard_textwidth_for_hard, hard lines will be used, otherwise
   soft. This factor is 0.6 by default.
 
+* `set g:wrapping_softhard_integrate_airline=0|1` - by default, the plugin
+  will integrate with
+  [vim-airline](https://github.com/vim-airline/vim-airline/) to automatically
+  add an `(H)` or `(s)` to the status line next to the encoding type. If you
+  set this to `0`, or this plugin detects that `vim-airline` is not loaded (it
+  should be loaded before `vim-wrapping-softhard`), this will not happen.
+
 ## Installation
 
 Use a vim package manager. If you don't have one,
