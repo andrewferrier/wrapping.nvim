@@ -1,0 +1,16 @@
+Execute (plugin is loaded):
+  AssertEqual 1, g:loaded_wrapping_softhard
+
+Given:
+  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+Execute (wrapmode autodetected to soft):
+  Log line2byte(line('$') + 1)
+  AssertEqual 1, &wrap
+
+Given:
+  xx
+
+Execute (wrapmode autodetected to hard):
+  Log line2byte(line('$') + 1)
+  AssertEqual 0, &wrap
