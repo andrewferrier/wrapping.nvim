@@ -59,3 +59,8 @@ start. Once you've installed it, run:
 
     cd ~/.vim/bundle
     git clone git://github.com/andrewferrier/vim-wrapping-softhard.git
+
+## Hacking
+
+There are some [vader tests](https://github.com/junegunn/vader.vim) in the
+`tests/` directory.
