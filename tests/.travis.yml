@@ -1,0 +1,7 @@
+language: vim
+
+before_script: |
+  git clone https://github.com/junegunn/vader.vim.git
+
+script:
+  bash -c 'cd tests/ && ./runtests.sh'
