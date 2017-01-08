@@ -124,3 +124,9 @@ if exists('g:loaded_airline') && g:loaded_airline && g:wrapping_softhard_integra
     call airline#parts#define_raw('GHSA', '%{GetHardSoftAirline()}')
     call airline#add_statusline_func('SoftHardApply')
 endif
+
+if exists("g:loaded_unimpaired")
+    nnoremap [ow :call <SID>SoftWrapMode()<CR>
+    nnoremap ]ow :call <SID>HardWrapMode()<CR>
+    nnoremap cow :call <SID>ToggleWrapMode()<CR>
+endif
