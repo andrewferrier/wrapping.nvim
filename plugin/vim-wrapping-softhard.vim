@@ -1,4 +1,4 @@
-if exists('g:loaded_wrapping_softhard') || &cp
+if exists('g:loaded_wrapping_softhard') || &compatible
     finish
 endif
 let g:loaded_wrapping_softhard=1
@@ -25,8 +25,8 @@ if !exists('g:wrapping_softhard_integrate_airline')
     let g:wrapping_softhard_integrate_airline=1
 endif
 
-if g:wrapping_softhard_default_hard != 'hard' && g:wrapping_softhard_default_hard != 'soft'
-    :echoerr g:wrapping_softhard_default_hard . " is not a valid value for g:wrapping_softhard_default_hard"
+if g:wrapping_softhard_default_hard !=# 'hard' && g:wrapping_softhard_default_hard !=# 'soft'
+    :echoerr g:wrapping_softhard_default_hard . ' is not a valid value for g:wrapping_softhard_default_hard'
     finish
 endif
 
@@ -47,24 +47,24 @@ endfunction
 
 function! s:SoftWrapMode()
     call <SID>SoftWrapModeInternal()
-    echomsg "Soft wrapping options enabled."
+    echomsg 'Soft wrapping options enabled.'
 endfunction
 
 function! s:HardWrapMode()
     call <SID>HardWrapModeInternal()
-    echomsg "Hard wrapping options enabled."
+    echomsg 'Hard wrapping options enabled.'
 endfunction
 
 function! s:ToggleWrapMode()
     let s:currentmode = <SID>GetCurrentMode()
 
-    if s:currentmode == 'hard'
+    if s:currentmode ==# 'hard'
         let b:wrapmode = 'soft'
     else
         let b:wrapmode = 'hard'
     endif
 
-    if b:wrapmode == 'hard'
+    if b:wrapmode ==# 'hard'
         call <SID>HardWrapMode()
     else
         call <SID>SoftWrapMode()
@@ -94,10 +94,12 @@ command! -bar HardWrapMode call <SID>HardWrapMode()
 command! -bar ToggleWrapMode call <SID>ToggleWrapMode()
 
 if g:wrapping_softhard_autodetermine
-    autocmd BufRead * call <SID>SetHardOrSoftModeAuto()
+    augroup softhard_init
+        autocmd BufRead * call <SID>SetHardOrSoftModeAuto()
+    augroup END
 endif
 
-if g:wrapping_softhard_default_hard == 'hard'
+if g:wrapping_softhard_default_hard ==# 'hard'
     let &textwidth=g:wrapping_softhard_textwidth_for_hard
     set nowrap
 else
@@ -114,7 +116,7 @@ if exists('g:loaded_airline') && g:loaded_airline && g:wrapping_softhard_integra
     function! GetHardSoftAirline()
         let s:currentmode = <SID>GetCurrentMode()
 
-        if s:currentmode == 'hard'
+        if s:currentmode ==# 'hard'
             return '(H)'
         else
             return '(s)'
