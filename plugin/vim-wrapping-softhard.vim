@@ -14,7 +14,7 @@ if !exists('g:wrapping_softhard_default_hard')
 endif
 
 if !exists('g:wrapping_softhard_line_length_compensator')
-    let g:wrapping_softhard_line_length_compensator=1.5
+    let g:wrapping_softhard_line_length_compensator=1.4
 endif
 
 if !exists('g:wrapping_softhard_autodetermine')
