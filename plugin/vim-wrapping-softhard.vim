@@ -36,12 +36,24 @@ function! s:SoftWrapModeInternal()
     " Effectively disable textwidth (setting it to 0 makes it act like 79 for gqxx)
     let &l:textwidth=s:VERY_LONG_TEXTWIDTH_FOR_SOFT
     setlocal wrap
+
+    nmap <buffer> <Up> g<Up>
+    nmap <buffer> <Down> g<Down>
+    let b:wrapmappingsinitialized = 1
+
     let b:wrapmode = 'soft'
 endfunction
 
 function! s:HardWrapModeInternal()
     let &l:textwidth=g:wrapping_softhard_textwidth_for_hard
     setlocal nowrap
+
+    if exists('b:wrapmappingsinitialized') && b:wrapmappingsinitialized == 1
+        nunmap <buffer> <Up>
+        nunmap <buffer> <Down>
+    endif
+    let b:wrapmappingsinitialized = 0
+
     let b:wrapmode = 'hard'
 endfunction
 
