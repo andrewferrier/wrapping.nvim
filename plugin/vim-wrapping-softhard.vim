@@ -71,15 +71,9 @@ function! s:ToggleWrapMode()
     let s:currentmode = <SID>GetCurrentMode()
 
     if s:currentmode ==# 'hard'
-        let b:wrapmode = 'soft'
-    else
-        let b:wrapmode = 'hard'
-    endif
-
-    if b:wrapmode ==# 'hard'
-        call <SID>HardWrapMode()
-    else
         call <SID>SoftWrapMode()
+    else
+        call <SID>HardWrapMode()
     endif
 endfunction
 
