@@ -142,5 +142,5 @@ endif
 if exists('g:loaded_unimpaired')
     nnoremap [ow :call <SID>SoftWrapMode()<CR>
     nnoremap ]ow :call <SID>HardWrapMode()<CR>
-    nnoremap cow :call <SID>ToggleWrapMode()<CR>
+    nnoremap yow :call <SID>ToggleWrapMode()<CR>
 endif
