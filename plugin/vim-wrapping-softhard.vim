@@ -123,9 +123,9 @@ if exists('g:loaded_airline') && g:loaded_airline && g:wrapping_softhard_integra
         let s:currentmode = <SID>GetCurrentMode()
 
         if s:currentmode ==# 'hard'
-            return '(H)'
+            return '.H'
         else
-            return '(s)'
+            return '.s'
         endif
     endfunction
 
