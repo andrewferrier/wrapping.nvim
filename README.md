@@ -10,12 +10,14 @@ ending is "hard" wrapped using the author's preference for line length
 
 This plugin makes it easy to quickly flip between the two when files are open,
 setting the relevant vim settings to make it "natural" to edit the file that
-way. At the moment, this just changes `textwidth` and `wrap/nowrap`.
+way. At the moment, this just changes `textwidth` and `wrap/nowrap`. It will
+also re-map the up and down keys depending on the wrapping style, so they
+move by screen line in soft mode.
 
 ## Minimal Configuration
 
 As well as installing the plugin (see 'Installation' below), you will also
-like to have some keybindings for the `SoftWrapMode` and `HardWrapMode`
+likely want to have some keybindings for the `SoftWrapMode` and `HardWrapMode`
 commands, which flip between the different types of wrapping. This should
 probably look roughly like this in your vim configuration (change the keys
 themselves to your preference):
@@ -47,7 +49,7 @@ themselves to your preference):
 * `set g:wrapping_softhard_integrate_airline=0|1` - by default, the plugin
   will integrate with
   [vim-airline](https://github.com/vim-airline/vim-airline/) to automatically
-  add an `(H)` or `(s)` to the status line next to the encoding type. If you
+  add an `.H` or `.s` to the status line next to the encoding type. If you
   set this to `0`, or this plugin detects that `vim-airline` is not loaded (it
   should be loaded before `vim-wrapping-softhard`), this will not happen.
 
