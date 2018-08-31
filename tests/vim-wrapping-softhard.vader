@@ -8,3 +8,7 @@ Execute (wrapmode autodetected to soft):
 Execute (wrapmode autodetected to hard):
   edit shortlinefile.txt
   AssertEqual 0, &wrap
+
+Execute (wrapmode forced to hard because filetype not in whitelist):
+  edit longlineshellscript.sh
+  AssertEqual 0, &wrap

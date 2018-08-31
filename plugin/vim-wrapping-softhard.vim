@@ -25,6 +25,10 @@ if !exists('g:wrapping_softhard_integrate_airline')
     let g:wrapping_softhard_integrate_airline=1
 endif
 
+if !exists('g:wrapping_softhard_filetype_whitelist')
+    let g:wrapping_softhard_filetype_whitelist=['markdown', 'text']
+endif
+
 if g:wrapping_softhard_default_hard !=# 'hard' && g:wrapping_softhard_default_hard !=# 'soft'
     :echoerr g:wrapping_softhard_default_hard . ' is not a valid value for g:wrapping_softhard_default_hard'
     finish
@@ -86,12 +90,16 @@ function s:GetCurrentMode()
 endfunction
 
 function s:SetHardOrSoftModeAuto()
-    let s:size = getfsize(expand('%'))
-    let s:average_length=s:size / line('$')
-    if (s:average_length * g:wrapping_softhard_line_length_compensator) < g:wrapping_softhard_textwidth_for_hard
+    if index(g:wrapping_softhard_filetype_whitelist, &filetype) == -1
         call <SID>HardWrapModeInternal()
     else
-        call <SID>SoftWrapModeInternal()
+        let s:size = getfsize(expand('%'))
+        let s:average_length=s:size / line('$')
+        if (s:average_length * g:wrapping_softhard_line_length_compensator) < g:wrapping_softhard_textwidth_for_hard
+            call <SID>HardWrapModeInternal()
+        else
+            call <SID>SoftWrapModeInternal()
+        endif
     endif
 endfunction
 
