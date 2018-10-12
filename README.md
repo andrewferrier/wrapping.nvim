@@ -1,18 +1,24 @@
 # vim-wrapping-softhard
 
-This is a Vim plugin designed to make it easy to flip between 'soft' and
+**Note**: this plugin has been deprecated as I am replacing my own usage with
+that of [vim-pencil](https://github.com/reedes/vim-pencil) which provides
+similar functionality.
+
+---
+
+~~This is a Vim plugin designed to make it easy to flip between 'soft' and
 'hard' wrapping when editing text-like files. Typically one comes across
 various text files which have no hard carriage returns to wrap text - each
 paragraph is one long line (e.g. many Markdown files are like this). Other
 files use "hard" wrapping (like this README, for example), where each line
 ending is "hard" wrapped using the author's preference for line length
-(typically in the 78-80 character range).
+(typically in the 78-80 character range).~~
 
-This plugin makes it easy to quickly flip between the two when files are open,
+~~This plugin makes it easy to quickly flip between the two when files are open,
 setting the relevant vim settings to make it "natural" to edit the file that
 way. At the moment, this just changes `textwidth` and `wrap/nowrap`. It will
 also re-map the up and down keys depending on the wrapping style, so they
-move by screen line in soft mode.
+move by screen line in soft mode.~~
 
 ## Minimal Configuration
 
