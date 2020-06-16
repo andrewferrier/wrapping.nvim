@@ -15,7 +15,7 @@ set linebreak " Only relevant when wrapping is turned on
 set nowrap
 
 if exists('g:loaded_unimpaired')
-    nnoremap <silent> [ow :call vim_wrapping_softhard#SoftWrapMode()<CR>
-    nnoremap <silent> ]ow :call vim_wrapping_softhard#HardWrapMode()<CR>
-    nnoremap <silent> yow :call vim_wrapping_softhard#ToggleWrapMode()<CR>
+    nnoremap [ow :SoftWrapMode<CR>
+    nnoremap ]ow :HardWrapMode<CR>
+    nnoremap yow :ToggleWrapMode<CR>
 endif
