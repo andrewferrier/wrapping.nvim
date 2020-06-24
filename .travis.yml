@@ -1,4 +1,0 @@
-language: vim
-
-script:
-  bash -c 'cd tests/ && ./runtests.sh'
