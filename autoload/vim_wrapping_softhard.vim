@@ -1,6 +1,6 @@
 let s:VERY_LONG_TEXTWIDTH_FOR_SOFT=999999
 
-function! vim_wrapping_softhard#SoftWrapModeInternal()
+function! vim_wrapping_softhard#SoftWrapMode()
     if !(exists('b:wrapmode') && b:wrapmode ==# 'soft')
         " Save prior textwidth
         let b:hard_textwidth=&l:textwidth
@@ -17,7 +17,7 @@ function! vim_wrapping_softhard#SoftWrapModeInternal()
     endif
 endfunction
 
-function! vim_wrapping_softhard#HardWrapModeInternal()
+function! vim_wrapping_softhard#HardWrapMode()
     if !(exists('b:wrapmode') && b:wrapmode ==# 'hard')
         if exists('b:hard_textwidth')
             let &l:textwidth=b:hard_textwidth
@@ -51,14 +51,6 @@ function vim_wrapping_softhard#SetModeAutomatically()
     else
         call vim_wrapping_softhard#SoftWrapModeInternal()
     endif
-endfunction
-
-function! vim_wrapping_softhard#SoftWrapMode()
-    call vim_wrapping_softhard#SoftWrapModeInternal()
-endfunction
-
-function! vim_wrapping_softhard#HardWrapMode()
-    call vim_wrapping_softhard#HardWrapModeInternal()
 endfunction
 
 function! vim_wrapping_softhard#ToggleWrapMode()
