@@ -47,9 +47,9 @@ function vim_wrapping_softhard#SetModeAutomatically()
     endif
 
     if (l:average_line_length * g:wrapping_softhard_line_length_compensator) < l:hard_textwidth_for_comparison
-        call vim_wrapping_softhard#HardWrapModeInternal()
+        call vim_wrapping_softhard#HardWrapMode()
     else
-        call vim_wrapping_softhard#SoftWrapModeInternal()
+        call vim_wrapping_softhard#SoftWrapMode()
     endif
 endfunction
 
