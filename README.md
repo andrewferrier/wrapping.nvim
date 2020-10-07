@@ -13,9 +13,14 @@ character range).
 
 This plugin makes it easy to quickly flip between the two when files are open,
 setting the relevant vim settings to make it "natural" to edit the file that
-way. At the moment, this just changes `textwidth` and `wrap/nowrap`. It will
-also re-map the up and down keys depending on the wrapping style, so they move
-by screen line in soft mode. The default mode for files is 'hard' wrapping.
+way. It also attempts to detect the natural wrapping style of the file when
+first opening it using `vim_wrapping_softhard#SetModeAutomatically()` if you use
+that feature (see below).
+
+At the moment, this plugin just changes the `textwidth` and `wrap/nowrap`
+settings when switching between modes. It will also re-map the up and down keys
+depending on the wrapping style, so they move by screen line in soft mode. The
+default mode for files is 'hard' wrapping.
 
 ## Minimal Configuration
 
