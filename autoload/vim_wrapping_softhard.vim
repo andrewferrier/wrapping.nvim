@@ -36,9 +36,17 @@ function! vim_wrapping_softhard#HardWrapMode()
     endif
 endfunction
 
+function s:CountBlankLines()
+    let l:svpos = winsaveview()
+    let l:count = 0
+    g/^\s*$/let l:count += 1
+    return l:count
+    call winrestview(l:svpos)
+endfunction
+
 function vim_wrapping_softhard#SetModeAutomatically()
     let l:size = getfsize(expand('%'))
-    let l:average_line_length=l:size / line('$')
+    let l:average_line_length=l:size / (line('$') - s:CountBlankLines())
 
     if exists('b:hard_textwidth')
         let l:hard_textwidth_for_comparison = b:hard_textwidth

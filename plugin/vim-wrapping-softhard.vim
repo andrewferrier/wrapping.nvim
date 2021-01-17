@@ -4,7 +4,7 @@ endif
 let g:loaded_wrapping_softhard=1
 
 if !exists('g:wrapping_softhard_line_length_compensator')
-    let g:wrapping_softhard_line_length_compensator=1.4
+    let g:wrapping_softhard_line_length_compensator=1.0
 endif
 
 command! -bar SoftWrapMode call vim_wrapping_softhard#SoftWrapMode()
