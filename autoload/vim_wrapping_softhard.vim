@@ -39,7 +39,8 @@ endfunction
 function s:CountBlankLines()
     let l:svpos = winsaveview()
     let l:count = 0
-    g/^\s*$/let l:count += 1
+    " silent is needed to ensure that even if there are no matches, we don't show an error.
+    silent g/^\s*$/let l:count += 1
     return l:count
     call winrestview(l:svpos)
 endfunction
