@@ -57,6 +57,17 @@ local function toggle_wrap_mode()
     end
 end
 
+local function get_softener()
+    local filetype = vim.opt.filetype:get()
+    local value = vim.tbl_get(opts.softener, filetype)
+
+    if value ~= nil then
+        return value
+    else
+        return opts.softener.default
+    end
+end
+
 M.set_mode_heuristically = function()
     local size = vim.fn.getfsize(vim.fn.expand("%"))
     local average_line_length = size / (vim.fn.line("$") - count_blank_lines())
@@ -70,7 +81,7 @@ M.set_mode_heuristically = function()
     end
 
     if
-        (average_line_length * opts.line_length_compensator)
+        (average_line_length * get_softener())
         < hard_textwidth_for_comparison
     then
         M.hard_wrap_mode()
@@ -89,11 +100,15 @@ end
 
 M.setup = function(o)
     opts = vim.tbl_extend("force", {
-        line_length_compensator = 1.0,
+        softener = {},
         create_commands = true,
         create_keymaps = true,
         auto_set_mode_heuristically = true,
     }, o or {})
+
+    opts.softener = vim.tbl_extend("force", {
+        default = 1.0,
+    }, opts.softener)
 
     vim.opt.linebreak = true
     vim.opt.wrap = false
