@@ -80,9 +80,14 @@ M.set_mode_heuristically = function()
         hard_textwidth_for_comparison = vim.opt.textwidth:get()
     end
 
-    if
-        (average_line_length * get_softener())
-        < hard_textwidth_for_comparison
+    local softener = get_softener()
+
+    if softener == true then
+        M.soft_wrap_mode()
+    elseif
+        softener == false
+        or (average_line_length * softener)
+            < hard_textwidth_for_comparison
     then
         M.hard_wrap_mode()
     else
