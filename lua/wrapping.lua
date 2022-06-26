@@ -57,7 +57,7 @@ local function toggle_wrap_mode()
     end
 end
 
-M.set_mode_automatically = function()
+M.set_mode_heuristically = function()
     local size = vim.fn.getfsize(vim.fn.expand("%"))
     local average_line_length = size / (vim.fn.line("$") - count_blank_lines())
 
@@ -91,7 +91,8 @@ M.setup = function(o)
     opts = vim.tbl_extend("force", {
         line_length_compensator = 1.0,
         create_commands = true,
-        create_keymaps = true
+        create_keymaps = true,
+        auto_set_mode_heuristically = true,
     }, o or {})
 
     vim.opt.linebreak = true
@@ -125,6 +126,15 @@ M.setup = function(o)
         vim.keymap.set("n", "yow", function()
             toggle_wrap_mode()
         end)
+    end
+
+    if opts.auto_set_mode_heuristically then
+        vim.api.nvim_create_autocmd("BufRead", {
+            group = vim.api.nvim_create_augroup("wrapping", {}),
+            callback = function()
+                M.set_mode_heuristically()
+            end,
+        })
     end
 end
 
