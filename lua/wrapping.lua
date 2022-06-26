@@ -100,13 +100,19 @@ M.setup = function(o)
     if opts.create_commands then
         vim.api.nvim_create_user_command("SoftWrapMode", function()
             M.soft_wrap_mode()
-        end, {})
+        end, {
+            desc = "Set wrap mode to 'soft'",
+        })
         vim.api.nvim_create_user_command("HardWrapMode", function()
             M.hard_wrap_mode()
-        end, {})
+        end, {
+            desc = "Set wrap mode to 'hard'",
+        })
         vim.api.nvim_create_user_command("ToggleWrapMode", function()
             toggle_wrap_mode()
-        end, {})
+        end, {
+            desc = "Toggle wrap mode",
+        })
     end
 
     if opts.create_keymaps then
