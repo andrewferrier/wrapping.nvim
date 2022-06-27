@@ -1,7 +1,12 @@
 # vim-wrapping-softhard
 
-**Note**: I have de-deprecated and simplified this plugin, as I was finding
-[vim-pencil](https://github.com/reedes/vim-pencil) too complex for my needs.
+**Note**: For anyone currently using this plugin; I am in the process of migrating
+it to be lua-based for NeoVim. The last VimL-based version suitable for using for
+vim is tagged with the [vim-viml](https://github.com/andrewferrier/vim-wrapping-softhard/releases/tag/vim-viml)
+tag. The [neovim-lua](https://github.com/andrewferrier/vim-wrapping-softhard/tree/neovim-lua)
+branch is the new codebase, and eventually will be merged to master.
+
+---
 
 This is a Vim plugin designed to make it easy to flip between 'soft' and 'hard'
 wrapping when editing text-like files. Typically one comes across various text
