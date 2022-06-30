@@ -1,12 +1,13 @@
-# vim-wrapping-softhard
+# wrapping.nvim
 
-⚠️  **Note**: This plugin has been rewritten from VimL (Vim) to lua (for NeoVim
-only). If you are still using Vim, the last VimL-based version suitable for
-using for vim is tagged with the
+⚠️  **Note**: This plugin has been rewritten from VimL  (Vim and NeoVim) to lua
+(just NeoVim), and renamed from `vim-wrapping-softhard` to `wrapping.nvim`. If
+you are still using Vim, the last VimL-based version suitable for using for vim
+is tagged with the
 [vim-viml](https://github.com/andrewferrier/vim-wrapping-softhard/releases/tag/vim-viml)
 tag.
 
----
+***
 
 This is a NeoVim plugin designed to make it easy to flip between 'soft' and
 'hard' wrapping when editing text-like files. Typically one comes across some
@@ -20,7 +21,8 @@ This plugin makes it easy to flip between the two when files are open,
 setting the relevant vim settings to make it "natural" to edit the file that
 way. It also attempts to detect the natural wrapping style of the file when
 first opening it if you use that feature (see below). It introduces the concept
-of a soft or hard 'mode' per-file.
+of a soft or hard 'mode' per-file. It does *not* directly affect the content of
+the file or 'convert' between files of those types.
 
 ## What the Soft Hard Mode Affects
 
@@ -31,7 +33,7 @@ soft mode.
 
 ## Installation
 
-Example for `packer.nvim`:
+Example for [`packer.nvim`](https://github.com/wbthomason/packer.nvim):
 
     packer.startup(function(use)
 
@@ -63,7 +65,7 @@ You can add an `opts` object to the setup method:
 
 The sections below detail the allowed options.
 
-### Commands
+### Commands and Keymappings
 
 By default, the plugin will create the following commands to set/override a
 wrapping mode:
@@ -72,17 +74,7 @@ wrapping mode:
     SoftWrapMode
     ToggleWrapMode
 
-Disable these commands by setting:
-
-    opts = {
-        create_commands = false,
-        ...
-    }
-
-### Keymappings
-
-By default, the plugin will create the following keymappings to set/override a
-wrapping mode:
+As well as the following normal-mode keymappings:
 
     [ow (soft wrap mode)
     ]ow (hard wrap mode)
@@ -90,18 +82,26 @@ wrapping mode:
 
 (these are similar to [vim-unimpaired](https://github.com/tpope/vim-unimpaired))
 
-Disable these keymappings by setting:
+Disable these commands and/or keymappings by setting these options accordingly:
 
     opts = {
+        create_commands = false,
         create_keymappings = false,
         ...
     }
+
+You can create your own instead by invoking these functions:
+
+*   `require('wrapping').hard_wrap_mode()`
+*   `require('wrapping').soft_wrap_mode()`
+*   `require('wrapping').toggle_wrap_mode()`
 
 ### Automatic Heuristic Mode
 
 By default, the plugin will set the hard or soft mode automatically when any
 type of file loads, using the `BufRead` event in an autocmd. You might want to
-stop this behaviour, or ...
+stop this behaviour, or override it so that it's only called for certain types
+of files (for example, if you work with 
 
 TODO
 

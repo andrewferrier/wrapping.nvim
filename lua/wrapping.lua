@@ -40,6 +40,14 @@ M.hard_wrap_mode = function()
     end
 end
 
+M.toggle_wrap_mode = function()
+    if M.get_current_mode() == "hard" then
+        M.soft_wrap_mode()
+    else
+        M.hard_wrap_mode()
+    end
+end
+
 local function count_blank_lines()
     local svpos = vim.fn.winsaveview()
     vim.b.blankline_count = 0
@@ -47,14 +55,6 @@ local function count_blank_lines()
     vim.cmd("silent g/^\\s*$/let b:blankline_count += 1")
     vim.fn.winrestview(svpos)
     return vim.b.blankline_count
-end
-
-local function toggle_wrap_mode()
-    if M.get_current_mode() == "hard" then
-        M.soft_wrap_mode()
-    else
-        M.hard_wrap_mode()
-    end
 end
 
 local function get_softener()
@@ -130,7 +130,7 @@ M.setup = function(o)
             desc = "Set wrap mode to 'hard'",
         })
         vim.api.nvim_create_user_command("ToggleWrapMode", function()
-            toggle_wrap_mode()
+            M.toggle_wrap_mode()
         end, {
             desc = "Toggle wrap mode",
         })
@@ -144,7 +144,7 @@ M.setup = function(o)
             M.hard_wrap_mode()
         end)
         vim.keymap.set("n", "yow", function()
-            toggle_wrap_mode()
+            M.toggle_wrap_mode()
         end)
     end
 
