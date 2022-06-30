@@ -1,10 +1,10 @@
 # vim-wrapping-softhard
 
-**Note**: For anyone currently using this plugin; I am in the process of migrating
-it to be lua-based for NeoVim. The last VimL-based version suitable for using for
-vim is tagged with the [vim-viml](https://github.com/andrewferrier/vim-wrapping-softhard/releases/tag/vim-viml)
-tag. The [neovim-lua](https://github.com/andrewferrier/vim-wrapping-softhard/tree/neovim-lua)
-branch is the new codebase, and eventually will be merged to master.
+⚠️  **Note**: This plugin has been rewritten from VimL (Vim) to lua (for NeoVim
+only). If you are still using Vim, the last VimL-based version suitable for
+using for vim is tagged with the
+[vim-viml](https://github.com/andrewferrier/vim-wrapping-softhard/releases/tag/vim-viml)
+tag.
 
 ---
 
