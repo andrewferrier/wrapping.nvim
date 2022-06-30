@@ -86,8 +86,7 @@ M.set_mode_heuristically = function()
         M.soft_wrap_mode()
     elseif
         softener == false
-        or (average_line_length * softener)
-            < hard_textwidth_for_comparison
+        or (average_line_length * softener) < hard_textwidth_for_comparison
     then
         M.hard_wrap_mode()
     else

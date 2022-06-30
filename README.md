@@ -107,4 +107,4 @@ TODO
 
 ## Other Extensions
 
-* How to get the mode for status line
+*   How to get the mode for status line
