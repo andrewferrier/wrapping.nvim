@@ -69,6 +69,17 @@ local function get_softener()
 end
 
 M.set_mode_heuristically = function()
+    local textwidth = vim.opt.textwidth:get()
+
+    if textwidth > (vim.fn.winwidth(0) * 1.5) then
+        -- textwidth has probably been set by a modeline, autocmd or
+        -- filetype/x.{lua.vim} to be large deliberately - assume that means
+        -- this file is a hard mode file
+
+        M.hard_wrap_mode()
+        return
+    end
+
     local size = vim.fn.getfsize(vim.fn.expand("%"))
     local average_line_length = size / (vim.fn.line("$") - count_blank_lines())
 
