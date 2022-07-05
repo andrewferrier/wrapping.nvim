@@ -159,7 +159,9 @@ M.setup = function(o)
     end
 
     if opts.auto_set_mode_heuristically then
-        vim.api.nvim_create_autocmd("BufRead", {
+        -- We use BufWinEnter as it is fired after modelines are processed, so
+        -- we can use what's in there.
+        vim.api.nvim_create_autocmd("BufWinEnter", {
             group = vim.api.nvim_create_augroup("wrapping", {}),
             callback = function()
                 M.set_mode_heuristically()
