@@ -115,8 +115,10 @@ M.set_mode_heuristically = function()
 
     if softener == true then
         M.soft_wrap_mode()
+        return
     elseif softener == false then
         M.hard_wrap_mode()
+        return
     end
 
     if likely_nontextual_language() then
