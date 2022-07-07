@@ -80,8 +80,8 @@ M.set_mode_heuristically = function()
         return
     end
 
-    local size = vim.fn.getfsize(vim.fn.expand("%"))
-    local average_line_length = size / (vim.fn.line("$") - count_blank_lines())
+    local file_size = vim.fn.getfsize(vim.fn.expand("%"))
+    local average_line_length = file_size / (vim.fn.line("$") - count_blank_lines())
 
     local hard_textwidth_for_comparison
 
