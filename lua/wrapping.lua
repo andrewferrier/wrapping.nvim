@@ -114,16 +114,14 @@ M.get_current_mode = function()
 end
 
 M.setup = function(o)
-    opts = vim.tbl_extend("force", {
-        softener = {},
+    opts = vim.tbl_deep_extend("force", {
+        softener = {
+            default = 1.0,
+        },
         create_commands = true,
         create_keymaps = true,
         auto_set_mode_heuristically = true,
     }, o or {})
-
-    opts.softener = vim.tbl_extend("force", {
-        default = 1.0,
-    }, opts.softener)
 
     vim.opt.linebreak = true
     vim.opt.wrap = false
