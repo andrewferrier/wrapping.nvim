@@ -68,7 +68,23 @@ local function get_softener()
     end
 end
 
+local function likely_nontextual_language()
+    -- If an LSP provider supports these capabilities it's almost certainly not
+    -- a textual language, and therefore we should use hard wrapping
+
+    for _, client in pairs(vim.lsp.buf_get_clients(0)) do
+        if client.definitionProvider or client.signatureHelpProvider then
+            return true
+        end
+    end
+end
+
 M.set_mode_heuristically = function()
+    if likely_nontextual_language() then
+        M.hard_wrap_mode()
+        return
+    end
+
     local textwidth = vim.opt.textwidth:get()
 
     if textwidth > (vim.fn.winwidth(0) * 1.5) then
