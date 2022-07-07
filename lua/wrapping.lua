@@ -3,6 +3,7 @@ local M = {}
 local OPTION_DEFAULTS = {
     softener = {
         default = 1.0,
+        gitcommit = false, -- Based on https://stackoverflow.com/a/2120040/27641
     },
     create_commands = true,
     create_keymaps = true,
