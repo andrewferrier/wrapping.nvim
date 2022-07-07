@@ -10,12 +10,12 @@ tag.
 ***
 
 This is a NeoVim plugin designed to make it easy to flip between 'soft' and
-'hard' wrapping when editing text-like files. Typically one comes across some
-text-like files which have no hard carriage returns to wrap text - each
-paragraph is one long line (some Markdown files are like this). Other files use
-"hard" wrapping (like this README, for example), where each line ending is
-"hard" wrapped using the author's preference for line length (typically in the
-78-80 character range).
+'hard' wrapping when editing text-like files (e.g. text, Markdown, LaTeX,
+AsciiDoc, etc.). Typically one comes across some text-like files which have no
+hard carriage returns to wrap text - each paragraph is one long line (some
+Markdown files are like this). Other files use "hard" wrapping (like this
+README, for example), where each line ending is "hard" wrapped using the
+author's preference for line length (typically in the 78-80 character range).
 
 This plugin makes it easy to flip between the two when files are open,
 setting the relevant vim settings to make it "natural" to edit the file that
@@ -99,11 +99,23 @@ You can create your own instead by invoking these functions:
 ### Automatic Heuristic Mode
 
 By default, the plugin will set the hard or soft mode automatically when any
-type of file loads, using the `BufRead` event in an autocmd. You might want to
+type of file loads, using the `BufWinEnter` event in an autocmd. It uses a
+variety of heuristics which I won't document in detail here. If it detects your
+file incorrectly, you have two options:
+
+1. SPECIFY HOW SOFTENER WORKS
+
+2. Open an issue with an example of the file that's being incorrectly detected.
+
+You might want to
 stop this behaviour, or override it so that it's only called for certain types
 of files (for example, if you work with 
 
 TODO
+
+## Status Lines
+
+Use `require('wrapping').get_current_mode()`.
 
 ## Other Extensions
 
