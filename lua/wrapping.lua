@@ -81,12 +81,7 @@ local function likely_nontextual_language()
     return false
 end
 
-M.set_mode_heuristically = function()
-    if likely_nontextual_language() then
-        M.hard_wrap_mode()
-        return
-    end
-
+local function likely_textwidth_set_deliberately()
     local textwidth = vim.opt.textwidth:get()
 
     if textwidth > (vim.fn.winwidth(0) * 1.5) then
@@ -94,6 +89,19 @@ M.set_mode_heuristically = function()
         -- filetype/x.{lua.vim} to be large deliberately - assume that means
         -- this file is a hard mode file
 
+        return true
+    end
+
+    return false
+end
+
+M.set_mode_heuristically = function()
+    if likely_nontextual_language() then
+        M.hard_wrap_mode()
+        return
+    end
+
+    if likely_textwidth_set_deliberately() then
         M.hard_wrap_mode()
         return
     end
@@ -106,7 +114,7 @@ M.set_mode_heuristically = function()
     if vim.b.hard_textwidth then
         hard_textwidth_for_comparison = vim.b.hard_textwidth
     else
-        hard_textwidth_for_comparison = textwidth
+        hard_textwidth_for_comparison = vim.opt.textwidth:get()
     end
 
     local softener = get_softener()
