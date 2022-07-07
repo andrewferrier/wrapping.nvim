@@ -88,7 +88,7 @@ M.set_mode_heuristically = function()
     if vim.b.hard_textwidth then
         hard_textwidth_for_comparison = vim.b.hard_textwidth
     else
-        hard_textwidth_for_comparison = vim.opt.textwidth:get()
+        hard_textwidth_for_comparison = textwidth
     end
 
     local softener = get_softener()
