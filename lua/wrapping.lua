@@ -154,7 +154,7 @@ M.get_current_mode = function()
     if vim.b.wrapmode then
         return vim.b.wrapmode
     else
-        return "hard"
+        return nil
     end
 end
 
