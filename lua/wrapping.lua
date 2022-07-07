@@ -106,6 +106,14 @@ local function likely_textwidth_set_deliberately()
 end
 
 M.set_mode_heuristically = function()
+    local softener = get_softener()
+
+    if softener == true then
+        M.soft_wrap_mode()
+    elseif softener == false then
+        M.hard_wrap_mode()
+    end
+
     if likely_nontextual_language() then
         M.hard_wrap_mode()
         return
@@ -128,14 +136,7 @@ M.set_mode_heuristically = function()
         hard_textwidth_for_comparison = vim.opt.textwidth:get()
     end
 
-    local softener = get_softener()
-
-    if softener == true then
-        M.soft_wrap_mode()
-    elseif
-        softener == false
-        or (average_line_length * softener) < hard_textwidth_for_comparison
-    then
+    if (average_line_length * softener) < hard_textwidth_for_comparison then
         M.hard_wrap_mode()
     else
         M.soft_wrap_mode()
