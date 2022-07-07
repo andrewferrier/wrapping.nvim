@@ -77,6 +77,8 @@ local function likely_nontextual_language()
             return true
         end
     end
+
+    return false
 end
 
 M.set_mode_heuristically = function()
