@@ -1,5 +1,14 @@
 local M = {}
 
+local OPTION_DEFAULTS = {
+    softener = {
+        default = 1.0,
+    },
+    create_commands = true,
+    create_keymaps = true,
+    auto_set_mode_heuristically = true,
+}
+
 local VERY_LONG_TEXTWIDTH_FOR_SOFT = 999999
 local opts
 
@@ -107,7 +116,8 @@ M.set_mode_heuristically = function()
     end
 
     local file_size = vim.fn.getfsize(vim.fn.expand("%"))
-    local average_line_length = file_size / (vim.fn.line("$") - count_blank_lines())
+    local average_line_length = file_size
+        / (vim.fn.line("$") - count_blank_lines())
 
     local hard_textwidth_for_comparison
 
@@ -140,14 +150,7 @@ M.get_current_mode = function()
 end
 
 M.setup = function(o)
-    opts = vim.tbl_deep_extend("force", {
-        softener = {
-            default = 1.0,
-        },
-        create_commands = true,
-        create_keymaps = true,
-        auto_set_mode_heuristically = true,
-    }, o or {})
+    opts = vim.tbl_deep_extend("force", OPTION_DEFAULTS, o or {})
 
     vim.opt.linebreak = true
     vim.opt.wrap = false
