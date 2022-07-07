@@ -106,6 +106,11 @@ local function likely_textwidth_set_deliberately()
 end
 
 M.set_mode_heuristically = function()
+    if vim.opt_local.buftype:get() ~= "" then
+        -- We shouldn't really try to handle anything that isn't a regular buffer
+        return
+    end
+
     local softener = get_softener()
 
     if softener == true then
