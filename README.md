@@ -2,66 +2,73 @@
 
 ⚠️  **Note**: This plugin has been rewritten from VimL  (Vim and NeoVim) to lua
 (just NeoVim), and renamed from `vim-wrapping-softhard` to `wrapping.nvim`. If
-you are still using Vim, the last VimL-based version suitable for using for vim
-is tagged with the
+you are still using Vim, the
 [vim-viml](https://github.com/andrewferrier/vim-wrapping-softhard/releases/tag/vim-viml)
-tag.
+tag is against the last VimL-based version suitable for using with vim.
 
 ***
 
 This is a NeoVim plugin designed to make it easy to flip between 'soft' and
-'hard' wrapping when editing text-like files (e.g. text, Markdown, LaTeX,
+'hard' wrapping modes when editing text-like files (e.g. text, Markdown, LaTeX,
 AsciiDoc, etc.). Typically one comes across some text-like files which have no
 hard carriage returns to wrap text - each paragraph is one long line (some
 Markdown files are like this). Other files use "hard" wrapping (like this
 README, for example), where each line ending is "hard" wrapped using the
 author's preference for line length (typically in the 78-80 character range).
 
-This plugin makes it easy to flip between the two when files are open,
-setting the relevant vim settings to make it "natural" to edit the file that
-way. It also attempts to detect the natural wrapping style of the file when
-first opening it if you use that feature (see below). It introduces the concept
-of a soft or hard 'mode' per-file. It does *not* directly affect the content of
-the file or 'convert' between files of those types.
+This plugin makes it easy to flip between the two when files are open, setting
+the relevant vim settings to make it "natural" to edit the file that way. It
+also attempts to detect the natural wrapping style of the file when first
+opening it if you use that feature (see below). It introduces the concept of a
+soft or hard 'mode' per-file. It does *not* support modifying the content of the
+file or converting between files of those types.
 
-## What the Soft Hard Mode Affects
+## What the Soft / Hard Mode Affects
 
 At the moment, this plugin just changes the `textwidth` and `wrap/nowrap`
-settings when switching between modes. It will also re-map the `<Up>` and
-`<Down>` keys depending on the wrapping style, so they move by screen line in
-soft mode.
+settings when switching between hard and soft wrapping modes. It will also
+re-map the `<Up>` and `<Down>` keys depending on the wrapping style, so they
+move by screen line in soft mode. I would welcome issues / pull requests if
+there are other settings that would be useful to alter under these different
+modes.
 
 ## Installation
 
+**Requires NeoVim 0.7+.**
+
 Example for [`packer.nvim`](https://github.com/wbthomason/packer.nvim):
 
-    packer.startup(function(use)
+```lua
+packer.startup(function(use)
 
-        ...
+    ...
 
-        use({
-            "andrewferrier/vim-wrapping-softhard",
-            config = function()
-                require("wrapping").setup()
-            end,
-        })
+    use({
+        "andrewferrier/vim-wrapping-softhard",
+        config = function()
+            require("wrapping").setup()
+        end,
+    })
 
-        ...
+    ...
 
-    end)
+end)
+```
 
 ## Modifying the Default Behaviour
 
 You can add an `opts` object to the setup method:
 
-    opts = { ... }
+```lua
+opts = { ... }
 
-    use({
-        "andrewferrier/vim-wrapping-softhard",
-        config = function()
-            require("wrapping").setup(opts)
-        end,
-    })
+use({
+    "andrewferrier/vim-wrapping-softhard",
+    config = function()
+        require("wrapping").setup(opts)
+    end,
+})
+```
 
 The sections below detail the allowed options.
 
@@ -70,25 +77,31 @@ The sections below detail the allowed options.
 By default, the plugin will create the following commands to set/override a
 wrapping mode:
 
+```viml
     HardWrapMode
     SoftWrapMode
     ToggleWrapMode
+```
 
 As well as the following normal-mode keymappings:
 
-    [ow (soft wrap mode)
-    ]ow (hard wrap mode)
-    yow (toggle wrap mode)
+```text
+[ow (soft wrap mode)
+]ow (hard wrap mode)
+yow (toggle wrap mode)
+```
 
 (these are similar to [vim-unimpaired](https://github.com/tpope/vim-unimpaired))
 
 Disable these commands and/or keymappings by setting these options accordingly:
 
-    opts = {
-        create_commands = false,
-        create_keymappings = false,
-        ...
-    }
+```lua
+opts = {
+    create_commands = false,
+    create_keymappings = false,
+    ...
+}
+```
 
 You can create your own instead by invoking these functions:
 
@@ -99,24 +112,54 @@ You can create your own instead by invoking these functions:
 ### Automatic Heuristic Mode
 
 By default, the plugin will set the hard or soft mode automatically when any
-type of file loads, using the `BufWinEnter` event in an autocmd. It uses a
-variety of heuristics which I won't document in detail here. If it detects your
-file incorrectly, you have two options:
+file loads, using the `BufWinEnter` event in an autocmd. It uses a variety of
+heuristics which aren't documented in detail here as they will evolve over time
+as `wrapping.nvim` becomes more sophisticated.
 
-1. SPECIFY HOW SOFTENER WORKS
+If you don't want automatic heuristics to kick in for every file using the
+`BufWinEnter` event, you can disable that:
 
-2. Open an issue with an example of the file that's being incorrectly detected.
+```lua
+opts = {
+    auto_set_mode_heuristically = false
+    ...
+}
+```
 
-You might want to
-stop this behaviour, or override it so that it's only called for certain types
-of files (for example, if you work with 
+You can then trigger the automatic logic yourself from wherever you want - e.g.
+from a `ftdetect` plugin:
 
-TODO
+```lua
+require('wrapping').set_mode_heuristically()
+```
+
+You can also ignore heuristics entirely and just use the commands/keys above to
+switch between modes for a file.
+
+#### If Files Are Detected Incorrectly
+
+If it detects your file
+incorrectly, you have two options:
+
+1.  Override the 'softener' value for that file type. By default, this is `1.0`
+    for every file. Setting the value higher makes it *more likely* that the
+    file will be detected as having 'soft' line wrapping (this value is
+    multiplied by the average line length and then compared to the `textwidth`
+    in use for that filetype). For example, this sets the softener value to
+    `1.3` for Markdown files:
+
+```lua
+    require("wrapping").setup({
+        softener = { markdown = 1.3 },
+    })
+```
+
+2.  [Open an issue](https://github.com/andrewferrier/wrapping.nvim/issues/new)
+    with an example of the file that's being incorrectly detected and explain
+    why you think it should be detected as having hard or soft line breaks.
 
 ## Status Lines
 
-Use `require('wrapping').get_current_mode()`.
-
-## Other Extensions
-
-*   How to get the mode for status line
+If you have a custom status line, you can get the current mode for a file -
+`'hard'`, `'soft'`, or `''` by invoking
+`require('wrapping').get_current_mode()`.
