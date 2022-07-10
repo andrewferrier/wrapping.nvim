@@ -8,6 +8,15 @@ local OPTION_DEFAULTS = {
     create_commands = true,
     create_keymaps = true,
     auto_set_mode_heuristically = true,
+    auto_set_mode_filetype_allowlist = {
+        "asciidoc",
+        "gitcommit",
+        "mail",
+        "markdown",
+        "text",
+        "tex",
+    },
+    auto_set_mode_filetype_denylist = {},
 }
 
 local VERY_LONG_TEXTWIDTH_FOR_SOFT = 999999
@@ -105,6 +114,19 @@ local function likely_textwidth_set_deliberately()
     return false
 end
 
+local function auto_heuristic()
+    local filetype = vim.opt.filetype:get()
+
+    if vim.tbl_contains(opts.auto_set_mode_filetype_denylist, filetype) then
+        return
+    elseif
+        vim.tbl_count(opts.auto_set_mode_filetype_denylist) > 0
+        or vim.tbl_contains(opts.auto_set_mode_filetype_allowlist, filetype)
+    then
+        M.set_mode_heuristically()
+    end
+end
+
 M.set_mode_heuristically = function()
     if vim.opt_local.buftype:get() ~= "" then
         -- We shouldn't really try to handle anything that isn't a regular buffer
@@ -161,6 +183,18 @@ end
 M.setup = function(o)
     opts = vim.tbl_deep_extend("force", OPTION_DEFAULTS, o or {})
 
+    if
+        vim.tbl_count(opts.auto_set_mode_filetype_allowlist) > 0
+        and vim.tbl_count(opts.auto_set_mode_filetype_denylist) > 0
+    then
+        vim.notify(
+            "wrapping.lua: both auto_set_mode_filetype_allowlist and auto_set_mode_filetype_denylist have entries; "
+                .. "they are mutually exclusive and only one must be set.",
+            vim.log.levels.ERROR
+        )
+        return
+    end
+
     vim.opt.linebreak = true
     vim.opt.wrap = false
 
@@ -199,9 +233,7 @@ M.setup = function(o)
         -- we can use what's in there.
         vim.api.nvim_create_autocmd("BufWinEnter", {
             group = vim.api.nvim_create_augroup("wrapping", {}),
-            callback = function()
-                M.set_mode_heuristically()
-            end,
+            callback = auto_heuristic,
         })
     end
 end

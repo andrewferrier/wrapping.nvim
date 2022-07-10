@@ -25,12 +25,12 @@ file or converting between files of those types.
 
 ## What the Soft / Hard Mode Affects
 
-At the moment, this plugin just changes the `textwidth` and `wrap/nowrap`
-settings when switching between hard and soft wrapping modes. It will also
-re-map the `<Up>` and `<Down>` keys depending on the wrapping style, so they
-move by screen line in soft mode. I would welcome issues / pull requests if
-there are other settings that would be useful to alter under these different
-modes.
+At the moment, this plugin just sets the `textwidth` and `wrap/nowrap` settings
+(locally to the file's buffer) when switching between hard and soft wrapping
+modes. It will also re-map the `<Up>` and `<Down>` keys depending on the
+wrapping style, so they move by screen line in soft mode. I would welcome issues
+/ pull requests if there are other settings that would be useful to alter under
+these different modes.
 
 ## Installation
 
@@ -77,19 +77,15 @@ The sections below detail the allowed options.
 By default, the plugin will create the following commands to set/override a
 wrapping mode:
 
-```viml
-    HardWrapMode
-    SoftWrapMode
-    ToggleWrapMode
-```
+*   `HardWrapMode`
+*   `SoftWrapMode`
+*   `ToggleWrapMode`
 
 As well as the following normal-mode keymappings:
 
-```text
-[ow (soft wrap mode)
-]ow (hard wrap mode)
-yow (toggle wrap mode)
-```
+*   `[ow` (soft wrap mode)
+*   `]ow` (hard wrap mode)
+*   `yow` (toggle wrap mode)
 
 (these are similar to [vim-unimpaired](https://github.com/tpope/vim-unimpaired))
 
@@ -112,12 +108,36 @@ You can create your own instead by invoking these functions:
 ### Automatic Heuristic Mode
 
 By default, the plugin will set the hard or soft mode automatically when any
-file loads, using the `BufWinEnter` event in an autocmd. It uses a variety of
-heuristics which aren't documented in detail here as they will evolve over time
-as `wrapping.nvim` becomes more sophisticated.
+file loads (for a specific set of file types, see below), using the
+`BufWinEnter` event in an autocmd. It uses a variety of heuristics (which aren't
+documented in detail here as they will evolve over time as `wrapping.nvim`
+becomes more sophisticated).
 
-If you don't want automatic heuristics to kick in for every file using the
-`BufWinEnter` event, you can disable that:
+#### Disabling Heuristics or Controlling Filetypes it Triggers For
+
+If you want to control the filetypes that the automatic heuristic mode triggers
+for, you can change this list:
+
+```lua
+opts = {
+    auto_set_mode_filetype_allowlist = {
+        "asciidoc",
+        "gitcommit",
+        "mail",
+        "markdown",
+        "text",
+        "tex",
+    },
+}
+```
+
+(the list above is the default list).
+
+If you set `auto_set_mode_filetype_allowlist`) to `{}`, you can instead
+set `auto_set_mode_filetype_denylist` to a list of filetypes, and any files
+with a filetype *not* in that list will be heuristically detected.
+
+If you want to disable automatic heuristics entirely, you can set:
 
 ```lua
 opts = {
@@ -127,14 +147,16 @@ opts = {
 ```
 
 You can then trigger the automatic logic yourself from wherever you want - e.g.
-from a `ftdetect` plugin:
+from a `ftdetect` plugin. Note that this will *ignore* the
+`auto_set_mode_filetype_allowlist` and `auto_set_mode_filetype_denylist`
+options.
 
 ```lua
 require('wrapping').set_mode_heuristically()
 ```
 
-You can also ignore heuristics entirely and just use the commands/keys above to
-switch between modes for a file.
+You can also ignore heuristics entirely and just use the commands and/or
+keymappings listed above to switch between modes for a file.
 
 #### If Files Are Detected Incorrectly
 
