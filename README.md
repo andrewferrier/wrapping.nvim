@@ -181,7 +181,9 @@ incorrectly, you have two options:
 
 2.  [Open an issue](https://github.com/andrewferrier/wrapping.nvim/issues/new)
     with an example of the file that's being incorrectly detected and explain
-    why you think it should be detected as having hard or soft line breaks.
+    why you think it should be detected as having hard or soft line breaks, and
+    we'll review to see if there are ways to improve the heuristics of
+    `wrapping.nvim`.
 
 ## Status Lines
 
