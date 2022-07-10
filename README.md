@@ -131,7 +131,10 @@ opts = {
 }
 ```
 
-(the list above is the default list).
+(the list above is the default list; if you are aware of other filetypes
+supported by NeoVim which are typically treated as text, please [open an
+issue](https://github.com/andrewferrier/wrapping.nvim/issues/new) so we can add
+it to this default list).
 
 If you set `auto_set_mode_filetype_allowlist`) to `{}`, you can instead
 set `auto_set_mode_filetype_denylist` to a list of filetypes, and any files
