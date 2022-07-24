@@ -14,12 +14,18 @@ end
 
 local wrapping = require("wrapping")
 
+local setup = function(o)
+    local opts = vim.tbl_deep_extend("keep", o or {}, {
+        auto_set_mode_heuristically = false,
+        notify_on_switch = false,
+    })
+
+    wrapping.setup(opts)
+end
+
 describe("detect wrapping mode", function()
     before_each(function()
-        wrapping.setup({
-            auto_set_mode_heuristically = false,
-            notify_on_switch = false,
-        })
+        setup()
     end)
 
     it("can detect hard mode when filetype not set", function()
@@ -115,4 +121,86 @@ describe("detect wrapping mode", function()
         wrapping.toggle_wrap_mode()
         assert.are.same("hard", wrapping.get_current_mode())
     end)
+end)
+
+describe("detect wrapping mode with different softeners", function()
+    it(
+        "can detect hard mode when textwidth set globally but softener low",
+        function()
+            setup({ softener = { text = 0.1 } })
+            vim.opt.textwidth = 80
+
+            set_lines({
+                "test1",
+                "test2",
+                "test3",
+                "test4",
+                string_of_length(500),
+            })
+
+            vim.opt_local.filetype = "text"
+            wrapping.set_mode_heuristically()
+            assert.are.same("hard", wrapping.get_current_mode())
+        end
+    )
+
+    it(
+        "can detect hard mode when textwidth set globally but softener false",
+        function()
+            setup({ softener = { text = false } })
+            vim.opt.textwidth = 80
+
+            set_lines({
+                "test1",
+                "test2",
+                "test3",
+                "test4",
+                string_of_length(500),
+            })
+
+            vim.opt_local.filetype = "text"
+            wrapping.set_mode_heuristically()
+            assert.are.same("hard", wrapping.get_current_mode())
+        end
+    )
+
+    it(
+        "can detect soft mode when textwidth set globally but softener high",
+        function()
+            setup({ softener = { text = 999 } })
+            vim.opt.textwidth = 80
+
+            set_lines({
+                "test1",
+                "test2",
+                "test3",
+                "test4",
+                "test5",
+            })
+
+            vim.opt_local.filetype = "text"
+            wrapping.set_mode_heuristically()
+            assert.are.same("soft", wrapping.get_current_mode())
+        end
+    )
+
+    it(
+        "can detect soft mode when textwidth set globally but softener true",
+        function()
+            setup({ softener = { text = true } })
+            vim.opt.textwidth = 80
+
+            set_lines({
+                "test1",
+                "test2",
+                "test3",
+                "test4",
+                "test5",
+            })
+
+            vim.opt_local.filetype = "text"
+            wrapping.set_mode_heuristically()
+            assert.are.same("soft", wrapping.get_current_mode())
+        end
+    )
 end)
