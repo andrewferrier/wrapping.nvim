@@ -106,13 +106,12 @@ local function likely_nontextual_language()
 end
 
 local function likely_textwidth_set_deliberately()
-    local textwidth = vim.opt.textwidth:get()
+    local textwidth_global = vim.api.nvim_get_option("textwidth")
+    local textwidth_buffer = vim.api.nvim_buf_get_option(0, "textwidth")
 
-    if textwidth > (vim.fn.winwidth(0) * 1.5) then
+    if textwidth_global ~= textwidth_buffer then
         -- textwidth has probably been set by a modeline, autocmd or
-        -- filetype/x.{lua.vim} to be large deliberately - assume that means
-        -- this file is a hard mode file
-
+        -- filetype/x.{lua.vim} deliberately
         return true
     end
 
