@@ -208,6 +208,14 @@ M.set_mode_heuristically = function()
         )
     end
 
+    if hard_textwidth_for_comparison == 0 then
+        -- 0 is effectively treated like 'infinite' line length. It's also the
+        -- default, and many folks won't change it from that. Based upon that,
+        -- we're deciding here that we are going to treat it like it is set to
+        -- VERY_LONG_TEXTWIDTH_FOR_SOFT for the purposes of calculation.
+        hard_textwidth_for_comparison = VERY_LONG_TEXTWIDTH_FOR_SOFT
+    end
+
     local file_size = get_buf_size()
     local average_line_length = file_size
         / (vim.fn.line("$") - count_blank_lines())
