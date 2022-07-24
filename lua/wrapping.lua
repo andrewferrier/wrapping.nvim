@@ -35,7 +35,7 @@ local function soft_wrap_mode_quiet()
             VERY_LONG_TEXTWIDTH_FOR_SOFT
         )
 
-        vim.api.nvim_buf_set_option(0, "wrap", true)
+        vim.api.nvim_win_set_option(0, "wrap", true)
 
         vim.keymap.set("n", "<Up>", "g<Up>", { buffer = 0 })
         vim.keymap.set("n", "<Down>", "g<Down>", { buffer = 0 })
@@ -57,7 +57,7 @@ local function hard_wrap_mode_quiet()
             vim.b.hard_textwidth = nil
         end
 
-        vim.api.nvim_buf_set_option(0, "wrap", false)
+        vim.api.nvim_win_set_option(0, "wrap", false)
 
         if vim.b.wrap_mappings_initialized == true then
             vim.keymap.del("n", "<Up>", { buffer = 0 })
