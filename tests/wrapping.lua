@@ -203,4 +203,52 @@ describe("detect wrapping mode with different softeners", function()
             assert.are.same("soft", wrapping.get_current_mode())
         end
     )
+
+    it(
+        "can detect hard mode when textwidth set globally but softener func that returns false",
+        function()
+            setup({ softener = {
+                text = function()
+                    return false
+                end,
+            } })
+            vim.opt.textwidth = 80
+
+            set_lines({
+                "test1",
+                "test2",
+                "test3",
+                "test4",
+                string_of_length(500),
+            })
+
+            vim.opt_local.filetype = "text"
+            wrapping.set_mode_heuristically()
+            assert.are.same("hard", wrapping.get_current_mode())
+        end
+    )
+
+    it(
+        "can detect soft mode when textwidth set globally but softener func that returns true",
+        function()
+            setup({ softener = {
+                text = function()
+                    return true
+                end,
+            } })
+            vim.opt.textwidth = 80
+
+            set_lines({
+                "test1",
+                "test2",
+                "test3",
+                "test4",
+                "test5"
+            })
+
+            vim.opt_local.filetype = "text"
+            wrapping.set_mode_heuristically()
+            assert.are.same("soft", wrapping.get_current_mode())
+        end
+    )
 end)

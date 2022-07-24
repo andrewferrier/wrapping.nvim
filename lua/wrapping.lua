@@ -179,6 +179,10 @@ M.set_mode_heuristically = function()
 
     local softener = get_softener()
 
+    if type(softener) == 'function' then
+        softener = softener()
+    end
+
     if softener == true then
         M.soft_wrap_mode()
         return

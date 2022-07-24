@@ -173,11 +173,32 @@ incorrectly, you have two options:
     in use for that filetype). For example, this sets the softener value to
     `1.3` for Markdown files:
 
-```lua
-    require("wrapping").setup({
-        softener = { markdown = 1.3 },
-    })
-```
+    ```lua
+        require("wrapping").setup({
+            softener = { markdown = 1.3 },
+        })
+    ```
+
+    For more advanced use cases, this 'softener' value can also be set to a
+    callback function that performs some of your own custom logic. It should
+    then return `true`, `false`, or a numeric value (interpreted the same way as
+    described above). Example:
+
+    ```lua
+        require("wrapping").setup({
+            softener = {
+                markdown = function()
+                    -- Some custom logic
+                    return value
+                end
+            }
+        })
+    ```
+
+    Note that certain heuristics are triggered *before* the softener value is
+    evaluated, in which case it will have no effect. These should be
+    'foolproof', but if they are not, and you are sure a file is being detected
+    incorrectly, please move to option (2)…
 
 2.  [Open an issue](https://github.com/andrewferrier/wrapping.nvim/issues/new)
     with an example of the file that's being incorrectly detected and explain
