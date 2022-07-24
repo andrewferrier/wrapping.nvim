@@ -192,7 +192,6 @@ M.set_mode_heuristically = function()
     end
 
     if likely_nontextual_language() then
-        M.hard_wrap_mode()
         return
     end
 
