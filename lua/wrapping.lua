@@ -25,11 +25,16 @@ local opts
 M.soft_wrap_mode = function()
     if vim.b.wrapmode ~= "soft" then
         -- Save prior textwidth
-        vim.b.hard_textwidth = vim.opt.textwidth:get()
+        vim.b.hard_textwidth = vim.api.nvim_buf_get_option(0, "textwidth")
 
         -- Effectively disable textwidth (setting it to 0 makes it act like 79 for gqxx)
-        vim.opt_local.textwidth = VERY_LONG_TEXTWIDTH_FOR_SOFT
-        vim.opt_local.wrap = true
+        vim.api.nvim_buf_set_option(
+            0,
+            "textwidth",
+            VERY_LONG_TEXTWIDTH_FOR_SOFT
+        )
+
+        vim.api.nvim_buf_set_option(0, "wrap", true)
 
         vim.keymap.set("n", "<Up>", "g<Up>", { buffer = 0 })
         vim.keymap.set("n", "<Down>", "g<Down>", { buffer = 0 })
@@ -43,11 +48,11 @@ end
 M.hard_wrap_mode = function()
     if vim.b.wrapmode ~= "hard" then
         if vim.b.hard_textwidth then
-            vim.opt.textwidth = vim.b.hard_textwidth
+            vim.api.nvim_buf_set_option(0, "textwidth", vim.b.hard_textwidth)
             vim.b.hard_textwidth = nil
         end
 
-        vim.opt_local.wrap = false
+        vim.api.nvim_buf_set_option(0, "wrap", false)
 
         if vim.b.wrap_mappings_initialized == true then
             vim.keymap.del("n", "<Up>", { buffer = 0 })
@@ -77,7 +82,7 @@ local function count_blank_lines()
 end
 
 local function get_softener()
-    local filetype = vim.opt.filetype:get()
+    local filetype = vim.api.nvim_buf_get_option(0, "filetype")
     local value = vim.tbl_get(opts.softener, filetype)
 
     if value ~= nil then
@@ -115,7 +120,7 @@ local function likely_textwidth_set_deliberately()
 end
 
 local function auto_heuristic()
-    local filetype = vim.opt.filetype:get()
+    local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
     if vim.tbl_contains(opts.auto_set_mode_filetype_denylist, filetype) then
         return
@@ -128,7 +133,9 @@ local function auto_heuristic()
 end
 
 M.set_mode_heuristically = function()
-    if vim.opt_local.buftype:get() ~= "" then
+    local buftype = vim.api.nvim_buf_get_option(0, "buftype")
+
+    if buftype ~= "" then
         -- We shouldn't really try to handle anything that isn't a regular buffer
         return
     end
@@ -162,7 +169,10 @@ M.set_mode_heuristically = function()
     if vim.b.hard_textwidth then
         hard_textwidth_for_comparison = vim.b.hard_textwidth
     else
-        hard_textwidth_for_comparison = vim.opt.textwidth:get()
+        hard_textwidth_for_comparison = vim.api.nvim_buf_get_option(
+            0,
+            "textwidth"
+        )
     end
 
     if (average_line_length * softener) < hard_textwidth_for_comparison then
