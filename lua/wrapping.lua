@@ -17,12 +17,13 @@ local OPTION_DEFAULTS = {
         "tex",
     },
     auto_set_mode_filetype_denylist = {},
+    notify_on_switch = true,
 }
 
 local VERY_LONG_TEXTWIDTH_FOR_SOFT = 999999
 local opts
 
-M.soft_wrap_mode = function()
+local function soft_wrap_mode_quiet()
     if vim.b.wrapmode ~= "soft" then
         -- Save prior textwidth
         vim.b.hard_textwidth = vim.api.nvim_buf_get_option(0, "textwidth")
@@ -42,10 +43,14 @@ M.soft_wrap_mode = function()
         vim.b.wrap_mappings_initialized = true
 
         vim.b.wrapmode = "soft"
+
+        return true
     end
+
+    return false
 end
 
-M.hard_wrap_mode = function()
+local function hard_wrap_mode_quiet()
     if vim.b.wrapmode ~= "hard" then
         if vim.b.hard_textwidth then
             vim.api.nvim_buf_set_option(0, "textwidth", vim.b.hard_textwidth)
@@ -61,14 +66,36 @@ M.hard_wrap_mode = function()
         vim.b.wrap_mappings_initialized = false
 
         vim.b.wrapmode = "hard"
+
+        return true
+    end
+
+    return false
+end
+
+M.soft_wrap_mode = function()
+    if soft_wrap_mode_quiet() and opts.notify_on_switch then
+        vim.notify("Soft wrap mode.")
+    end
+end
+
+M.hard_wrap_mode = function()
+    if hard_wrap_mode_quiet() and opts.notify_on_switch then
+        vim.notify("Hard wrap mode.")
     end
 end
 
 M.toggle_wrap_mode = function()
     if M.get_current_mode() == "hard" then
-        M.soft_wrap_mode()
+        soft_wrap_mode_quiet()
+        if opts.notify_on_switch then
+            vim.notify("Soft wrap mode.")
+        end
     else
-        M.hard_wrap_mode()
+        hard_wrap_mode_quiet()
+        if opts.notify_on_switch then
+            vim.notify("Hard wrap mode.")
+        end
     end
 end
 
