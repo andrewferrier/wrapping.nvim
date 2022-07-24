@@ -79,4 +79,40 @@ describe("detect wrapping mode", function()
         wrapping.set_mode_heuristically()
         assert.are.same("soft", wrapping.get_current_mode())
     end)
+
+    it("can set soft mode explicitly", function()
+        set_lines({
+            "test1",
+            "test2",
+            "test3",
+        })
+
+        wrapping.soft_wrap_mode()
+        assert.are.same("soft", wrapping.get_current_mode())
+    end)
+
+    it("can set hard mode explicitly", function()
+        set_lines({
+            "test1",
+            "test2",
+            "test3",
+        })
+
+        wrapping.hard_wrap_mode()
+        assert.are.same("hard", wrapping.get_current_mode())
+    end)
+
+    it("can toggle mode explicitly", function()
+        set_lines({
+            "test1",
+            "test2",
+            "test3",
+        })
+
+        assert.are.same("hard", wrapping.get_current_mode())
+        wrapping.toggle_wrap_mode()
+        assert.are.same("soft", wrapping.get_current_mode())
+        wrapping.toggle_wrap_mode()
+        assert.are.same("hard", wrapping.get_current_mode())
+    end)
 end)
