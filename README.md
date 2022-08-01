@@ -179,10 +179,10 @@ incorrectly, you have two options:
         })
     ```
 
-    For more advanced use cases, this 'softener' value can also be set to a
-    callback function that performs some of your own custom logic. It should
-    then return `true`, `false`, or a numeric value (interpreted the same way as
-    described above). Example:
+    For more advanced use cases, you can set this 'softener' value to a callback
+    function that performs some of your own custom logic. It should then return
+    `true`, `false`, or a numeric value (interpreted the same way as described
+    above). Example:
 
     ```lua
         require("wrapping").setup({
