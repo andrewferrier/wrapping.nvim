@@ -179,7 +179,7 @@ M.set_mode_heuristically = function()
 
     local softener = get_softener()
 
-    if type(softener) == 'function' then
+    if type(softener) == "function" then
         softener = softener()
     end
 
@@ -205,10 +205,8 @@ M.set_mode_heuristically = function()
     if vim.b.hard_textwidth then
         hard_textwidth_for_comparison = vim.b.hard_textwidth
     else
-        hard_textwidth_for_comparison = vim.api.nvim_buf_get_option(
-            0,
-            "textwidth"
-        )
+        hard_textwidth_for_comparison =
+            vim.api.nvim_buf_get_option(0, "textwidth")
     end
 
     if hard_textwidth_for_comparison == 0 then

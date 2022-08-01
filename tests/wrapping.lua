@@ -207,11 +207,13 @@ describe("detect wrapping mode with different softeners", function()
     it(
         "can detect hard mode when textwidth set globally but softener func that returns false",
         function()
-            setup({ softener = {
-                text = function()
-                    return false
-                end,
-            } })
+            setup({
+                softener = {
+                    text = function()
+                        return false
+                    end,
+                },
+            })
             vim.opt.textwidth = 80
 
             set_lines({
@@ -231,11 +233,13 @@ describe("detect wrapping mode with different softeners", function()
     it(
         "can detect soft mode when textwidth set globally but softener func that returns true",
         function()
-            setup({ softener = {
-                text = function()
-                    return true
-                end,
-            } })
+            setup({
+                softener = {
+                    text = function()
+                        return true
+                    end,
+                },
+            })
             vim.opt.textwidth = 80
 
             set_lines({
@@ -243,7 +247,7 @@ describe("detect wrapping mode with different softeners", function()
                 "test2",
                 "test3",
                 "test4",
-                "test5"
+                "test5",
             })
 
             vim.opt_local.filetype = "text"
