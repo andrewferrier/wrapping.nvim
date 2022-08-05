@@ -239,6 +239,25 @@ end
 M.setup = function(o)
     opts = vim.tbl_deep_extend("force", OPTION_DEFAULTS, o or {})
 
+    vim.validate({
+        softener = { opts.softener, "table" },
+        create_commands = { opts.create_commands, "boolean" },
+        create_keymaps = { opts.create_commands, "boolean" },
+        auto_set_mode_heuristically = {
+            opts.auto_set_mode_heuristically,
+            "boolean",
+        },
+        auto_set_mode_filetype_allowlist = {
+            opts.auto_set_mode_filetype_allowlist,
+            "table",
+        },
+        auto_set_mode_filetype_denylist = {
+            opts.auto_set_mode_filetype_denylist,
+            "table",
+        },
+        notify_on_switch = { opts.notify_on_switch, "boolean" },
+    })
+
     if
         vim.tbl_count(opts.auto_set_mode_filetype_allowlist) > 0
         and vim.tbl_count(opts.auto_set_mode_filetype_denylist) > 0
