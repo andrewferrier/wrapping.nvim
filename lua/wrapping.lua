@@ -23,6 +23,7 @@ local OPTION_DEFAULTS = {
 local VERY_LONG_TEXTWIDTH_FOR_SOFT = 999999
 local opts
 
+-- FIXME: There may be a more efficient way to do this
 local function get_buf_size()
     local lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
 
