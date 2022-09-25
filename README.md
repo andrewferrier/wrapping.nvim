@@ -8,24 +8,24 @@ tag is against the last VimL-based version suitable for using with vim.
 
 ***
 
-This is a NeoVim plugin designed to make it easy to flip between 'soft' and
-'hard' wrapping modes when editing text-like files (e.g. text, Markdown, LaTeX,
-AsciiDoc, etc.). Typically one comes across some text-like files which have no
-hard carriage returns to wrap text - each paragraph is one long line (some
-Markdown files are like this). Other files use "hard" wrapping (like this
+This is a NeoVim plugin designed to make it easy to use appropriate settings for
+'soft' and 'hard' wrapping modes when editing text-like files (e.g. text,
+Markdown, LaTeX, AsciiDoc, etc.). Typically there are some text-like files which
+have no hard carriage returns to wrap text - each paragraph is one long line
+(some Markdown files are like this). Other files use "hard" wrapping (like this
 README, for example), where each line ending is "hard" wrapped using the
 author's preference for line length (typically in the 78-80 character range).
 
-This plugin makes it easy to flip between the two when files are open, setting
-the relevant vim settings to make it "natural" to edit the file that way. It
-also attempts to detect the natural wrapping style of the file when first
-opening it if you use that feature (see below). It introduces the concept of a
-soft or hard 'mode' per-file. It does *not* support modifying the content of the
-file or converting between files of those types.
+`wrapping.nvim` attempts to detect the natural wrapping style of the file when
+first opening it, setting the relevant vim settings to make it "natural" to edit
+the file that way (this automatic detection can be disabled). It also makes it
+easy to toggle between the two on the occasion that the wrong mode is detected.
+It does *not* (currently) support modifying the content of the file or
+converting between files of those types.
 
 ## What the Soft / Hard Mode Affects
 
-At the moment, this plugin just sets the `textwidth` and `wrap/nowrap` settings
+At the moment, this plugin sets the `textwidth` and `wrap/nowrap` settings
 (locally to the file's buffer) when switching between hard and soft wrapping
 modes. It will also re-map the `<Up>` and `<Down>` keys depending on the
 wrapping style, so they move by screen line in soft mode. I would welcome issues
@@ -44,7 +44,7 @@ packer.startup(function(use)
     ...
 
     use({
-        "andrewferrier/vim-wrapping-softhard",
+        "andrewferrier/wrapping.nvim",
         config = function()
             require("wrapping").setup()
         end,
@@ -57,13 +57,17 @@ end)
 
 ## Modifying the Default Behaviour
 
-You can add an `opts` object to the setup method:
+`wrapping.nvim` attempts to do the right thing out of the box, and tries to
+detect the wrapping mode if the filetype matches a builtin whitelist of files it
+considers 'textual'. However, you can customize a variety of options.
+
+To do this, add an `opts` object to the setup method:
 
 ```lua
 opts = { ... }
 
 use({
-    "andrewferrier/vim-wrapping-softhard",
+    "andrewferrier/wrapping.nvim",
     config = function()
         require("wrapping").setup(opts)
     end,
@@ -138,7 +142,7 @@ it to this default list).
 
 If you set `auto_set_mode_filetype_allowlist`) to `{}`, you can instead
 set `auto_set_mode_filetype_denylist` to a list of filetypes, and any files
-with a filetype *not* in that list will be heuristically detected.
+with a filetype *not* in that list will be heuristically detected instead.
 
 If you want to disable automatic heuristics entirely, you can set:
 
@@ -163,15 +167,17 @@ keymappings listed above to switch between modes for a file.
 
 #### If Files Are Detected Incorrectly
 
-If it detects your file
-incorrectly, you have two options:
+If `wrapping.nvim` detects your file incorrectly, you have two options:
 
 1.  Override the 'softener' value for that file type. By default, this is `1.0`
     for every file. Setting the value higher makes it *more likely* that the
     file will be detected as having 'soft' line wrapping (this value is
     multiplied by the average line length and then compared to the `textwidth`
-    in use for that filetype). For example, this sets the softener value to
-    `1.3` for Markdown files:
+    in use for that filetype). Setting it to `true` means that files of that
+    type will *always* be treated as having soft line endings. Setting it to
+    `false` means that files of that type will *always* be treated as having
+    hard line endings. For example, this sets the softener value to `1.3` for
+    Markdown files:
 
     ```lua
         require("wrapping").setup({
@@ -195,10 +201,10 @@ incorrectly, you have two options:
         })
     ```
 
-    Note that certain heuristics are triggered *before* the softener value is
-    evaluated, in which case it will have no effect. These should be
-    'foolproof', but if they are not, and you are sure a file is being detected
-    incorrectly, please move to option (2)…
+    Note that certain heuristics are evaluated *before* the softener value, in
+    which case it will have no effect. These should be 'foolproof', but if they
+    are not, and you are sure a file is being detected incorrectly, please move
+    to option (2)…
 
 2.  [Open an issue](https://github.com/andrewferrier/wrapping.nvim/issues/new)
     with an example of the file that's being incorrectly detected and explain
