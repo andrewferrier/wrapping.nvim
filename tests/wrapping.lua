@@ -2,16 +2,6 @@ local set_lines = function(lines)
     vim.api.nvim_buf_set_lines(0, 0, -1, true, lines)
 end
 
-local string_of_length = function(length)
-    local res = ""
-
-    for _ = 1, length do
-        res = res .. "x"
-    end
-
-    return res
-end
-
 local wrapping = require("wrapping")
 
 local setup = function(o)
@@ -47,7 +37,7 @@ describe("detect wrapping mode", function()
             "test2",
             "test3",
             "test4",
-            string_of_length(500),
+            string.rep("x", 500),
         })
 
         vim.opt_local.filetype = "text"
@@ -61,7 +51,7 @@ describe("detect wrapping mode", function()
             "test2",
             "test3",
             "test4",
-            string_of_length(500),
+            string.rep("x", 500),
         })
 
         vim.opt_local.filetype = "text"
@@ -78,7 +68,7 @@ describe("detect wrapping mode", function()
             "test2",
             "test3",
             "test4",
-            string_of_length(500),
+            string.rep("x", 500),
         })
 
         vim.opt_local.filetype = "text"
@@ -135,7 +125,7 @@ describe("detect wrapping mode with different softeners", function()
                 "test2",
                 "test3",
                 "test4",
-                string_of_length(500),
+                string.rep("x", 500),
             })
 
             vim.opt_local.filetype = "text"
@@ -155,7 +145,7 @@ describe("detect wrapping mode with different softeners", function()
                 "test2",
                 "test3",
                 "test4",
-                string_of_length(500),
+                string.rep("x", 500),
             })
 
             vim.opt_local.filetype = "text"
@@ -221,7 +211,7 @@ describe("detect wrapping mode with different softeners", function()
                 "test2",
                 "test3",
                 "test4",
-                string_of_length(500),
+                string.rep("x", 500),
             })
 
             vim.opt_local.filetype = "text"
