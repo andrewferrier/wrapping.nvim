@@ -1,5 +1,7 @@
 local M = {}
 
+local utils = require('wrapping.utils')
+
 local OPTION_DEFAULTS = {
     softener = {
         default = 1.0,
@@ -22,18 +24,6 @@ local OPTION_DEFAULTS = {
 
 local VERY_LONG_TEXTWIDTH_FOR_SOFT = 999999
 local opts
-
--- FIXME: There may be a more efficient way to do this
-local function get_buf_size()
-    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
-
-    local count = 0
-    for _, line in pairs(lines) do
-        count = count + #line
-    end
-
-    return count
-end
 
 local function soft_wrap_mode_quiet()
     if vim.b.wrapmode ~= "soft" then
@@ -109,15 +99,6 @@ M.toggle_wrap_mode = function()
             vim.notify("Hard wrap mode.")
         end
     end
-end
-
-local function count_blank_lines()
-    local svpos = vim.fn.winsaveview()
-    vim.b.blankline_count = 0
-    -- silent is needed to ensure that even if there are no matches, we don't show an error.
-    vim.cmd("silent g/^\\s*$/let b:blankline_count += 1")
-    vim.fn.winrestview(svpos)
-    return vim.b.blankline_count
 end
 
 local function get_softener()
@@ -218,9 +199,9 @@ M.set_mode_heuristically = function()
         hard_textwidth_for_comparison = VERY_LONG_TEXTWIDTH_FOR_SOFT
     end
 
-    local file_size = get_buf_size()
+    local file_size = utils.get_buf_size()
     local average_line_length = file_size
-        / (vim.fn.line("$") - count_blank_lines())
+        / (vim.fn.line("$") - utils.count_blank_lines())
 
     if (average_line_length * softener) < hard_textwidth_for_comparison then
         M.hard_wrap_mode()
