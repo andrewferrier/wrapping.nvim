@@ -2,6 +2,17 @@ local M = {}
 
 local utils = require("wrapping.utils")
 
+local function get_log_path()
+    local log_path = vim.fn.stdpath("log")
+    local LOG_SUFFIX = "/wrapping.nvim.log"
+
+    if log_path ~= nil then
+        return log_path .. LOG_SUFFIX
+    else
+        return vim.fn.stdpath("cache") .. LOG_SUFFIX
+    end
+end
+
 local OPTION_DEFAULTS = {
     softener = {
         default = 1.0,
@@ -20,10 +31,27 @@ local OPTION_DEFAULTS = {
     },
     auto_set_mode_filetype_denylist = {},
     notify_on_switch = true,
+    log_path = get_log_path(),
 }
 
 local VERY_LONG_TEXTWIDTH_FOR_SOFT = 999999
 local opts
+
+local function log(str)
+    if opts.log_path ~= nil then
+        local bufname = vim.fn.bufname()
+        local datetime = os.date("%FT%H:%m:%S%z")
+
+        if bufname == nil or bufname == "" then
+            bufname = "Unknown of filetype "
+                .. vim.api.nvim_buf_get_option(0, "filetype")
+        end
+
+        local fp = assert(io.open(opts.log_path, "a"))
+        fp:write("[" .. datetime .. "] " .. bufname .. ": " .. str .. "\n")
+        fp:close()
+    end
+end
 
 local function soft_wrap_mode_quiet()
     if vim.b.wrapmode == "soft" then
@@ -128,45 +156,57 @@ local function likely_textwidth_set_deliberately()
 end
 
 local function auto_heuristic()
+    log("Testing for auto heuristic...")
     local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+    log("Filetype: " .. filetype)
 
     if vim.tbl_contains(opts.auto_set_mode_filetype_denylist, filetype) then
+        log("File in denylist")
         return
     elseif
         vim.tbl_count(opts.auto_set_mode_filetype_denylist) > 0
         or vim.tbl_contains(opts.auto_set_mode_filetype_allowlist, filetype)
     then
+        log("About to set mode heuristically")
         M.set_mode_heuristically()
+    else
+        log("Skipping heuristic mode because of allow/denylist")
     end
 end
 
 M.set_mode_heuristically = function()
     local buftype = vim.api.nvim_buf_get_option(0, "buftype")
+    log("Buftype: " .. buftype)
 
     if buftype ~= "" then
-        -- We shouldn't really try to handle anything that isn't a regular buffer
+        log("Not a regular buffer, ignoring")
         return
     end
 
     local softener = get_softener()
+    log("Softener is " .. vim.inspect(softener))
 
     if type(softener) == "function" then
         softener = softener()
     end
 
     if softener == true then
+        log("Softener function forcing soft mode")
         M.soft_wrap_mode()
         return
     elseif softener == false then
+        log("Softener function forcing hard mode")
         M.hard_wrap_mode()
         return
     end
 
     if likely_nontextual_language() then
+        log("Likely this is a nontextual language, ignoring")
         return
     end
 
     if likely_textwidth_set_deliberately() then
+        log("Likely that textwidth was set deliberately, forcing hard mode")
         M.hard_wrap_mode()
         return
     end
@@ -175,9 +215,14 @@ M.set_mode_heuristically = function()
 
     if vim.b.hard_textwidth then
         hard_textwidth_for_comparison = vim.b.hard_textwidth
+        log(
+            "Hard textwidth from previous save: "
+                .. hard_textwidth_for_comparison
+        )
     else
         hard_textwidth_for_comparison =
             vim.api.nvim_buf_get_option(0, "textwidth")
+        log("Hard textwidth from option: " .. hard_textwidth_for_comparison)
     end
 
     if hard_textwidth_for_comparison == 0 then
@@ -186,15 +231,20 @@ M.set_mode_heuristically = function()
         -- we're deciding here that we are going to treat it like it is set to
         -- VERY_LONG_TEXTWIDTH_FOR_SOFT for the purposes of calculation.
         hard_textwidth_for_comparison = VERY_LONG_TEXTWIDTH_FOR_SOFT
+        log("Forcing very long textwidth")
     end
 
     local file_size = utils.get_buf_size()
     local average_line_length = file_size
         / (vim.fn.line("$") - utils.count_blank_lines())
 
+    log("Average line length: " .. vim.inspect(average_line_length))
+
     if (average_line_length * softener) < hard_textwidth_for_comparison then
+        log("Selecting hard wrap mode")
         M.hard_wrap_mode()
     else
+        log("Selecting soft wrap mode")
         M.soft_wrap_mode()
     end
 end
@@ -227,6 +277,7 @@ M.setup = function(o)
             "table",
         },
         notify_on_switch = { opts.notify_on_switch, "boolean" },
+        log_path = { opts.log_path, "string" },
     })
 
     if
@@ -257,6 +308,13 @@ M.setup = function(o)
         })
         vim.api.nvim_create_user_command("ToggleWrapMode", function()
             M.toggle_wrap_mode()
+        end, {
+            desc = "Toggle wrap mode",
+        })
+        vim.api.nvim_create_user_command("WrappingOpenLog", function()
+            vim.cmd(":split " .. opts.log_path)
+            vim.api.nvim_buf_set_option(0, "readonly", true)
+            vim.cmd(":norm G")
         end, {
             desc = "Toggle wrap mode",
         })

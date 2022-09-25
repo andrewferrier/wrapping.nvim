@@ -210,7 +210,9 @@ If `wrapping.nvim` detects your file incorrectly, you have two options:
     with an example of the file that's being incorrectly detected and explain
     why you think it should be detected as having hard or soft line breaks, and
     we'll review to see if there are ways to improve the heuristics of
-    `wrapping.nvim`.
+    `wrapping.nvim`. In this case, please also run the command
+    `WrappingOpenLog`, and include the relevant sections of log file that's
+    displayed, to help diagnose why `wrapping.nvim` isn't doing what you want.
 
 ## Status Lines
 
