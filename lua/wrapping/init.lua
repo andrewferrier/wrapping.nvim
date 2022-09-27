@@ -165,10 +165,9 @@ end
 
 M.set_mode_heuristically = function()
     local buftype = vim.api.nvim_buf_get_option(0, "buftype")
-    log("Buftype: " .. buftype)
 
     if buftype ~= "" then
-        log("Not a regular buffer, ignoring")
+        log("Buftype is " .. buftype .. ", ignoring")
         return
     end
 
@@ -204,14 +203,11 @@ M.set_mode_heuristically = function()
 
     if vim.b.hard_textwidth then
         hard_textwidth_for_comparison = vim.b.hard_textwidth
-        log(
-            "Hard textwidth from previous save: "
-                .. hard_textwidth_for_comparison
-        )
+        log("Previous hard textwidth=" .. hard_textwidth_for_comparison)
     else
         hard_textwidth_for_comparison =
             vim.api.nvim_buf_get_option(0, "textwidth")
-        log("Hard textwidth from option: " .. hard_textwidth_for_comparison)
+        log("Option textwidth=" .. hard_textwidth_for_comparison)
     end
 
     if hard_textwidth_for_comparison == 0 then
