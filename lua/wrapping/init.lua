@@ -2,17 +2,6 @@ local M = {}
 
 local utils = require("wrapping.utils")
 
-local function get_log_path()
-    local log_path = vim.fn.stdpath("log")
-    local LOG_SUFFIX = "/wrapping.nvim.log"
-
-    if log_path ~= nil then
-        return log_path .. LOG_SUFFIX
-    else
-        return vim.fn.stdpath("cache") .. LOG_SUFFIX
-    end
-end
-
 local OPTION_DEFAULTS = {
     softener = {
         default = 1.0,
@@ -31,7 +20,7 @@ local OPTION_DEFAULTS = {
     },
     auto_set_mode_filetype_denylist = {},
     notify_on_switch = true,
-    log_path = get_log_path(),
+    log_path = utils.get_log_path(),
 }
 
 local VERY_LONG_TEXTWIDTH_FOR_SOFT = 999999

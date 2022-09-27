@@ -21,4 +21,15 @@ M.count_blank_lines = function()
     return vim.b.blankline_count
 end
 
+M.get_log_path = function()
+    local log_path = vim.fn.stdpath("log")
+    local LOG_SUFFIX = "/wrapping.nvim.log"
+
+    if log_path ~= nil then
+        return log_path .. LOG_SUFFIX
+    else
+        return vim.fn.stdpath("cache") .. LOG_SUFFIX
+    end
+end
+
 return M
