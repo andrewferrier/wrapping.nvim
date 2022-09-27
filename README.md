@@ -2,11 +2,11 @@
 
 This is a NeoVim plugin designed to make it easy to use appropriate settings for
 'soft' and 'hard' wrapping modes when editing text-like files (e.g. text,
-Markdown, LaTeX, AsciiDoc, etc.). Typically there are some text-like files which
-have no hard carriage returns to wrap text - each paragraph is one long line
-(some Markdown files are like this). Other files use "hard" wrapping (like this
-README, for example), where each line ending is "hard" wrapped using the
-author's preference for line length (typically in the 78-80 character range).
+Markdown, LaTeX, AsciiDoc, etc.). Some "soft" text-like files have no hard
+carriage returns to wrap text - each paragraph is one long line (some Markdown
+files are like this). Other files use "hard" wrapping (like this README, for
+example), where each line ending is "hard" wrapped using the author's preference
+for line length (typically in the 78-80 character range).
 
 `wrapping.nvim` attempts to detect the natural wrapping style of the file when
 first opening it, setting the relevant vim settings to make it "natural" to edit
@@ -34,7 +34,9 @@ these different modes.
 
 **Requires NeoVim 0.7+.**
 
-Example for [`packer.nvim`](https://github.com/wbthomason/packer.nvim):
+`wrapping.nvim` is a standard NeoVim plugin and can be installed using any
+standard package manager. Example for
+[`packer.nvim`](https://github.com/wbthomason/packer.nvim):
 
 ```lua
 packer.startup(function(use)
@@ -77,7 +79,7 @@ The sections below detail the allowed options.
 ### Commands and Keymappings
 
 By default, the plugin will create the following commands to set/override a
-wrapping mode:
+wrapping mode if it is not autodetected correctly:
 
 *   `HardWrapMode`
 *   `SoftWrapMode`
@@ -115,7 +117,7 @@ file loads (for a specific set of file types, see below), using the
 documented in detail here as they will evolve over time as `wrapping.nvim`
 becomes more sophisticated).
 
-#### Disabling Heuristics or Controlling Filetypes it Triggers For
+#### Controlling Filetypes that Trigger Heuristics
 
 If you want to control the filetypes that the automatic heuristic mode triggers
 for, you can change this list:
@@ -138,11 +140,13 @@ supported by NeoVim which are typically treated as text, please [open an
 issue](https://github.com/andrewferrier/wrapping.nvim/issues/new) so we can add
 it to this default list).
 
-If you set `auto_set_mode_filetype_allowlist`) to `{}`, you can instead
+If you set `auto_set_mode_filetype_allowlist` to `{}`, you can instead
 set `auto_set_mode_filetype_denylist` to a list of filetypes, and any files
 with a filetype *not* in that list will be heuristically detected instead.
 
-If you want to disable automatic heuristics entirely, you can set:
+#### Disabling Heuristics Entirely
+
+To disable automatic heuristics entirely, you can set:
 
 ```lua
 opts = {
@@ -209,7 +213,7 @@ If `wrapping.nvim` detects your file incorrectly, you have two options:
     why you think it should be detected as having hard or soft line breaks, and
     we'll review to see if there are ways to improve the heuristics of
     `wrapping.nvim`. In this case, please also run the command
-    `WrappingOpenLog`, and include the relevant sections of log file that's
+    `WrappingOpenLog`, and include the relevant sections of the log file that's
     displayed, to help diagnose why `wrapping.nvim` isn't doing what you want.
 
 ## Status Lines
