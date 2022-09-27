@@ -1,6 +1,7 @@
 local M = {}
 
 local utils = require("wrapping.utils")
+local treesitter = require("wrapping.treesitter")
 
 local OPTION_DEFAULTS = {
     softener = {
@@ -219,9 +220,12 @@ M.set_mode_heuristically = function()
         log("Forcing very long textwidth")
     end
 
-    local file_size = utils.get_buf_size()
+    local tree_lines, tree_chars =
+        treesitter.count_lines_of_query("(fenced_code_block) @fcb")
+
+    local file_size = utils.get_buf_size() - tree_chars
     local average_line_length = file_size
-        / (vim.fn.line("$") - utils.count_blank_lines())
+        / (vim.fn.line("$") - utils.count_blank_lines() - tree_lines)
 
     log("Average line length: " .. vim.inspect(average_line_length))
 

@@ -216,6 +216,16 @@ If `wrapping.nvim` detects your file incorrectly, you have two options:
     `WrappingOpenLog`, and include the relevant sections of the log file that's
     displayed, to help diagnose why `wrapping.nvim` isn't doing what you want.
 
+#### Advanced: Modifying Treesitter Queries
+
+By default, `wrapping.nvim` excludes some lines from the softening calculation
+based on treesitter queries (the defaults can be seen in the
+[init.lua](lua/wrapping/init.lua) file, in the `OPTION_DEFAULTS` object, and
+this currently only supports Markdown files). If you wish, you can modify/add to
+these in the `opts` object. Details are left as an exercise for the advanced
+reader! Please open an issue if you wish to do this and the process is not
+obvious.
+
 ## Status Lines
 
 If you have a custom status line, you can get the current mode for a file -

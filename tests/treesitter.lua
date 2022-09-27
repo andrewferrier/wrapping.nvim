@@ -1,25 +1,13 @@
-local set_lines = function(lines)
-    vim.api.nvim_buf_set_lines(0, 0, -1, true, lines)
-end
-
+local common = require("tests.common")
 local wrapping = require("wrapping")
-
-local setup = function(o)
-    local opts = vim.tbl_deep_extend("keep", o or {}, {
-        auto_set_mode_heuristically = false,
-        notify_on_switch = false,
-    })
-
-    wrapping.setup(opts)
-end
 
 describe("detect wrapping mode", function()
     before_each(function()
-        setup()
+        common.setup()
     end)
 
     it("can detect hard mode when filetype not set", function()
-        set_lines({
+        common.set_lines({
             "test1",
             "test2",
             "test3",
@@ -32,7 +20,7 @@ describe("detect wrapping mode", function()
     end)
 
     it("can detect hard mode when textwidth not set", function()
-        set_lines({
+        common.set_lines({
             "test1",
             "test2",
             "test3",
@@ -46,7 +34,7 @@ describe("detect wrapping mode", function()
     end)
 
     it("can detect hard mode when textwidth set locally", function()
-        set_lines({
+        common.set_lines({
             "test1",
             "test2",
             "test3",
@@ -63,7 +51,7 @@ describe("detect wrapping mode", function()
     it("can detect soft mode when textwidth set globally", function()
         vim.opt.textwidth = 80
 
-        set_lines({
+        common.set_lines({
             "test1",
             "test2",
             "test3",
@@ -77,7 +65,7 @@ describe("detect wrapping mode", function()
     end)
 
     it("can set soft mode explicitly", function()
-        set_lines({
+        common.set_lines({
             "test1",
             "test2",
             "test3",
@@ -88,7 +76,7 @@ describe("detect wrapping mode", function()
     end)
 
     it("can set hard mode explicitly", function()
-        set_lines({
+        common.set_lines({
             "test1",
             "test2",
             "test3",
@@ -99,7 +87,7 @@ describe("detect wrapping mode", function()
     end)
 
     it("can toggle mode explicitly", function()
-        set_lines({
+        common.set_lines({
             "test1",
             "test2",
             "test3",
@@ -117,10 +105,10 @@ describe("detect wrapping mode with different softeners", function()
     it(
         "can detect hard mode when textwidth set globally but softener low",
         function()
-            setup({ softener = { text = 0.1 } })
+            common.setup({ softener = { text = 0.1 } })
             vim.opt.textwidth = 80
 
-            set_lines({
+            common.set_lines({
                 "test1",
                 "test2",
                 "test3",
@@ -137,10 +125,10 @@ describe("detect wrapping mode with different softeners", function()
     it(
         "can detect hard mode when textwidth set globally but softener false",
         function()
-            setup({ softener = { text = false } })
+            common.setup({ softener = { text = false } })
             vim.opt.textwidth = 80
 
-            set_lines({
+            common.set_lines({
                 "test1",
                 "test2",
                 "test3",
@@ -157,10 +145,10 @@ describe("detect wrapping mode with different softeners", function()
     it(
         "can detect soft mode when textwidth set globally but softener high",
         function()
-            setup({ softener = { text = 999 } })
+            common.setup({ softener = { text = 999 } })
             vim.opt.textwidth = 80
 
-            set_lines({
+            common.set_lines({
                 "test1",
                 "test2",
                 "test3",
@@ -177,10 +165,10 @@ describe("detect wrapping mode with different softeners", function()
     it(
         "can detect soft mode when textwidth set globally but softener true",
         function()
-            setup({ softener = { text = true } })
+            common.setup({ softener = { text = true } })
             vim.opt.textwidth = 80
 
-            set_lines({
+            common.set_lines({
                 "test1",
                 "test2",
                 "test3",
@@ -197,7 +185,7 @@ describe("detect wrapping mode with different softeners", function()
     it(
         "can detect hard mode when textwidth set globally but softener func that returns false",
         function()
-            setup({
+            common.setup({
                 softener = {
                     text = function()
                         return false
@@ -206,7 +194,7 @@ describe("detect wrapping mode with different softeners", function()
             })
             vim.opt.textwidth = 80
 
-            set_lines({
+            common.set_lines({
                 "test1",
                 "test2",
                 "test3",
@@ -223,7 +211,7 @@ describe("detect wrapping mode with different softeners", function()
     it(
         "can detect soft mode when textwidth set globally but softener func that returns true",
         function()
-            setup({
+            common.setup({
                 softener = {
                     text = function()
                         return true
@@ -232,7 +220,7 @@ describe("detect wrapping mode with different softeners", function()
             })
             vim.opt.textwidth = 80
 
-            set_lines({
+            common.set_lines({
                 "test1",
                 "test2",
                 "test3",
@@ -241,6 +229,72 @@ describe("detect wrapping mode with different softeners", function()
             })
 
             vim.opt_local.filetype = "text"
+            wrapping.set_mode_heuristically()
+            assert.are.same("soft", wrapping.get_current_mode())
+        end
+    )
+end)
+
+describe("handle treesitter blocks", function()
+    it(
+        "can exclude fenced code blocks - hard",
+        function()
+            common.setup()
+            vim.opt.textwidth = 80
+
+            common.set_lines({
+                string.rep("x", 79),
+                "```lua",
+                "function x()",
+                "end",
+                "```"
+            })
+
+            vim.opt_local.filetype = "markdown"
+            wrapping.set_mode_heuristically()
+            assert.are.same("hard", wrapping.get_current_mode())
+        end
+    )
+
+    it(
+        "can exclude fenced code blocks - soft",
+        function()
+            common.setup()
+            vim.opt.textwidth = 80
+
+            common.set_lines({
+                string.rep("x", 81),
+                "```lua",
+                "function x()",
+                "end",
+                "```"
+            })
+
+            vim.opt_local.filetype = "markdown"
+            wrapping.set_mode_heuristically()
+            assert.are.same("soft", wrapping.get_current_mode())
+        end
+    )
+
+    it(
+        "can exclude 2 fenced code blocks",
+        function()
+            common.setup()
+            vim.opt.textwidth = 80
+
+            common.set_lines({
+                "```lua",
+                "function x()",
+                "end",
+                "```",
+                string.rep("x", 120),
+                "```lua",
+                "function x()",
+                "end",
+                "```"
+            })
+
+            vim.opt_local.filetype = "markdown"
             wrapping.set_mode_heuristically()
             assert.are.same("soft", wrapping.get_current_mode())
         end
