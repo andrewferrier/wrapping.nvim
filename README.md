@@ -1,13 +1,5 @@
 # wrapping.nvim
 
-⚠️  **Note**: This plugin has been rewritten from VimL  (Vim and NeoVim) to lua
-(just NeoVim), and renamed from `vim-wrapping-softhard` to `wrapping.nvim`. If
-you are still using Vim, the
-[vim-viml](https://github.com/andrewferrier/vim-wrapping-softhard/releases/tag/vim-viml)
-tag is against the last VimL-based version suitable for using with vim.
-
-***
-
 This is a NeoVim plugin designed to make it easy to use appropriate settings for
 'soft' and 'hard' wrapping modes when editing text-like files (e.g. text,
 Markdown, LaTeX, AsciiDoc, etc.). Typically there are some text-like files which
@@ -22,6 +14,12 @@ the file that way (this automatic detection can be disabled). It also makes it
 easy to toggle between the two on the occasion that the wrong mode is detected.
 It does *not* (currently) support modifying the content of the file or
 converting between files of those types.
+
+⚠️  **Note**: This plugin used to be called `vim-wrapping-softhard`, and has been
+renamed to `wrapping.nvim` and rewritten in Lua, so is only suitable for NeoVim.
+If you are still using Vim, the
+[vim-viml](https://github.com/andrewferrier/vim-wrapping-softhard/releases/tag/vim-viml)
+tag is against the last VimL-based version suitable for using with vim.
 
 ## What the Soft / Hard Mode Affects
 
