@@ -223,9 +223,21 @@ M.set_mode_heuristically = function()
     local tree_lines, tree_chars =
         treesitter.count_lines_of_query("(fenced_code_block) @fcb")
 
+    local blank_lines = utils.count_blank_lines()
+
+    log(
+        "Exclusions: "
+            .. tree_lines
+            .. " TS lines; "
+            .. tree_chars
+            .. " TS chars; "
+            .. blank_lines
+            .. " blank lines"
+    )
+
     local file_size = utils.get_buf_size() - tree_chars
     local average_line_length = file_size
-        / (vim.fn.line("$") - utils.count_blank_lines() - tree_lines)
+        / (vim.fn.line("$") - blank_lines - tree_lines)
 
     log("Average line length: " .. vim.inspect(average_line_length))
 
