@@ -136,7 +136,17 @@ local function likely_textwidth_set_deliberately()
     local textwidth_global = vim.api.nvim_get_option("textwidth")
     local textwidth_buffer = vim.api.nvim_buf_get_option(0, "textwidth")
 
-    if textwidth_global ~= textwidth_buffer then
+    log(
+        "Textwidths: global="
+            .. textwidth_global
+            .. ", buffer="
+            .. textwidth_buffer
+    )
+
+    if
+        textwidth_global ~= textwidth_buffer
+        and textwidth_buffer ~= VERY_LONG_TEXTWIDTH_FOR_SOFT
+    then
         -- textwidth has probably been set by a modeline, autocmd or
         -- filetype/x.{lua.vim} deliberately
         return true
@@ -147,6 +157,12 @@ end
 
 local function auto_heuristic()
     log("Testing for auto heuristic...")
+
+    if vim.b.wrapmode ~= nil then
+        log("wrapmode already set for this buffer")
+        return
+    end
+
     local filetype = vim.api.nvim_buf_get_option(0, "filetype")
     log("Filetype: " .. filetype)
 
