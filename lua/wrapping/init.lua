@@ -14,10 +14,11 @@ local OPTION_DEFAULTS = {
     auto_set_mode_filetype_allowlist = {
         "asciidoc",
         "gitcommit",
+        "latex",
         "mail",
         "markdown",
-        "text",
         "tex",
+        "text",
     },
     auto_set_mode_filetype_denylist = {},
     excluded_treesitter_queries = {
