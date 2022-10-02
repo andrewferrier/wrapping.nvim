@@ -20,6 +20,11 @@ local OPTION_DEFAULTS = {
         "tex",
     },
     auto_set_mode_filetype_denylist = {},
+    excluded_treesitter_queries = {
+        markdown = {
+            "(fenced_code_block) @fcb",
+        },
+    },
     notify_on_switch = true,
     log_path = utils.get_log_path(),
 }
@@ -155,6 +160,25 @@ local function likely_textwidth_set_deliberately()
     return false
 end
 
+local function get_excluded_treesitter()
+    local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+    local exclusions = opts.excluded_treesitter_queries[filetype]
+
+    local tree_lines = 0
+    local tree_chars = 0
+
+    if exclusions then
+        for _, exclusion in pairs(exclusions) do
+            local lines, chars =
+                treesitter.count_lines_of_query(filetype, exclusion)
+            tree_lines = tree_lines + lines
+            tree_chars = tree_chars + chars
+        end
+    end
+
+    return tree_lines, tree_chars
+end
+
 local function auto_heuristic()
     log("Testing for auto heuristic...")
 
@@ -236,9 +260,7 @@ M.set_mode_heuristically = function()
         log("Forcing very long textwidth")
     end
 
-    local tree_lines, tree_chars =
-        treesitter.count_lines_of_query("(fenced_code_block) @fcb")
-
+    local tree_lines, tree_chars = get_excluded_treesitter()
     local blank_lines = utils.count_blank_lines()
 
     log(

@@ -27,7 +27,7 @@ local function get_character_count(start_line, end_line)
     return count
 end
 
-M.count_lines_of_query = function(query)
+M.count_lines_of_query = function(language, query)
     local total_lines = 0
     local total_chars = 0
 
@@ -52,7 +52,7 @@ M.count_lines_of_query = function(query)
     end
 
     if tree_root ~= nil then
-        local query_result = vim.treesitter.query.parse_query("markdown", query)
+        local query_result = vim.treesitter.query.parse_query(language, query)
 
         for _, node, _ in query_result:iter_captures(tree_root, buf, nil, nil) do
             local row1, _, row2, _ = node:range()
