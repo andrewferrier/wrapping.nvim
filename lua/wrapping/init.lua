@@ -22,7 +22,8 @@ local OPTION_DEFAULTS = {
     auto_set_mode_filetype_denylist = {},
     excluded_treesitter_queries = {
         markdown = {
-            "(fenced_code_block) @fcb",
+            "(fenced_code_block) @markdown1",
+            "(atx_heading) @markdown2",
         },
     },
     notify_on_switch = true,
