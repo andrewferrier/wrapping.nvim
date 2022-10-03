@@ -109,6 +109,18 @@ You can create your own instead by invoking these functions:
 *   `require('wrapping').soft_wrap_mode()`
 *   `require('wrapping').toggle_wrap_mode()`
 
+### Notifications
+
+By default, `wrapping.nvim` will put a message in the command line when the hard
+or soft mode is set. You can disable this with:
+
+```lua
+opts = {
+    notify_on_switch = false
+    ...
+}
+```
+
 ### Automatic Heuristic Mode
 
 By default, the plugin will set the hard or soft mode automatically when any
