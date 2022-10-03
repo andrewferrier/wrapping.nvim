@@ -237,67 +237,58 @@ describe("detect wrapping mode with different softeners", function()
 end)
 
 describe("handle treesitter blocks", function()
-    it(
-        "can exclude fenced code blocks - hard",
-        function()
-            common.setup()
-            vim.opt.textwidth = 80
+    it("can exclude fenced code blocks - hard", function()
+        common.setup()
+        vim.opt.textwidth = 80
 
-            common.set_lines({
-                string.rep("x", 79),
-                "```lua",
-                "function x()",
-                "end",
-                "```"
-            })
+        common.set_lines({
+            string.rep("x", 79),
+            "```lua",
+            "function x()",
+            "end",
+            "```",
+        })
 
-            vim.opt_local.filetype = "markdown"
-            wrapping.set_mode_heuristically()
-            assert.are.same("hard", wrapping.get_current_mode())
-        end
-    )
+        vim.opt_local.filetype = "markdown"
+        wrapping.set_mode_heuristically()
+        assert.are.same("hard", wrapping.get_current_mode())
+    end)
 
-    it(
-        "can exclude fenced code blocks - soft",
-        function()
-            common.setup()
-            vim.opt.textwidth = 80
+    it("can exclude fenced code blocks - soft", function()
+        common.setup()
+        vim.opt.textwidth = 80
 
-            common.set_lines({
-                string.rep("x", 81),
-                "```lua",
-                "function x()",
-                "end",
-                "```"
-            })
+        common.set_lines({
+            string.rep("x", 81),
+            "```lua",
+            "function x()",
+            "end",
+            "```",
+        })
 
-            vim.opt_local.filetype = "markdown"
-            wrapping.set_mode_heuristically()
-            assert.are.same("soft", wrapping.get_current_mode())
-        end
-    )
+        vim.opt_local.filetype = "markdown"
+        wrapping.set_mode_heuristically()
+        assert.are.same("soft", wrapping.get_current_mode())
+    end)
 
-    it(
-        "can exclude 2 fenced code blocks",
-        function()
-            common.setup()
-            vim.opt.textwidth = 80
+    it("can exclude 2 fenced code blocks", function()
+        common.setup()
+        vim.opt.textwidth = 80
 
-            common.set_lines({
-                "```lua",
-                "function x()",
-                "end",
-                "```",
-                string.rep("x", 120),
-                "```lua",
-                "function x()",
-                "end",
-                "```"
-            })
+        common.set_lines({
+            "```lua",
+            "function x()",
+            "end",
+            "```",
+            string.rep("x", 120),
+            "```lua",
+            "function x()",
+            "end",
+            "```",
+        })
 
-            vim.opt_local.filetype = "markdown"
-            wrapping.set_mode_heuristically()
-            assert.are.same("soft", wrapping.get_current_mode())
-        end
-    )
+        vim.opt_local.filetype = "markdown"
+        wrapping.set_mode_heuristically()
+        assert.are.same("soft", wrapping.get_current_mode())
+    end)
 end)
