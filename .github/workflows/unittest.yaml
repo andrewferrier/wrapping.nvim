@@ -30,4 +30,6 @@ jobs:
           ln -s $(pwd) ~/.local/share/nvim/site/pack/vendor/start
 
       - name: Run tests
-        run: make test
+        run: |
+          nvim --headless --clean -u tests/init-minimal.vim -c "PlenaryBustedFile tests/minimal.lua"
+          nvim --headless --clean -u tests/init-treesitter.vim -c "PlenaryBustedFile tests/treesitter.lua"
