@@ -31,8 +31,4 @@ jobs:
 
       - name: Run tests
         run: |
-          make test
-
-      - name: Cat logs
-        run: |
-          cat ~/.local/state/nvim/wrapping.nvim.log
+          make test; cat ~/.local/state/nvim/wrapping.nvim.log
