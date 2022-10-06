@@ -30,7 +30,7 @@ jobs:
           git clone --depth 1 https://github.com/nvim-treesitter/nvim-treesitter ~/.local/share/nvim/site/pack/vendor/start/nvim-treesitter
           # ln -s $(pwd) ~/.local/share/nvim/site/pack/vendor/start
           echo "Before nvim"
-          nvim --headless --clean -u tests/init-minimal.vim -c "PlenaryBustedFile tests/minimal.lua"
+          # nvim --headless --clean -u tests/init-minimal.vim -c "PlenaryBustedFile tests/minimal.lua"
           echo "After nvim"
       #
       # - name: Run tests
