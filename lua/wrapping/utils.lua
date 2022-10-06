@@ -35,13 +35,7 @@ M.get_log_path = function()
         log_path = vim.fn.stdpath("cache")
     end
 
-    local LOG_SUFFIX = "/wrapping.nvim.log"
-
-    if log_path ~= nil then
-        return log_path .. LOG_SUFFIX
-    else
-        return vim.fn.stdpath("cache") .. LOG_SUFFIX
-    end
+    return log_path .. "/wrapping.nvim.log"
 end
 
 return M
