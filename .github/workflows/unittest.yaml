@@ -33,4 +33,4 @@ jobs:
       - name: Run tests
         run: |
           nvim --headless --clean -u tests/init-minimal.vim -c "PlenaryBustedFile tests/minimal.lua"
-          nvim --headless --clean -u tests/init-treesitter.vim -c "PlenaryBustedFile tests/treesitter.lua"
+          # nvim --headless --clean -u tests/init-treesitter.vim -c "PlenaryBustedFile tests/treesitter.lua"
