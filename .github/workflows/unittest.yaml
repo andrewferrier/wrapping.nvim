@@ -32,3 +32,4 @@ jobs:
       - name: Run tests
         run: |
           nvim --headless --clean -u tests/init-minimal.vim -c 'packadd plenary.nvim' -c "PlenaryBustedFile tests/minimal.lua" -c ":q"
+          nvim --headless --clean -u tests/init-treesitter.vim -c 'packadd plenary.nvim' -c "PlenaryBustedFile tests/treesitter.lua" -c ":q"
