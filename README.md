@@ -8,11 +8,11 @@ files are like this). Other files use "hard" wrapping (like this README, for
 example), where each line ending is "hard" wrapped using the author's preference
 for line length (typically in the 78-80 character range).
 
-`wrapping.nvim` attempts to detect the natural wrapping style of the file when
-first opening it, setting the relevant vim settings to make it "natural" to edit
-the file that way (this automatic detection can be disabled). It also makes it
-easy to toggle between the two on the occasion that the wrong mode is detected.
-It does *not* (currently) support modifying the content of the file or
+`wrapping.nvim` attempts to detect the natural wrapping style of text-like files
+when first opening them, setting the relevant vim settings to make it "natural" to
+edit the file that way (this automatic detection can be disabled). It also makes
+it easy to toggle between the two on the occasion that the wrong mode is
+detected. It does *not* (currently) support modifying the content of the file or
 converting between files of those types.
 
 ⚠️  **Note**: This plugin used to be called `vim-wrapping-softhard`, and has been
@@ -25,10 +25,10 @@ tag is against the last VimL-based version suitable for using with vim.
 
 At the moment, this plugin sets the `textwidth` and `wrap/nowrap` settings
 (locally to the file's buffer) when switching between hard and soft wrapping
-modes. It will also re-map the `<Up>` and `<Down>` keys depending on the
-wrapping style, so they move by screen line in soft mode. I would welcome issues
-/ pull requests if there are other settings that would be useful to alter under
-these different modes.
+modes, which makes lines reflow naturally in 'soft' mode. It will also re-map
+the `<Up>` and `<Down>` keys depending on the wrapping style, so they move by
+screen line in soft mode. I would welcome issues / pull requests if there are
+other settings that would be useful to alter under these different modes.
 
 ## Installation
 
@@ -58,8 +58,8 @@ end)
 ## Modifying the Default Behaviour
 
 `wrapping.nvim` attempts to do the right thing out of the box, and tries to
-detect the wrapping mode if the filetype matches a builtin whitelist of files it
-considers 'textual'. However, you can customize a variety of options.
+detect and set the wrapping mode if the filetype matches a builtin whitelist of
+files it considers 'textual'. However, you can customize a variety of options.
 
 To do this, add an `opts` object to the setup method:
 
@@ -89,7 +89,12 @@ As well as the following normal-mode keymappings:
 
 *   `[ow` (soft wrap mode)
 *   `]ow` (hard wrap mode)
-*   `yow` (toggle wrap mode)
+*   `yow` (toggle wrap mode) 
+
+And the following utility command to open a debug log showing what
+`wrapping.nvim` is doing:
+
+*   `WrappingOpenLog`
 
 (these are similar to [vim-unimpaired](https://github.com/tpope/vim-unimpaired))
 
@@ -111,8 +116,8 @@ You can create your own instead by invoking these functions:
 
 ### Notifications
 
-By default, `wrapping.nvim` will put a message in the command line when the hard
-or soft mode is set. You can disable this with:
+By default, `wrapping.nvim` will output a message to the command line when the
+hard or soft mode is set. You can disable this with:
 
 ```lua
 opts = {
@@ -180,9 +185,9 @@ require('wrapping').set_mode_heuristically()
 You can also ignore heuristics entirely and just use the commands and/or
 keymappings listed above to switch between modes for a file.
 
-#### If Files Are Detected Incorrectly
+#### If Heuristics Make the Wrong Choice
 
-If `wrapping.nvim` detects your file incorrectly, you have two options:
+You have two options:
 
 1.  Override the 'softener' value for that file type. By default, this is `1.0`
     for every file. Setting the value higher makes it *more likely* that the
@@ -242,5 +247,5 @@ obvious.
 ## Status Lines
 
 If you have a custom status line, you can get the current mode for a file -
-`'hard'`, `'soft'`, or `''` by invoking
-`require('wrapping').get_current_mode()`.
+`'hard'`, `'soft'`, or `''` (`wrapping.nvim` not activated for that file) by
+invoking `require('wrapping').get_current_mode()`.
