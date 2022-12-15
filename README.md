@@ -89,7 +89,7 @@ As well as the following normal-mode keymappings:
 
 *   `[ow` (soft wrap mode)
 *   `]ow` (hard wrap mode)
-*   `yow` (toggle wrap mode) 
+*   `yow` (toggle wrap mode)
 
 (these are similar to [vim-unimpaired](https://github.com/tpope/vim-unimpaired))
 
