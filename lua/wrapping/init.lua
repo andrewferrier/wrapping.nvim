@@ -302,6 +302,8 @@ end
 M.setup = function(o)
     opts = vim.tbl_deep_extend("force", OPTION_DEFAULTS, o or {})
 
+    log("setup() with o=" .. vim.inspect(o))
+
     vim.validate({
         set_nvim_opt_defaults = { opts.set_nvim_opt_defaults, "boolean" },
         softener = { opts.softener, "table" },
