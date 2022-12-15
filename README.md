@@ -58,7 +58,7 @@ end)
 ## Modifying the Default Behaviour
 
 `wrapping.nvim` attempts to do the right thing out of the box, and tries to
-detect and set the wrapping mode if the filetype matches a builtin whitelist of
+detect and set the wrapping mode if the filetype matches a built-in allowlist of
 files it considers 'textual'. However, you can customize a variety of options.
 
 To do this, add an `opts` object to the setup method:
@@ -79,7 +79,7 @@ The sections below detail the allowed options.
 ### Commands and Keymappings
 
 By default, the plugin will create the following commands to set/override a
-wrapping mode if it is not autodetected correctly:
+wrapping mode in case it is not autodetected correctly:
 
 *   `HardWrapMode`
 *   `SoftWrapMode`
@@ -91,12 +91,12 @@ As well as the following normal-mode keymappings:
 *   `]ow` (hard wrap mode)
 *   `yow` (toggle wrap mode) 
 
+(these are similar to [vim-unimpaired](https://github.com/tpope/vim-unimpaired))
+
 And the following utility command to open a debug log showing what
 `wrapping.nvim` is doing:
 
 *   `WrappingOpenLog`
-
-(these are similar to [vim-unimpaired](https://github.com/tpope/vim-unimpaired))
 
 Disable these commands and/or keymappings by setting these options accordingly:
 
