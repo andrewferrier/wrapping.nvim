@@ -4,6 +4,7 @@ local utils = require("wrapping.utils")
 local treesitter = require("wrapping.treesitter")
 
 local OPTION_DEFAULTS = {
+    set_nvim_opt_defaults = true,
     softener = {
         default = 1.0,
         gitcommit = false, -- Based on https://stackoverflow.com/a/2120040/27641
@@ -302,6 +303,7 @@ M.setup = function(o)
     opts = vim.tbl_deep_extend("force", OPTION_DEFAULTS, o or {})
 
     vim.validate({
+        set_nvim_opt_defaults = { opts.set_nvim_opt_defaults, "boolean" },
         softener = { opts.softener, "table" },
         create_commands = { opts.create_commands, "boolean" },
         create_keymaps = { opts.create_commands, "boolean" },
@@ -333,8 +335,10 @@ M.setup = function(o)
         return
     end
 
-    vim.opt.linebreak = true
-    vim.opt.wrap = false
+    if opts.set_nvim_opt_defaults then
+        vim.api.nvim_set_option("linebreak", true)
+        vim.api.nvim_set_option("wrap", false)
+    end
 
     if opts.create_commands then
         vim.api.nvim_create_user_command("SoftWrapMode", function()
