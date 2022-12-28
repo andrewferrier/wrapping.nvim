@@ -147,6 +147,7 @@ opts = {
         "latex",
         "mail",
         "markdown",
+        "rst",
         "tex",
         "text",
     },

@@ -18,6 +18,7 @@ local OPTION_DEFAULTS = {
         "latex",
         "mail",
         "markdown",
+        "rst",
         "tex",
         "text",
     },
