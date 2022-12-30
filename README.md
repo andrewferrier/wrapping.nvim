@@ -245,6 +245,19 @@ these in the `opts` object. Details are left as an exercise for the advanced
 reader! Please open an issue if you wish to do this and the process is not
 obvious.
 
+### Disable NeoVim defaults change
+
+By default, `wrapping.nvim` will tweak some NeoVim defaults (`linebreak` and
+`wrap`) to make it operate more smoothly. If for some reason you don't want this
+to happen:
+
+```lua
+opts = {
+    set_nvim_opt_defaults = false
+    ...
+}
+```
+
 ## Status Lines
 
 If you have a custom status line, you can get the current mode for a file -
