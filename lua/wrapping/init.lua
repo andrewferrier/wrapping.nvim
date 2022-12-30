@@ -339,8 +339,8 @@ M.setup = function(o)
     end
 
     if opts.set_nvim_opt_defaults then
-        vim.api.nvim_set_option("linebreak", true)
-        vim.api.nvim_set_option("wrap", false)
+        vim.api.nvim_set_option_value("linebreak", true, {})
+        vim.api.nvim_set_option_value("wrap", false, {})
     end
 
     if opts.create_commands then
