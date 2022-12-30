@@ -9,11 +9,11 @@ example), where each line ending is "hard" wrapped using the author's preference
 for line length (typically in the 78-80 character range).
 
 `wrapping.nvim` attempts to detect the natural wrapping style of text-like files
-when first opening them, setting the relevant vim settings to make it "natural" to
-edit the file that way (this automatic detection can be disabled). It also makes
-it easy to toggle between the two on the occasion that the wrong mode is
-detected. It does *not* (currently) support modifying the content of the file or
-converting between files of those types.
+when first opening them, setting the relevant NeoVim settings to make it
+"natural" to edit the file that way (this automatic detection can be disabled).
+It also makes it easy to toggle between the relevant NeoVim settings on the
+occasion that the wrong mode is detected. It does *not* (currently) support
+modifying the content of the file or converting between files of those types.
 
 ⚠️  **Note**: This plugin used to be called `vim-wrapping-softhard`, and has been
 renamed to `wrapping.nvim` and rewritten in Lua, so is only suitable for NeoVim.
