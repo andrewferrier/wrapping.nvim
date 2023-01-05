@@ -11,7 +11,7 @@ jobs:
       - name: wrapping
         uses: kdheepak/panvimdoc@main
         with:
-          vimdoc: ${VIMDOC_PROJECT_NAME}
+          vimdoc: wrapping.nvim
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "chore: Auto generate Vim docs"
