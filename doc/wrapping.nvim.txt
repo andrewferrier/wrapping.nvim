@@ -4,7 +4,7 @@
 Table of Contents                            *wrapping.nvim-table-of-contents*
 
 1. wrapping.nvim                                 |wrapping.nvim-wrapping.nvim|
-  - What the Soft / Hard Mode Affects|wrapping.nvim-what-the-soft-/-hard-mode-affects|
+  - What the Mode Affects                |wrapping.nvim-what-the-mode-affects|
   - Installation                                  |wrapping.nvim-installation|
   - Modifying the Default Behaviour|wrapping.nvim-modifying-the-default-behaviour|
   - Status Lines                                  |wrapping.nvim-status-lines|
@@ -33,7 +33,7 @@ NeoVim. If you are still using Vim, the vim-viml
 <https://github.com/andrewferrier/vim-wrapping-softhard/releases/tag/vim-viml>
 tag is against the last VimL-based version suitable for using with vim.
 
-WHAT THE SOFT / HARD MODE AFFECTS*wrapping.nvim-what-the-soft-/-hard-mode-affects*
+WHAT THE MODE AFFECTS                    *wrapping.nvim-what-the-mode-affects*
 
 At the moment, this plugin sets the `textwidth` and `wrap/nowrap` settings
 (locally to the file’s buffer) when switching between hard and soft wrapping
@@ -271,9 +271,9 @@ relevant sections of the log file that’s displayed, to help diagnose why
 `wrapping.nvim` isn’t doing what you want.
 
 
-                        *wrapping.nvim-Advanced:-Modifying-Treesitter-Queries*
+                       *wrapping.nvim-Modifying-Treesitter-Queries-(Advanced)*
 
-Advanced: Modifying Treesitter Queries By default, `wrapping.nvim` excludes
+Modifying Treesitter Queries (Advanced) By default, `wrapping.nvim` excludes
                                        some lines from the softening
                                        calculation based on treesitter queries
                                        (the defaults can be seen in the
