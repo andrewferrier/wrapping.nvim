@@ -55,7 +55,7 @@ packer.startup(function(use)
 end)
 ```
 
-## Modifying the Default Behaviour
+## Changing the Defaults
 
 `wrapping.nvim` attempts to do the right thing out of the box, and tries to
 detect and set the wrapping mode if the filetype matches a built-in allowlist of
