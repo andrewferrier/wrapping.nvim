@@ -6,7 +6,7 @@ Table of Contents                            *wrapping.nvim-table-of-contents*
 1. wrapping.nvim                                 |wrapping.nvim-wrapping.nvim|
   - What the Mode Affects                |wrapping.nvim-what-the-mode-affects|
   - Installation                                  |wrapping.nvim-installation|
-  - Modifying the Default Behaviour|wrapping.nvim-modifying-the-default-behaviour|
+  - Changing the Defaults                |wrapping.nvim-changing-the-defaults|
   - Status Lines                                  |wrapping.nvim-status-lines|
 
 ==============================================================================
@@ -68,7 +68,7 @@ standard package manager. Example for `packer.nvim`
 <
 
 
-MODIFYING THE DEFAULT BEHAVIOUR*wrapping.nvim-modifying-the-default-behaviour*
+CHANGING THE DEFAULTS                    *wrapping.nvim-changing-the-defaults*
 
 `wrapping.nvim` attempts to do the right thing out of the box, and tries to
 detect and set the wrapping mode if the filetype matches a built-in allowlist
