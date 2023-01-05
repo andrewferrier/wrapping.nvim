@@ -21,7 +21,7 @@ If you are still using Vim, the
 [vim-viml](https://github.com/andrewferrier/vim-wrapping-softhard/releases/tag/vim-viml)
 tag is against the last VimL-based version suitable for using with vim.
 
-## What the Soft / Hard Mode Affects
+## What the Mode Affects
 
 At the moment, this plugin sets the `textwidth` and `wrap/nowrap` settings
 (locally to the file's buffer) when switching between hard and soft wrapping
@@ -235,7 +235,7 @@ You have two options:
     `WrappingOpenLog`, and include the relevant sections of the log file that's
     displayed, to help diagnose why `wrapping.nvim` isn't doing what you want.
 
-#### Advanced: Modifying Treesitter Queries
+#### Modifying Treesitter Queries (Advanced)
 
 By default, `wrapping.nvim` excludes some lines from the softening calculation
 based on treesitter queries (the defaults can be seen in the
