@@ -24,7 +24,7 @@ tag is against the last VimL-based version suitable for using with vim.
 ## Demo
 
 <div align="center">
-  <video src="https://user-images.githubusercontent.com/107015/211171415-84a688c6-75de-43a2-8b5a-5900710c4273.mp4" type="video/mp4"></video>
+  <video src="https://user-images.githubusercontent.com/107015/211163072-69d0f3e6-57b3-4ec3-9fc1-7d5902372edf.mp4" type="video/mp4"></video>
 </div>
 
 ## What the Mode Affects
