@@ -41,23 +41,36 @@ other settings that would be useful to alter under these different modes.
 **Requires NeoVim 0.7+.**
 
 `wrapping.nvim` is a standard NeoVim plugin and can be installed using any
-standard package manager. Example for
-[`packer.nvim`](https://github.com/wbthomason/packer.nvim):
+standard package manager.
+
+Example for
+[`lazy.nvim`](https://github.com/folke/lazy.nvim/tree/4f76b431f73c912a7021bc17384533fbad96fba7):
+
+```lua
+require("lazy").setup({
+    ...
+    {
+        "andrewferrier/wrapping.nvim",
+        config = function()
+            require("wrapping").setup()
+        end
+    },
+    ...
+}
+```
+
+Example for [`packer.nvim`](https://github.com/wbthomason/packer.nvim):
 
 ```lua
 packer.startup(function(use)
-
     ...
-
     use({
         "andrewferrier/wrapping.nvim",
         config = function()
             require("wrapping").setup()
         end,
     })
-
     ...
-
 end)
 ```
 
