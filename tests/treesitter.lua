@@ -291,4 +291,21 @@ describe("handle treesitter blocks", function()
         wrapping.set_mode_heuristically()
         assert.are.same("soft", wrapping.get_current_mode())
     end)
+
+    it("wide tables make hard mode more likely", function()
+        common.setup()
+        vim.opt.textwidth = 80
+
+        common.set_lines({
+            "# ABC",
+            string.rep("x", 79),
+            "| Foo                                      | Bar                                  | ABC                         | XYZ |",
+            "| ---------------------------------------- | ------------------------------------ | --------------------------- | --- |",
+            "| foo                                      | bar                                  | abc                         | xyz |",
+        })
+
+        vim.opt_local.filetype = "markdown"
+        wrapping.set_mode_heuristically()
+        assert.are.same("hard", wrapping.get_current_mode())
+    end)
 end)

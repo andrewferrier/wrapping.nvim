@@ -27,6 +27,9 @@ local OPTION_DEFAULTS = {
         markdown = {
             "(fenced_code_block) @markdown1",
             "(atx_heading) @markdown2",
+            "(pipe_table_header) @markdown3",
+            "(pipe_table_delimiter_row) @markdown4",
+            "(pipe_table_row) @markdown5",
         },
     },
     notify_on_switch = true,

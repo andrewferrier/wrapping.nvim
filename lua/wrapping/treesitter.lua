@@ -56,6 +56,14 @@ M.count_lines_of_query = function(language, query)
 
         for _, node, _ in query_result:iter_captures(tree_root, buf, nil, nil) do
             local row1, _, row2, _ = node:range()
+
+            if row2 == row1 then
+                -- Some queries (e.g. for markdown) only cover one line (i.e. no
+                -- CR), but in practice we want to treat them as if they have a
+                -- CR in them.
+                row2 = row1 + 1
+            end
+
             total_lines = total_lines + (row2 - row1)
             total_chars = total_chars + get_character_count(row1, row2)
         end
