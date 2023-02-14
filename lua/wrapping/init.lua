@@ -68,8 +68,18 @@ local function soft_wrap_mode_quiet()
 
     vim.api.nvim_win_set_option(0, "wrap", true)
 
-    vim.keymap.set("n", "<Up>", "g<Up>", { buffer = 0 })
-    vim.keymap.set("n", "<Down>", "g<Down>", { buffer = 0 })
+    vim.keymap.set(
+        "n",
+        "<Up>",
+        "g<Up>",
+        { buffer = 0, desc = "Move up one display line" }
+    )
+    vim.keymap.set(
+        "n",
+        "<Down>",
+        "g<Down>",
+        { buffer = 0, desc = "Move down one display line" }
+    )
 
     vim.b.wrap_mappings_initialized = true
     vim.b.wrapmode = "soft"
@@ -374,13 +384,13 @@ M.setup = function(o)
     if opts.create_keymaps then
         vim.keymap.set("n", "[ow", function()
             M.soft_wrap_mode()
-        end)
+        end, { desc = "Soft wrap mode" })
         vim.keymap.set("n", "]ow", function()
             M.hard_wrap_mode()
-        end)
+        end, { desc = "Hard wrap mode" })
         vim.keymap.set("n", "yow", function()
             M.toggle_wrap_mode()
-        end)
+        end, { desc = "Toggle wrap mode" })
     end
 
     if opts.auto_set_mode_heuristically then
