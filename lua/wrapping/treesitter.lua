@@ -52,7 +52,15 @@ M.count_lines_of_query = function(language, query)
     end
 
     if tree_root ~= nil then
-        local query_result = vim.treesitter.query.parse_query(language, query)
+        local query_result
+
+        if vim.treesitter.query.parse then
+            -- This is only supported in NeoVim 0.9+, and parse_query is
+            -- deprecated.
+            query_result = vim.treesitter.query.parse(language, query)
+        else
+            query_result = vim.treesitter.query.parse_query(language, query)
+        end
 
         for _, node, _ in query_result:iter_captures(tree_root, buf, nil, nil) do
             local row1, _, row2, _ = node:range()
