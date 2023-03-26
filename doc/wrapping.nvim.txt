@@ -1,14 +1,14 @@
-*wrapping.nvim.txt*        For NVIM v0.8.0       Last change: 2023 February 14
+*wrapping.nvim.txt*         For NVIM v0.8.0         Last change: 2023 March 26
 
 ==============================================================================
 Table of Contents                            *wrapping.nvim-table-of-contents*
 
 1. wrapping.nvim                                 |wrapping.nvim-wrapping.nvim|
-  - Demo                                                  |wrapping.nvim-demo|
-  - What the Mode Affects                |wrapping.nvim-what-the-mode-affects|
-  - Installation                                  |wrapping.nvim-installation|
-  - Changing the Defaults                |wrapping.nvim-changing-the-defaults|
-  - Status Lines                                  |wrapping.nvim-status-lines|
+  - Demo                                    |wrapping.nvim-wrapping.nvim-demo|
+  - What the Mode Affects  |wrapping.nvim-wrapping.nvim-what-the-mode-affects|
+  - Installation                    |wrapping.nvim-wrapping.nvim-installation|
+  - Changing the Defaults  |wrapping.nvim-wrapping.nvim-changing-the-defaults|
+  - Status Lines                    |wrapping.nvim-wrapping.nvim-status-lines|
 
 ==============================================================================
 1. wrapping.nvim                                 *wrapping.nvim-wrapping.nvim*
@@ -34,13 +34,12 @@ NeoVim. If you are still using Vim, the vim-viml
 <https://github.com/andrewferrier/vim-wrapping-softhard/releases/tag/vim-viml>
 tag is against the last VimL-based version suitable for using with vim.
 
-DEMO                                                      *wrapping.nvim-demo*
 
-<video
-src="https://user-images.githubusercontent.com/107015/211172216-e22567f8-a9d2-4d8c-954e-3c74e6b0b61a.mp4"
-type="video/mp4"></video>
+DEMO                                        *wrapping.nvim-wrapping.nvim-demo*
 
-WHAT THE MODE AFFECTS                    *wrapping.nvim-what-the-mode-affects*
+
+
+WHAT THE MODE AFFECTS      *wrapping.nvim-wrapping.nvim-what-the-mode-affects*
 
 At the moment, this plugin sets the `textwidth` and `wrap/nowrap` settings
 (locally to the file’s buffer) when switching between hard and soft wrapping
@@ -49,7 +48,8 @@ the `<Up>` and `<Down>` keys depending on the wrapping style, so they move by
 screen line in soft mode. I would welcome issues / pull requests if there are
 other settings that would be useful to alter under these different modes.
 
-INSTALLATION                                      *wrapping.nvim-installation*
+
+INSTALLATION                        *wrapping.nvim-wrapping.nvim-installation*
 
 **Requires NeoVim 0.7+.**
 
@@ -59,7 +59,7 @@ standard package manager.
 Example for `lazy.nvim`
 <https://github.com/folke/lazy.nvim/tree/4f76b431f73c912a7021bc17384533fbad96fba7>:
 
->
+>lua
     require("lazy").setup({
         ...
         {
@@ -72,10 +72,9 @@ Example for `lazy.nvim`
     }
 <
 
-
 Example for `packer.nvim` <https://github.com/wbthomason/packer.nvim>:
 
->
+>lua
     packer.startup(function(use)
         ...
         use({
@@ -89,7 +88,7 @@ Example for `packer.nvim` <https://github.com/wbthomason/packer.nvim>:
 <
 
 
-CHANGING THE DEFAULTS                    *wrapping.nvim-changing-the-defaults*
+CHANGING THE DEFAULTS      *wrapping.nvim-wrapping.nvim-changing-the-defaults*
 
 `wrapping.nvim` attempts to do the right thing out of the box, and tries to
 detect and set the wrapping mode if the filetype matches a built-in allowlist
@@ -98,7 +97,7 @@ options.
 
 To do this, add an `opts` object to the setup method:
 
->
+>lua
     opts = { ... }
     
     use({
@@ -109,8 +108,8 @@ To do this, add an `opts` object to the setup method:
     })
 <
 
-
 The sections below detail the allowed options.
+
 
 COMMANDS AND KEYMAPPINGS ~
 
@@ -122,14 +121,12 @@ wrapping mode in case it is not autodetected correctly:
 - `SoftWrapMode`
 - `ToggleWrapMode`
 
-
 As well as the following normal-mode keymappings:
 
 
 - `[ow` (soft wrap mode)
 - `]ow` (hard wrap mode)
 - `yow` (toggle wrap mode)
-
 
 (these are similar to vim-unimpaired <https://github.com/tpope/vim-unimpaired>)
 
@@ -139,17 +136,15 @@ And the following utility command to open a debug log showing what
 
 - `WrappingOpenLog`
 
-
 Disable these commands and/or keymappings by setting these options accordingly:
 
->
+>lua
     opts = {
         create_commands = false,
         create_keymappings = false,
         ...
     }
 <
-
 
 You can create your own instead by invoking these functions:
 
@@ -164,7 +159,7 @@ NOTIFICATIONS ~
 By default, `wrapping.nvim` will output a message to the command line when the
 hard or soft mode is set. You can disable this with:
 
->
+>lua
     opts = {
         notify_on_switch = false
         ...
@@ -180,15 +175,13 @@ file loads (for a specific set of file types, see below), using the
 aren’t documented in detail here as they will evolve over time as
 `wrapping.nvim` becomes more sophisticated).
 
-                 *wrapping.nvim-Controlling-Filetypes-that-Trigger-Heuristics*
 
-Controlling Filetypes that Trigger Heuristics If you want to control the
-                                       filetypes that the automatic heuristic
-                                       mode triggers for, you can change this
-                                       list:
+CONTROLLING FILETYPES THAT TRIGGER HEURISTICS
 
+If you want to control the filetypes that the automatic heuristic mode triggers
+for, you can change this list:
 
->
+>lua
     opts = {
         auto_set_mode_filetype_allowlist = {
             "asciidoc",
@@ -203,7 +196,6 @@ Controlling Filetypes that Trigger Heuristics If you want to control the
     }
 <
 
-
 (the list above is the default list; if you are aware of other filetypes
 supported by NeoVim which are typically treated as text, please open an issue
 <https://github.com/andrewferrier/wrapping.nvim/issues/new> so we can add it to
@@ -213,37 +205,34 @@ If you set `auto_set_mode_filetype_allowlist` to `{}`, you can instead set
 `auto_set_mode_filetype_denylist` to a list of filetypes, and any files with a
 filetype _not_ in that list will be heuristically detected instead.
 
-                                 *wrapping.nvim-Disabling-Heuristics-Entirely*
 
-Disabling Heuristics Entirely          To disable automatic heuristics
-                                       entirely, you can set:
+DISABLING HEURISTICS ENTIRELY
 
+To disable automatic heuristics entirely, you can set:
 
->
+>lua
     opts = {
         auto_set_mode_heuristically = false
         ...
     }
 <
 
-
 You can then trigger the automatic logic yourself from wherever you want - e.g.
 from a `ftdetect` plugin. Note that this will _ignore_ the
 `auto_set_mode_filetype_allowlist` and `auto_set_mode_filetype_denylist`
 options.
 
->
+>lua
     require('wrapping').set_mode_heuristically()
 <
-
 
 You can also ignore heuristics entirely and just use the commands and/or
 keymappings listed above to switch between modes for a file.
 
-                           *wrapping.nvim-If-Heuristics-Make-the-Wrong-Choice*
 
-If Heuristics Make the Wrong Choice    You have two options:
+IF HEURISTICS MAKE THE WRONG CHOICE
 
+You have two options:
 
 
 1. Override the 'softener' value for that file type. By default, this is `1.0` for
@@ -255,19 +244,18 @@ treated as having soft line endings. Setting it to `false` means that files of
 that type will _always_ be treated as having hard line endings. For example,
 this sets the softener value to `1.3` for Markdown files:
 
->
+>lua
         require("wrapping").setup({
             softener = { markdown = 1.3 },
         })
 <
-
 
 For more advanced use cases, you can set this 'softener' value to a callback
 function that performs some of your own custom logic. It should then return
 `true`, `false`, or a numeric value (interpreted the same way as described
 above). Example:
 
->
+>lua
         require("wrapping").setup({
             softener = {
                 markdown = function()
@@ -278,11 +266,11 @@ above). Example:
         })
 <
 
-
 Note that certain heuristics are evaluated _before_ the softener value, in
 which case it will have no effect. These should be 'foolproof', but if they are
 not, and you are sure a file is being detected incorrectly, please move to
 option (2)…
+
 2. Open an issue <https://github.com/andrewferrier/wrapping.nvim/issues/new> with
 an example of the file that’s being incorrectly detected and explain why you
 think it should be detected as having hard or soft line breaks, and we’ll
@@ -292,21 +280,17 @@ relevant sections of the log file that’s displayed, to help diagnose why
 `wrapping.nvim` isn’t doing what you want.
 
 
-                       *wrapping.nvim-Modifying-Treesitter-Queries-(Advanced)*
 
-Modifying Treesitter Queries (Advanced) By default, `wrapping.nvim` excludes
-                                       some lines from the softening
-                                       calculation based on treesitter queries
-                                       (the defaults can be seen in the
-                                       init.lua <lua/wrapping/init.lua> file,
-                                       in the `OPTION_DEFAULTS` object, and
-                                       this currently only supports Markdown
-                                       files). If you wish, you can modify/add
-                                       to these in the `opts` object. Details
-                                       are left as an exercise for the advanced
-                                       reader! Please open an issue if you wish
-                                       to do this and the process is not
-                                       obvious.
+
+MODIFYING TREESITTER QUERIES (ADVANCED)
+
+By default, `wrapping.nvim` excludes some lines from the softening calculation
+based on treesitter queries (the defaults can be seen in the init.lua
+<lua/wrapping/init.lua> file, in the `OPTION_DEFAULTS` object, and this
+currently only supports Markdown files). If you wish, you can modify/add to
+these in the `opts` object. Details are left as an exercise for the advanced
+reader! Please open an issue if you wish to do this and the process is not
+obvious.
 
 
 DISABLE NEOVIM DEFAULTS CHANGE ~
@@ -315,7 +299,7 @@ By default, `wrapping.nvim` will tweak some NeoVim defaults (`linebreak` and
 `wrap`) to make it operate more smoothly. If for some reason you don’t want
 this to happen:
 
->
+>lua
     opts = {
         set_nvim_opt_defaults = false
         ...
@@ -323,7 +307,7 @@ this to happen:
 <
 
 
-STATUS LINES                                      *wrapping.nvim-status-lines*
+STATUS LINES                        *wrapping.nvim-wrapping.nvim-status-lines*
 
 If you have a custom status line, you can get the current mode for a file -
 `'hard'`, `'soft'`, or `''` (`wrapping.nvim` not activated for that file) by
