@@ -46,7 +46,7 @@ local function log(str)
 
         if bufname == nil or bufname == "" then
             bufname = "Unknown of filetype "
-                .. vim.api.nvim_buf_get_option(0, "filetype")
+                .. vim.api.nvim_get_option_value("filetype", { buf = 0 })
         end
 
         local fp = assert(io.open(opts.log_path, "a"))
@@ -61,12 +61,12 @@ local function soft_wrap_mode_quiet()
     end
 
     -- Save prior textwidth
-    vim.b.hard_textwidth = vim.api.nvim_buf_get_option(0, "textwidth")
+    vim.b.hard_textwidth = vim.api.nvim_get_option_value("textwidth", { buf = 0 })
 
     -- Effectively disable textwidth (setting it to 0 makes it act like 79 for gqxx)
-    vim.api.nvim_buf_set_option(0, "textwidth", VERY_LONG_TEXTWIDTH_FOR_SOFT)
+    vim.api.nvim_set_option_value("textwidth", VERY_LONG_TEXTWIDTH_FOR_SOFT, { buf = 0 })
 
-    vim.api.nvim_win_set_option(0, "wrap", true)
+    vim.api.nvim_set_option_value("wrap", true, { win = 0 })
 
     vim.keymap.set(
         "n",
@@ -93,11 +93,11 @@ local function hard_wrap_mode_quiet()
     end
 
     if vim.b.hard_textwidth then
-        vim.api.nvim_buf_set_option(0, "textwidth", vim.b.hard_textwidth)
+        vim.api.nvim_set_option_value("textwidth", vim.b.hard_textwidth, { buf = 0 })
         vim.b.hard_textwidth = nil
     end
 
-    vim.api.nvim_win_set_option(0, "wrap", false)
+    vim.api.nvim_set_option_value("wrap", false, { win = 0 })
 
     if vim.b.wrap_mappings_initialized == true then
         vim.keymap.del("n", "<Up>", { buffer = 0 })
@@ -131,7 +131,7 @@ M.toggle_wrap_mode = function()
 end
 
 local function get_softener()
-    local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+    local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
     local value = vim.tbl_get(opts.softener, filetype)
 
     if value ~= nil then
@@ -156,7 +156,7 @@ end
 
 local function likely_textwidth_set_deliberately()
     local textwidth_global = vim.api.nvim_get_option("textwidth")
-    local textwidth_buffer = vim.api.nvim_buf_get_option(0, "textwidth")
+    local textwidth_buffer = vim.api.nvim_get_option_value("textwidth", { buf = 0 })
 
     log(
         "Textwidths: global="
@@ -178,7 +178,7 @@ local function likely_textwidth_set_deliberately()
 end
 
 local function get_excluded_treesitter()
-    local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+    local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
     local exclusions = opts.excluded_treesitter_queries[filetype]
 
     local tree_lines = 0
@@ -204,7 +204,7 @@ local function auto_heuristic()
         return
     end
 
-    local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+    local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
     log("Filetype: " .. filetype)
 
     if vim.tbl_contains(opts.auto_set_mode_filetype_denylist, filetype) then
@@ -222,7 +222,7 @@ local function auto_heuristic()
 end
 
 M.set_mode_heuristically = function()
-    local buftype = vim.api.nvim_buf_get_option(0, "buftype")
+    local buftype = vim.api.nvim_get_option_value("buftype", { buf = 0 })
 
     if buftype ~= "" then
         log("Buftype is " .. buftype .. ", ignoring")
@@ -264,7 +264,7 @@ M.set_mode_heuristically = function()
         log("Previous hard textwidth=" .. hard_textwidth_for_comparison)
     else
         hard_textwidth_for_comparison =
-            vim.api.nvim_buf_get_option(0, "textwidth")
+            vim.api.nvim_get_option_value("textwidth", { buf = 0 })
         log("Option textwidth=" .. hard_textwidth_for_comparison)
     end
 
@@ -374,7 +374,7 @@ M.setup = function(o)
         })
         vim.api.nvim_create_user_command("WrappingOpenLog", function()
             vim.cmd(":split " .. opts.log_path)
-            vim.api.nvim_buf_set_option(0, "readonly", true)
+            vim.api.nvim_set_option_value("readonly", true, { buf = 0 })
             vim.cmd(":norm G")
         end, {
             desc = "Toggle wrap mode",
