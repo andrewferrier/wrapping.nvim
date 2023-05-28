@@ -403,4 +403,13 @@ M.setup = function(o)
     end
 end
 
+if vim.fn.has("nvim-0.8.0") ~= 1 then
+    vim.notify(
+        "WARNING: wrapping.nvim is only compatible with NeoVim 0.8+",
+        vim.log.levels.WARN
+    )
+
+    return
+end
+
 return M
