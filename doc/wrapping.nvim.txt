@@ -1,4 +1,4 @@
-*wrapping.nvim.txt*         For NVIM v0.8.0         Last change: 2023 April 08
+*wrapping.nvim.txt*          For NVIM v0.8.0          Last change: 2023 May 28
 
 ==============================================================================
 Table of Contents                            *wrapping.nvim-table-of-contents*
@@ -116,13 +116,11 @@ COMMANDS AND KEYMAPPINGS ~
 By default, the plugin will create the following commands to set/override a
 wrapping mode in case it is not autodetected correctly:
 
-
 - `HardWrapMode`
 - `SoftWrapMode`
 - `ToggleWrapMode`
 
 As well as the following normal-mode keymappings:
-
 
 - `[ow` (soft wrap mode)
 - `]ow` (hard wrap mode)
@@ -132,7 +130,6 @@ As well as the following normal-mode keymappings:
 
 And the following utility command to open a debug log showing what
 `wrapping.nvim` is doing:
-
 
 - `WrappingOpenLog`
 
@@ -147,7 +144,6 @@ Disable these commands and/or keymappings by setting these options accordingly:
 <
 
 You can create your own instead by invoking these functions:
-
 
 - `require('wrapping').hard_wrap_mode()`
 - `require('wrapping').soft_wrap_mode()`
@@ -234,7 +230,6 @@ IF HEURISTICS MAKE THE WRONG CHOICE
 
 You have two options:
 
-
 1. Override the 'softener' value for that file type. By default, this is `1.0` for
 every file. Setting the value higher makes it _more likely_ that the file will
 be detected as having 'soft' line wrapping (this value is multiplied by the
@@ -270,6 +265,7 @@ Note that certain heuristics are evaluated _before_ the softener value, in
 which case it will have no effect. These should be 'foolproof', but if they are
 not, and you are sure a file is being detected incorrectly, please move to
 option (2)…
+
 
 2. Open an issue <https://github.com/andrewferrier/wrapping.nvim/issues/new> with
 an example of the file that’s being incorrectly detected and explain why you
