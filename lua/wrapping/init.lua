@@ -61,10 +61,15 @@ local function soft_wrap_mode_quiet()
     end
 
     -- Save prior textwidth
-    vim.b.hard_textwidth = vim.api.nvim_get_option_value("textwidth", { buf = 0 })
+    vim.b.hard_textwidth =
+        vim.api.nvim_get_option_value("textwidth", { buf = 0 })
 
     -- Effectively disable textwidth (setting it to 0 makes it act like 79 for gqxx)
-    vim.api.nvim_set_option_value("textwidth", VERY_LONG_TEXTWIDTH_FOR_SOFT, { buf = 0 })
+    vim.api.nvim_set_option_value(
+        "textwidth",
+        VERY_LONG_TEXTWIDTH_FOR_SOFT,
+        { buf = 0 }
+    )
 
     vim.api.nvim_set_option_value("wrap", true, { win = 0 })
 
@@ -93,7 +98,11 @@ local function hard_wrap_mode_quiet()
     end
 
     if vim.b.hard_textwidth then
-        vim.api.nvim_set_option_value("textwidth", vim.b.hard_textwidth, { buf = 0 })
+        vim.api.nvim_set_option_value(
+            "textwidth",
+            vim.b.hard_textwidth,
+            { buf = 0 }
+        )
         vim.b.hard_textwidth = nil
     end
 
@@ -156,7 +165,8 @@ end
 
 local function likely_textwidth_set_deliberately()
     local textwidth_global = vim.api.nvim_get_option("textwidth")
-    local textwidth_buffer = vim.api.nvim_get_option_value("textwidth", { buf = 0 })
+    local textwidth_buffer =
+        vim.api.nvim_get_option_value("textwidth", { buf = 0 })
 
     log(
         "Textwidths: global="
