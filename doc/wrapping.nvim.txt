@@ -138,7 +138,7 @@ Disable these commands and/or keymappings by setting these options accordingly:
 >lua
     opts = {
         create_commands = false,
-        create_keymappings = false,
+        create_keymaps = false,
         ...
     }
 <
