@@ -394,13 +394,13 @@ M.setup = function(o)
     if opts.create_keymaps then
         vim.keymap.set("n", "[ow", function()
             M.soft_wrap_mode()
-        end, { desc = "Soft wrap mode" })
+        end, { desc = "Soft wrap mode", unique = true })
         vim.keymap.set("n", "]ow", function()
             M.hard_wrap_mode()
-        end, { desc = "Hard wrap mode" })
+        end, { desc = "Hard wrap mode", unique = true })
         vim.keymap.set("n", "yow", function()
             M.toggle_wrap_mode()
-        end, { desc = "Toggle wrap mode" })
+        end, { desc = "Toggle wrap mode", unique = true })
     end
 
     if opts.auto_set_mode_heuristically then
