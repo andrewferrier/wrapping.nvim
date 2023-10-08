@@ -17,4 +17,10 @@ M.setup = function(o)
     wrapping.setup(opts)
 end
 
+M.teardown = function()
+    vim.keymap.del("n", "yow")
+    vim.keymap.del("n", "[ow")
+    vim.keymap.del("n", "]ow")
+end
+
 return M

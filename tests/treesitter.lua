@@ -6,6 +6,8 @@ describe("detect wrapping mode", function()
         common.setup()
     end)
 
+    after_each(common.teardown)
+
     it("can detect hard mode when filetype not set", function()
         common.set_lines({
             "test1",
@@ -103,6 +105,8 @@ describe("detect wrapping mode", function()
 end)
 
 describe("detect wrapping mode with different softeners", function()
+    after_each(common.teardown)
+
     it(
         "can detect hard mode when textwidth set globally but softener low",
         function()
@@ -237,6 +241,8 @@ describe("detect wrapping mode with different softeners", function()
 end)
 
 describe("handle treesitter blocks", function()
+    after_each(common.teardown)
+
     it("can exclude fenced code blocks - hard", function()
         common.setup()
         vim.opt.textwidth = 80

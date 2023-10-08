@@ -2,6 +2,8 @@ local common = require("tests.common")
 local wrapping = require("wrapping")
 
 describe("handle treesitter blocks", function()
+    after_each(common.teardown)
+
     it("won't exclude fenced code blocks", function()
         common.setup()
         vim.opt.textwidth = 80
