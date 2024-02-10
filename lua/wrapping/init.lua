@@ -15,6 +15,7 @@ local OPTION_DEFAULTS = {
     auto_set_mode_filetype_allowlist = {
         "asciidoc",
         "gitcommit",
+        "help",
         "latex",
         "mail",
         "markdown",
