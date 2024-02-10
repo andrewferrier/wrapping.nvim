@@ -21,6 +21,7 @@ local OPTION_DEFAULTS = {
         "rst",
         "tex",
         "text",
+        "typst", -- Supported from NeoVim 0.10+
     },
     auto_set_mode_filetype_denylist = {},
     excluded_treesitter_queries = {
