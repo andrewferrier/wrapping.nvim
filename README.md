@@ -254,6 +254,22 @@ You have two options:
     `WrappingOpenLog`, and include the relevant sections of the log file that's
     displayed, to help diagnose why `wrapping.nvim` isn't doing what you want.
 
+#### Toggle Hard Wrapping in Comments
+
+This option enables an autocommand which uses treesitter to detect when the
+cursor is in a comment and toggles hard wrapping on and off. This is useful for
+when you want to wrap your code comments to a specific width.
+
+```lua
+    require("wrapping").setup({
+        ...
+        hard_wrap_comments = {
+            notify = false, -- This will override "notify_on_switch"
+            width = 79, -- Default textwidth if not set for the filetype
+        }
+    })
+```
+
 #### Modifying Treesitter Queries (Advanced)
 
 By default, `wrapping.nvim` excludes some lines from the softening calculation
