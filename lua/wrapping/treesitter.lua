@@ -80,4 +80,21 @@ M.count_lines_of_query = function(language, query)
     return total_lines, total_chars
 end
 
+M.cursor_in_comment = function()
+    local tsutils = try_to_load("nvim-treesitter.ts_utils")
+
+    -- For now we just return false if we can't load the module
+    if tsutils == nil then
+        return false
+    end
+
+    local node = tsutils.get_node_at_cursor()
+
+    if node and node:type() == "comment" then
+        return true
+    end
+
+    return false
+end
+
 return M
