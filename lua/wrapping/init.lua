@@ -36,11 +36,10 @@ local OPTION_DEFAULTS = {
     },
     notify_on_switch = true,
     log_path = utils.get_log_path(),
-    -- TS query to match comments
-    hard_wrap_comments = {
-        notify = false, -- This will override "notify_on_switch"
-        width = 79, -- Default textwidth if not set for the filetype
-    },
+    -- hard_wrap_comments = {
+    --     notify = false, -- This will override "notify_on_switch"
+    --     width = 79, -- Default textwidth if not set for the filetype
+    -- },
 }
 
 local VERY_LONG_TEXTWIDTH_FOR_SOFT = 999999
