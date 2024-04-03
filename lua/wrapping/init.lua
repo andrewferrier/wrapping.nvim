@@ -36,6 +36,11 @@ local OPTION_DEFAULTS = {
     },
     notify_on_switch = true,
     log_path = utils.get_log_path(),
+    -- TS query to match comments
+    hard_wrap_comments = {
+        notify = false, -- This will override "notify_on_switch"
+        width = 79, -- Default textwidth if not set for the filetype
+    },
 }
 
 local VERY_LONG_TEXTWIDTH_FOR_SOFT = 999999
@@ -121,15 +126,39 @@ local function hard_wrap_mode_quiet()
     return true
 end
 
-M.soft_wrap_mode = function()
-    if soft_wrap_mode_quiet() and opts.notify_on_switch then
-        vim.notify("Soft wrap mode.")
+---@param force_notify boolean|nil
+M.soft_wrap_mode = function(force_notify)
+    -- Always run the function
+    if soft_wrap_mode_quiet() then
+        -- Always notify when forces
+        if force_notify then
+            vim.notify("Soft wrap mode.")
+            return
+        -- Explicitly don't notify when false passed in
+        elseif force_notify == false then
+            return
+        -- Otherwise use default behavior
+        elseif force_notify == nil and opts.notify_on_switch then
+            vim.notify("Soft wrap mode.")
+        end
     end
 end
 
-M.hard_wrap_mode = function()
-    if hard_wrap_mode_quiet() and opts.notify_on_switch then
-        vim.notify("Hard wrap mode.")
+---@param force_notify boolean|nil
+M.hard_wrap_mode = function(force_notify)
+    -- Always run the function
+    if hard_wrap_mode_quiet() then
+        -- Always notify when forces
+        if force_notify then
+            vim.notify("Hard wrap mode.")
+            return
+        -- Explicitly don't notify when false passed in
+        elseif force_notify == false then
+            return
+        -- Otherwise use default behavior
+        elseif force_notify == nil and opts.notify_on_switch then
+            vim.notify("Hard wrap mode.")
+        end
     end
 end
 
@@ -251,10 +280,12 @@ M.set_mode_heuristically = function()
     if softener == true then
         log("Softener function forcing soft mode")
         M.soft_wrap_mode()
+        vim.b.defaultwrap = "soft"
         return
     elseif softener == false then
         log("Softener function forcing hard mode")
         M.hard_wrap_mode()
+        vim.b.defaultwrap = "hard"
         return
     end
 
@@ -265,6 +296,7 @@ M.set_mode_heuristically = function()
 
     if likely_textwidth_set_deliberately() then
         log("Likely that textwidth was set deliberately, forcing hard mode")
+        vim.b.defaultwrap = "hard"
         M.hard_wrap_mode()
         return
     end
@@ -311,9 +343,11 @@ M.set_mode_heuristically = function()
     if (average_line_length * softener) < hard_textwidth_for_comparison then
         log("Selecting hard wrap mode")
         M.hard_wrap_mode()
+        vim.b.defaultwrap = "hard"
     else
         log("Selecting soft wrap mode")
         M.soft_wrap_mode()
+        vim.b.defaultwrap = "soft"
     end
 end
 
@@ -349,6 +383,7 @@ M.setup = function(o)
         },
         notify_on_switch = { opts.notify_on_switch, "boolean" },
         log_path = { opts.log_path, "string" },
+        comment_toggle = { opts.hard_wrap_comments, "table" },
     })
 
     if
@@ -411,6 +446,36 @@ M.setup = function(o)
         vim.api.nvim_create_autocmd("BufWinEnter", {
             group = vim.api.nvim_create_augroup("wrapping", {}),
             callback = auto_heuristic,
+        })
+    end
+
+    if opts.hard_wrap_comments then
+        vim.api.nvim_create_autocmd("CursorMoved", {
+            group = vim.api.nvim_create_augroup("wrapping", {}),
+            callback = function()
+                local defaultwrap = vim.b.defaultwrap
+
+                if treesitter.cursor_in_comment() then
+                    if M.get_current_mode() ~= "hard" then
+                        vim.opt_local.textwidth = opts.hard_wrap_comments.width
+                            or vim.b.hard_textwidth
+                        M.hard_wrap_mode(opts.hard_wrap_comments.notify)
+                    end
+                elseif vim.b.wrapmode ~= defaultwrap then
+                    if defaultwrap == "soft" then
+                        M.soft_wrap_mode(opts.hard_wrap_comments.notify)
+                    else
+                        vim.opt_local.textwidth = nil
+                        vim.b.wrapmode = nil
+
+                        if opts.hard_wrap_comments.notify then
+                            vim.notify(
+                                "Left comment, returning to previous wrap mode."
+                            )
+                        end
+                    end
+                end
+            end,
         })
     end
 end
