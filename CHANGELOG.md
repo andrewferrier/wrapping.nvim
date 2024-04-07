@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.0](https://github.com/andrewferrier/wrapping.nvim/compare/v1.0.0...v1.1.0) (2024-02-25)
+
+
+### Features
+
+* Add support for `typst` files - closes [#42](https://github.com/andrewferrier/wrapping.nvim/issues/42) ([6d7df51](https://github.com/andrewferrier/wrapping.nvim/commit/6d7df512c89343b72643b1290068b95cb94201da))
+* Ensure appropriate keymaps are unique ([748449b](https://github.com/andrewferrier/wrapping.nvim/commit/748449bb188bf0ceb5592f4cbb8ae744ee2bab83))
+* Make 'help' a whitelisted filetype - closes [#28](https://github.com/andrewferrier/wrapping.nvim/issues/28) ([8a0e4ec](https://github.com/andrewferrier/wrapping.nvim/commit/8a0e4ec5b35871360d90daa0aabfa22114187142))
+
 ## 1.0.0 (2023-05-28)
 
 
