@@ -90,7 +90,12 @@ M.cursor_in_comment = function()
 
     local node = tsutils.get_node_at_cursor()
 
-    if node and node:type() == "comment" then
+    -- Covers most file-type comments
+    local isComment = node and node:type() == "comment"
+    -- Doc-string comments
+    local isDescription = node and node:type() == "description"
+
+    if isComment or isDescription then
         return true
     end
 

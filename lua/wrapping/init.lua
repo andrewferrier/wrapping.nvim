@@ -382,7 +382,7 @@ M.setup = function(o)
         },
         notify_on_switch = { opts.notify_on_switch, "boolean" },
         log_path = { opts.log_path, "string" },
-        comment_toggle = { opts.hard_wrap_comments, "table", true}, -- optional
+        comment_toggle = { opts.hard_wrap_comments, "table", true }, -- optional
     })
 
     if
