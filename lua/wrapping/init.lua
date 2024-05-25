@@ -156,8 +156,19 @@ local function likely_nontextual_language()
     -- If an LSP provider supports these capabilities it's almost certainly not
     -- a textual language, and therefore we should use hard wrapping
 
-    for _, client in pairs(vim.lsp.buf_get_clients(0)) do
-        if client.definitionProvider or client.signatureHelpProvider then
+    local get_clients
+
+    if vim.fn.has("nvim-0.10") == 1 then
+        get_clients = vim.lsp.get_clients
+    else
+        get_clients = vim.lsp.get_active_clients
+    end
+
+    for _, client in pairs(get_clients({ bufnr = 0 })) do
+        if
+            client.server_capabilities.definitionProvider
+            or client.server_capabilities.signatureHelpProvider
+        then
             return true
         end
     end
