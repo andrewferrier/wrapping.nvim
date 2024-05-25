@@ -27,15 +27,7 @@ M.count_blank_lines = function()
 end
 
 M.get_log_path = function()
-    local log_path
-
-    if vim.fn.has("nvim-0.8.0") == 1 then
-        log_path = vim.fn.stdpath("log")
-    else
-        log_path = vim.fn.stdpath("cache")
-    end
-
-    return log_path .. "/wrapping.nvim.log"
+    return vim.fn.stdpath("log") .. "/wrapping.nvim.log"
 end
 
 return M
