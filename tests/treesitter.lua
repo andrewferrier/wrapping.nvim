@@ -285,8 +285,8 @@ describe("handle treesitter blocks", function()
     end)
 
     if
-        vim.version.gt(vim.version(), { 0, 8, 0 })
-        and vim.version.lt(vim.version(), { 0, 10, 0 })
+        vim.fn.has("nvim-0.10") == 1
+        or (vim.fn.has("nvim-0.8") == 1 and vim.fn.has("nvim-0.9") ~= 1)
     then
         -- These tests seem to fail on NeoVim 0.9.x - I think there's some kind
         -- of parser issue
