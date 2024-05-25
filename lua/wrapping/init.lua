@@ -25,6 +25,7 @@ local OPTION_DEFAULTS = {
         "typst", -- Supported from NeoVim 0.10+
     },
     auto_set_mode_filetype_denylist = {},
+    buftype_allowlist = {},
     excluded_treesitter_queries = {
         markdown = {
             "(fenced_code_block) @markdown1",
@@ -249,7 +250,9 @@ end
 M.set_mode_heuristically = function()
     local buftype = vim.api.nvim_get_option_value("buftype", { buf = 0 })
 
-    if buftype ~= "" then
+    if
+        buftype ~= "" and not vim.tbl_contains(opts.buftype_allowlist, buftype)
+    then
         log("Buftype is " .. buftype .. ", ignoring")
         return
     end
@@ -360,6 +363,7 @@ M.setup = function(o)
             opts.auto_set_mode_filetype_denylist,
             "table",
         },
+        buftype_allowlist = { opts.buftype_allowlist, "table" },
         notify_on_switch = { opts.notify_on_switch, "boolean" },
         log_path = { opts.log_path, "string" },
     })
