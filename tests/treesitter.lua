@@ -1,3 +1,27 @@
+vim.opt.runtimepath:prepend(
+    "~/.local/share/nvim/site/pack/vendor/start/nvim-treesitter"
+)
+vim.opt.runtimepath:prepend("../nvim-treesitter")
+
+vim.cmd("runtime! plugin/nvim-treesitter.lua")
+
+local install_parser_if_needed = function(filetype)
+    if vim.tbl_contains(vim.tbl_keys(vim.fn.environ()), "GITHUB_WORKFLOW") then
+        print("Running in GitHub; installing parser " .. filetype .. "...")
+        vim.cmd("TSInstallSync! " .. filetype)
+    else
+        vim.cmd("new")
+        vim.cmd("only")
+        local ok, _ = pcall(vim.treesitter.get_parser, 0, filetype, {})
+        if not ok then
+            print("Cannot load parser for " .. filetype .. ", installing...")
+            vim.cmd("TSInstallSync! " .. filetype)
+        end
+    end
+end
+
+install_parser_if_needed("markdown")
+
 local common = require("tests.common")
 local wrapping = require("wrapping")
 

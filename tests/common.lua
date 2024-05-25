@@ -1,5 +1,8 @@
 local M = {}
 
+vim.o.hidden = true
+vim.o.swapfile = false
+
 local wrapping = require("wrapping")
 
 M.set_lines = function(lines)
