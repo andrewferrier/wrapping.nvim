@@ -177,7 +177,8 @@ local function likely_nontextual_language()
 end
 
 local function likely_textwidth_set_deliberately()
-    local textwidth_global = vim.api.nvim_get_option("textwidth")
+    local textwidth_global =
+        vim.api.nvim_get_option_value("textwidth", { scope = "global" })
     local textwidth_buffer =
         vim.api.nvim_get_option_value("textwidth", { buf = 0 })
 
