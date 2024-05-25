@@ -220,8 +220,9 @@ local function get_excluded_treesitter()
     return tree_lines, tree_chars
 end
 
-local function auto_heuristic()
-    log("Testing for auto heuristic...")
+---@param reason string
+local function auto_heuristic(reason)
+    log("Testing for auto heuristic because of event " .. reason)
 
     if vim.b.wrapmode ~= nil then
         log("wrapmode already set for this buffer")
@@ -422,7 +423,16 @@ M.setup = function(o)
         -- we can use what's in there.
         vim.api.nvim_create_autocmd("BufWinEnter", {
             group = vim.api.nvim_create_augroup("wrapping", {}),
-            callback = auto_heuristic,
+            callback = function()
+                auto_heuristic("BufWinEnter")
+            end,
+        })
+
+        vim.api.nvim_create_autocmd("OptionSet", {
+            pattern = "filetype",
+            callback = function()
+                auto_heuristic("OptionSet")
+            end,
         })
     end
 end
