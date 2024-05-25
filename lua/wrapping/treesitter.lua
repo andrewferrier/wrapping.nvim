@@ -38,9 +38,9 @@ M.count_lines_of_query = function(language, query)
     end
 
     local buf = vim.api.nvim_win_get_buf(0)
-    local root_lang_tree = parsers.get_parser(buf)
+    local status, root_lang_tree = pcall(parsers.get_parser, buf)
 
-    if not root_lang_tree then
+    if not status or not root_lang_tree then
         return total_lines, total_chars
     end
 
