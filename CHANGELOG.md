@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.2.0](https://github.com/andrewferrier/wrapping.nvim/compare/v1.1.0...v1.2.0) (2024-05-25)
+
+
+### Features
+
+* Support a buftype_allowlist ([4c87a23](https://github.com/andrewferrier/wrapping.nvim/commit/4c87a23f6ae11c0ddc1a93405d0e62c1a5f198c4))
+
+
+### Bug Fixes
+
+* Stop using deprecated buf_get_clients ([8b1a814](https://github.com/andrewferrier/wrapping.nvim/commit/8b1a814522e89dcc24abf81922f4898e63817e02))
+* Stop using deprecated nvim_get_option ([d202b8f](https://github.com/andrewferrier/wrapping.nvim/commit/d202b8faa8c596f9ddd83a055cd1a6c23cb6c006))
+* Support OptionSet as an event ([2491326](https://github.com/andrewferrier/wrapping.nvim/commit/24913268b7f8fd83309a528c424b96ef48a40726))
+* Wrap get_parser with a pcall ([eb62d18](https://github.com/andrewferrier/wrapping.nvim/commit/eb62d1816e66494d9fceb8619203eaf5985f17cb))
+
 ## [1.1.0](https://github.com/andrewferrier/wrapping.nvim/compare/v1.0.0...v1.1.0) (2024-02-25)
 
 
