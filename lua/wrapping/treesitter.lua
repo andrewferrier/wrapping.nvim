@@ -1,5 +1,6 @@
 local M = {}
 
+---@param module_name string
 local function try_to_load(module_name)
     local function requiref(module)
         require(module)
@@ -16,6 +17,8 @@ end
 
 -- FIXME: This is technically inaccurate right now as it only looks at lines and
 -- not starting/ending chars
+---@param start_line integer
+---@param end_line integer
 local function get_character_count(start_line, end_line)
     local lines = vim.api.nvim_buf_get_lines(0, start_line, end_line, true)
 
@@ -27,6 +30,9 @@ local function get_character_count(start_line, end_line)
     return count
 end
 
+---@param language string
+---@param query string
+---@return integer, integer
 M.count_lines_of_query = function(language, query)
     local total_lines = 0
     local total_chars = 0

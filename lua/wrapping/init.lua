@@ -3,6 +3,7 @@ local M = {}
 local utils = require("wrapping.utils")
 local treesitter = require("wrapping.treesitter")
 
+---@type Options
 local OPTION_DEFAULTS = {
     set_nvim_opt_defaults = true,
     softener = {
@@ -42,6 +43,8 @@ local OPTION_DEFAULTS = {
 local VERY_LONG_TEXTWIDTH_FOR_SOFT = 999999
 local opts
 
+---@param str string
+---@return nil
 local function log(str)
     if opts.log_path ~= nil then
         local bufname = vim.fn.bufname()
@@ -58,6 +61,7 @@ local function log(str)
     end
 end
 
+---@return boolean
 local function soft_wrap_mode_quiet()
     if vim.b.wrapmode == "soft" then
         return false
@@ -95,6 +99,7 @@ local function soft_wrap_mode_quiet()
     return true
 end
 
+---@return boolean
 local function hard_wrap_mode_quiet()
     if vim.b.wrapmode == "hard" then
         return false
@@ -122,18 +127,21 @@ local function hard_wrap_mode_quiet()
     return true
 end
 
+---@return nil
 M.soft_wrap_mode = function()
     if soft_wrap_mode_quiet() and opts.notify_on_switch then
         vim.notify("Soft wrap mode.")
     end
 end
 
+---@return nil
 M.hard_wrap_mode = function()
     if hard_wrap_mode_quiet() and opts.notify_on_switch then
         vim.notify("Hard wrap mode.")
     end
 end
 
+---@return nil
 M.toggle_wrap_mode = function()
     if M.get_current_mode() == "hard" then
         M.soft_wrap_mode()
@@ -142,6 +150,7 @@ M.toggle_wrap_mode = function()
     end
 end
 
+---@return number
 local function get_softener()
     local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
     local value = vim.tbl_get(opts.softener, filetype)
@@ -153,6 +162,7 @@ local function get_softener()
     end
 end
 
+---@return boolean
 local function likely_nontextual_language()
     -- If an LSP provider supports these capabilities it's almost certainly not
     -- a textual language, and therefore we should use hard wrapping
@@ -177,6 +187,7 @@ local function likely_nontextual_language()
     return false
 end
 
+---@return boolean
 local function likely_textwidth_set_deliberately()
     local textwidth_global =
         vim.api.nvim_get_option_value("textwidth", { scope = "global" })
@@ -202,6 +213,7 @@ local function likely_textwidth_set_deliberately()
     return false
 end
 
+---@return integer, integer
 local function get_excluded_treesitter()
     local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
     local exclusions = opts.excluded_treesitter_queries[filetype]
@@ -222,6 +234,7 @@ local function get_excluded_treesitter()
 end
 
 ---@param reason string
+---@return nil
 local function auto_heuristic(reason)
     log("Testing for auto heuristic because of event " .. reason)
 
@@ -247,6 +260,7 @@ local function auto_heuristic(reason)
     end
 end
 
+---@return nil
 M.set_mode_heuristically = function()
     local buftype = vim.api.nvim_get_option_value("buftype", { buf = 0 })
 
@@ -333,6 +347,7 @@ M.set_mode_heuristically = function()
     end
 end
 
+---@return string|nil
 M.get_current_mode = function()
     if vim.b.wrapmode then
         return vim.b.wrapmode
@@ -341,6 +356,8 @@ M.get_current_mode = function()
     end
 end
 
+---@param o Options
+---@return nil
 M.setup = function(o)
     opts = vim.tbl_deep_extend("force", OPTION_DEFAULTS, o or {})
 

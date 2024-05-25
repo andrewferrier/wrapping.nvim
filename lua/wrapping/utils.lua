@@ -1,6 +1,7 @@
 local M = {}
 
 -- FIXME: There may be a more efficient way to do this
+---@return integer
 M.get_buf_size = function()
     local lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
 
@@ -13,6 +14,7 @@ M.get_buf_size = function()
 end
 
 -- FIXME: There may be a more efficient way to do this
+---@return integer
 M.count_blank_lines = function()
     local lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
 
@@ -26,6 +28,7 @@ M.count_blank_lines = function()
     return count
 end
 
+---@return string
 M.get_log_path = function()
     return vim.fn.stdpath("log") .. "/wrapping.nvim.log"
 end
