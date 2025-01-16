@@ -15,7 +15,7 @@ It also makes it easy to toggle between the relevant NeoVim settings on the
 occasion that the wrong mode is detected. It does *not* (currently) support
 modifying the content of the file or converting between files of those types.
 
-⚠️  **Note**: This plugin used to be called `vim-wrapping-softhard`, and has been
+⚠️ **Note**: This plugin used to be called `vim-wrapping-softhard`, and has been
 renamed to `wrapping.nvim` and rewritten in Lua, so is only suitable for NeoVim.
 If you are still using Vim, the
 [vim-viml](https://github.com/andrewferrier/vim-wrapping-softhard/releases/tag/vim-viml)
@@ -100,22 +100,22 @@ The sections below detail the allowed options.
 By default, the plugin will create the following commands to set/override a
 wrapping mode in case it is not autodetected correctly:
 
-*   `HardWrapMode`
-*   `SoftWrapMode`
-*   `ToggleWrapMode`
+- `HardWrapMode`
+- `SoftWrapMode`
+- `ToggleWrapMode`
 
 As well as the following normal-mode keymappings:
 
-*   `[ow` (soft wrap mode)
-*   `]ow` (hard wrap mode)
-*   `yow` (toggle wrap mode)
+- `[ow` (soft wrap mode)
+- `]ow` (hard wrap mode)
+- `yow` (toggle wrap mode)
 
 (these are similar to [vim-unimpaired](https://github.com/tpope/vim-unimpaired))
 
 And the following utility command to open a debug log showing what
 `wrapping.nvim` is doing:
 
-*   `WrappingOpenLog`
+- `WrappingOpenLog`
 
 Disable these commands and/or keymappings by setting these options accordingly:
 
@@ -129,9 +129,9 @@ opts = {
 
 You can create your own instead by invoking these functions:
 
-*   `require('wrapping').hard_wrap_mode()`
-*   `require('wrapping').soft_wrap_mode()`
-*   `require('wrapping').toggle_wrap_mode()`
+- `require('wrapping').hard_wrap_mode()`
+- `require('wrapping').soft_wrap_mode()`
+- `require('wrapping').toggle_wrap_mode()`
 
 ### Notifications
 
@@ -209,50 +209,50 @@ keymappings listed above to switch between modes for a file.
 
 You have two options:
 
-1.  Override the 'softener' value for that file type. By default, this is `1.0`
-    for every file. Setting the value higher makes it *more likely* that the
-    file will be detected as having 'soft' line wrapping (this value is
-    multiplied by the average line length and then compared to the `textwidth`
-    in use for that filetype). Setting it to `true` means that files of that
-    type will *always* be treated as having soft line endings. Setting it to
-    `false` means that files of that type will *always* be treated as having
-    hard line endings. For example, this sets the softener value to `1.3` for
-    Markdown files:
+1. Override the 'softener' value for that file type. By default, this is `1.0`
+   for every file. Setting the value higher makes it *more likely* that the
+   file will be detected as having 'soft' line wrapping (this value is
+   multiplied by the average line length and then compared to the `textwidth`
+   in use for that filetype). Setting it to `true` means that files of that
+   type will *always* be treated as having soft line endings. Setting it to
+   `false` means that files of that type will *always* be treated as having
+   hard line endings. For example, this sets the softener value to `1.3` for
+   Markdown files:
 
-    ```lua
-        require("wrapping").setup({
-            softener = { markdown = 1.3 },
-        })
-    ```
+   ```lua
+       require("wrapping").setup({
+           softener = { markdown = 1.3 },
+       })
+   ```
 
-    For more advanced use cases, you can set this 'softener' value to a callback
-    function that performs some of your own custom logic. It should then return
-    `true`, `false`, or a numeric value (interpreted the same way as described
-    above). Example:
+   For more advanced use cases, you can set this 'softener' value to a callback
+   function that performs some of your own custom logic. It should then return
+   `true`, `false`, or a numeric value (interpreted the same way as described
+   above). Example:
 
-    ```lua
-        require("wrapping").setup({
-            softener = {
-                markdown = function()
-                    -- Some custom logic
-                    return value
-                end
-            }
-        })
-    ```
+   ```lua
+       require("wrapping").setup({
+           softener = {
+               markdown = function()
+                   -- Some custom logic
+                   return value
+               end
+           }
+       })
+   ```
 
-    Note that certain heuristics are evaluated *before* the softener value, in
-    which case it will have no effect. These should be 'foolproof', but if they
-    are not, and you are sure a file is being detected incorrectly, please move
-    to option (2)…
+   Note that certain heuristics are evaluated *before* the softener value, in
+   which case it will have no effect. These should be 'foolproof', but if they
+   are not, and you are sure a file is being detected incorrectly, please move
+   to option (2)…
 
-2.  [Open an issue](https://github.com/andrewferrier/wrapping.nvim/issues/new)
-    with an example of the file that's being incorrectly detected and explain
-    why you think it should be detected as having hard or soft line breaks, and
-    we'll review to see if there are ways to improve the heuristics of
-    `wrapping.nvim`. In this case, please also run the command
-    `WrappingOpenLog`, and include the relevant sections of the log file that's
-    displayed, to help diagnose why `wrapping.nvim` isn't doing what you want.
+1. [Open an issue](https://github.com/andrewferrier/wrapping.nvim/issues/new)
+   with an example of the file that's being incorrectly detected and explain
+   why you think it should be detected as having hard or soft line breaks, and
+   we'll review to see if there are ways to improve the heuristics of
+   `wrapping.nvim`. In this case, please also run the command
+   `WrappingOpenLog`, and include the relevant sections of the log file that's
+   displayed, to help diagnose why `wrapping.nvim` isn't doing what you want.
 
 #### Modifying Treesitter Queries (Advanced)
 
