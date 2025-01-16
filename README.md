@@ -38,7 +38,7 @@ other settings that would be useful to alter under these different modes.
 
 ## Installation
 
-**Requires NeoVim 0.8+.**
+**Requires NeoVim 0.9+.**
 
 `wrapping.nvim` is a standard NeoVim plugin and can be installed using any
 standard package manager.
