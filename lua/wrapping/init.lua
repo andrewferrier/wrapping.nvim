@@ -167,6 +167,14 @@ local function likely_nontextual_language()
     -- If an LSP provider supports these capabilities it's almost certainly not
     -- a textual language, and therefore we should use hard wrapping
 
+    -- user-provided nontextual detection function or truth value
+    local manual_detector = vim.tbl_get(opts, "nontextual_heuristic")
+    if manual_detector ~= nil and type(manual_detector) == "function" then
+        return manual_detector()
+    elseif manual_detector ~= nil then
+        return manual_detector
+    end
+
     local get_clients
 
     if vim.fn.has("nvim-0.10") == 1 then
