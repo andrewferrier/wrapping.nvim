@@ -168,10 +168,7 @@ local function likely_nontextual_language()
     -- a textual language, and therefore we should use hard wrapping
 
     for _, client in pairs(vim.lsp.get_clients({ bufnr = 0 })) do
-        if
-            client.server_capabilities.definitionProvider
-            or client.server_capabilities.signatureHelpProvider
-        then
+        if client.server_capabilities.signatureHelpProvider then
             return true
         end
     end
