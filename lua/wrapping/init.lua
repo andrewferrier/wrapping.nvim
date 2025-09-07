@@ -167,15 +167,7 @@ local function likely_nontextual_language()
     -- If an LSP provider supports these capabilities it's almost certainly not
     -- a textual language, and therefore we should use hard wrapping
 
-    local get_clients
-
-    if vim.fn.has("nvim-0.10") == 1 then
-        get_clients = vim.lsp.get_clients
-    else
-        get_clients = vim.lsp.get_active_clients
-    end
-
-    for _, client in pairs(get_clients({ bufnr = 0 })) do
+    for _, client in pairs(vim.lsp.get_clients({ bufnr = 0 })) do
         if
             client.server_capabilities.definitionProvider
             or client.server_capabilities.signatureHelpProvider
@@ -458,9 +450,9 @@ M.setup = function(o)
     end
 end
 
-if vim.fn.has("nvim-0.8.0") ~= 1 then
+if vim.fn.has("nvim-0.10.0") ~= 1 then
     vim.notify(
-        "WARNING: wrapping.nvim is only compatible with NeoVim 0.8+",
+        "WARNING: wrapping.nvim is only compatible with NeoVim 0.10+",
         vim.log.levels.WARN
     )
 

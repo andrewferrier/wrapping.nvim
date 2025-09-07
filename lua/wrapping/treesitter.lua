@@ -44,29 +44,16 @@ M.count_lines_of_query = function(language, query)
     end
 
     local buf = vim.api.nvim_win_get_buf(0)
-    local status, root_lang_tree = pcall(parsers.get_parser, buf)
+    local root_lang_tree = vim.treesitter.get_parser(buf)
 
-    if not status or not root_lang_tree then
+    if root_lang_tree == nil then
         return total_lines, total_chars
     end
 
-    local tree_root
-    for _, tree in ipairs(root_lang_tree:trees()) do
-        -- FIXME: I'm not 100% sure this is correct; why would there be more
-        -- than one tree?
-        tree_root = tree:root()
-    end
+    local tree_root = root_lang_tree:parse()[1]:root()
 
     if tree_root ~= nil then
-        local query_result
-
-        if vim.treesitter.query.parse then
-            -- This is only supported in NeoVim 0.9+, and parse_query is
-            -- deprecated.
-            query_result = vim.treesitter.query.parse(language, query)
-        else
-            query_result = vim.treesitter.query.parse_query(language, query)
-        end
+        local query_result = vim.treesitter.query.parse(language, query)
 
         for _, node, _ in query_result:iter_captures(tree_root, buf, nil, nil) do
             local row1, _, row2, _ = node:range()

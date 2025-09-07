@@ -20,7 +20,21 @@ local install_parser_if_needed = function(filetype)
     end
 end
 
-install_parser_if_needed("markdown")
+local parsers = {
+    "markdown",
+}
+
+local install = require("nvim-treesitter").install
+
+if install ~= nil and type(install) == "function" then
+    print("'nvim-treesitter' new main branch detected.")
+    install(parsers, { max_jobs = 1, summary = true }):wait(60000)
+else
+    print("'nvim-treesitter' legacy master branch detected.")
+    for _, parser in ipairs(parsers) do
+        install_parser_if_needed(parser)
+    end
+end
 
 local common = require("tests.common")
 local wrapping = require("wrapping")
