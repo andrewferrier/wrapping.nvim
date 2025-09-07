@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.0.0](https://github.com/andrewferrier/wrapping.nvim/compare/v1.2.0...v2.0.0) (2025-09-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* No longer support NeoVim 0.8 as nvim-treesitter no longer supports it
+
+### Features
+
+* Add lazy spec - closes [#46](https://github.com/andrewferrier/wrapping.nvim/issues/46) ([67f93f2](https://github.com/andrewferrier/wrapping.nvim/commit/67f93f2fd12ce58d202815223223863518f02df9))
+
+
+### Bug Fixes
+
+* definitionProvider no longer implies non-textual - closes [#49](https://github.com/andrewferrier/wrapping.nvim/issues/49) ([d7c6854](https://github.com/andrewferrier/wrapping.nvim/commit/d7c68548fe23eb95dde28cbd9539b6325cd0bde9))
+* No longer support NeoVim 0.8 as nvim-treesitter no longer supports it ([79e0a87](https://github.com/andrewferrier/wrapping.nvim/commit/79e0a8755577f702b2cc9cac1a28d23b6b56a67b))
+* Support minimum NeoVim 0.10 ([c0cf84e](https://github.com/andrewferrier/wrapping.nvim/commit/c0cf84eec9169d271eba758c4b442694cd526d3a))
+
 ## [1.2.0](https://github.com/andrewferrier/wrapping.nvim/compare/v1.1.0...v1.2.0) (2024-05-25)
 
 
