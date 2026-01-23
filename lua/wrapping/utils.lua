@@ -3,7 +3,7 @@ local M = {}
 ---@return integer
 M.get_buf_size = function()
     local lcount = vim.api.nvim_buf_line_count(0)
-    return math.max(0, vim.fn.line2byte(lcount + 1) - 1 - lcount)
+    return vim.fn.line2byte(lcount + 1) - 1 - lcount
 end
 
 -- FIXME: There may be a more efficient way to do this
