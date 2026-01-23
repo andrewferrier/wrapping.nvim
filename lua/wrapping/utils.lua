@@ -1,16 +1,9 @@
 local M = {}
 
--- FIXME: There may be a more efficient way to do this
 ---@return integer
 M.get_buf_size = function()
-    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
-
-    local count = 0
-    for _, line in pairs(lines) do
-        count = count + #line
-    end
-
-    return count
+    local lcount = vim.api.nvim_buf_line_count(0)
+    return math.max(0, vim.fn.line2byte(lcount + 1) - 1 - lcount)
 end
 
 -- FIXME: There may be a more efficient way to do this
