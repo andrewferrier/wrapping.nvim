@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.1.0](https://github.com/andrewferrier/wrapping.nvim/compare/v2.0.0...v2.1.0) (2026-01-24)
+
+
+### Features
+
+* log pid - closes [#55](https://github.com/andrewferrier/wrapping.nvim/issues/55) ([c704bc0](https://github.com/andrewferrier/wrapping.nvim/commit/c704bc052217b0abd5b883437c81a74d3ea43add))
+
+
+### Bug Fixes
+
+* line2byte() to get buf size faster ([5307e29](https://github.com/andrewferrier/wrapping.nvim/commit/5307e291a8b33592bf3ef2f26beaa894fc42f3e4))
+* Remove math.max() as discussed ([506aa2a](https://github.com/andrewferrier/wrapping.nvim/commit/506aa2a55232025e1a5c89a3000913f11419472d))
+
 ## [2.0.0](https://github.com/andrewferrier/wrapping.nvim/compare/v1.2.0...v2.0.0) (2025-09-07)
 
 
