@@ -49,8 +49,15 @@ local function log(str)
     if opts.log_path ~= nil then
         local bufname = vim.fn.bufname()
         local datetime = os.date("%FT%H:%m:%S%z")
-        local pid =
-            vim.api.nvim_get_chan_info(vim.api.nvim_list_uis()[1].chan).client.attributes.pid
+        local uis = vim.api.nvim_list_uis()
+        local pid
+
+        if #uis > 0 then
+            local channel_id = uis[1].chan
+            pid = vim.api.nvim_get_chan_info(channel_id).client.attributes.pid
+        else
+            pid = ""
+        end
 
         if bufname == nil or bufname == "" then
             bufname = "Unknown of filetype "
