@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/andrewferrier/wrapping.nvim/compare/v2.1.0...v2.1.1) (2026-01-24)
+
+
+### Bug Fixes
+
+* Handle no UIs attached ([1cd42a9](https://github.com/andrewferrier/wrapping.nvim/commit/1cd42a960abf82f04e104125c6bfa7f145e0aef4))
+
 ## [2.1.0](https://github.com/andrewferrier/wrapping.nvim/compare/v2.0.0...v2.1.0) (2026-01-24)
 
 
