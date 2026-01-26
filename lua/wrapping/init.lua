@@ -209,16 +209,19 @@ local function likely_textwidth_set_deliberately()
             .. textwidth_buffer
     )
 
-    if
-        textwidth_global ~= textwidth_buffer
-        and textwidth_buffer ~= VERY_LONG_TEXTWIDTH_FOR_SOFT
-    then
-        -- textwidth has probably been set by a modeline, autocmd or
-        -- filetype/x.{lua.vim} deliberately
-        return true
-    end
+    local get_info = vim.api.nvim_get_option_info2
+    local info_global = get_info("textwidth", { scope = "global" })
+    local info_local = get_info("textwidth", {})
 
-    return false
+    -- textwidth has probably been set by a modeline, autocmd or
+    -- ftplugin/x.{lua.vim} deliberately
+    local is_same = (
+        textwidth_global == textwidth_buffer
+        and info_global.last_set_sid == info_local.last_set_sid
+        and info_global.last_set_linenr == info_local.last_set_linenr
+    )
+
+    return not is_same
 end
 
 ---@return integer, integer
