@@ -210,14 +210,16 @@ local function likely_textwidth_set_deliberately()
     )
 
     local get_info = vim.api.nvim_get_option_info2
-    local gi = get_info("textwidth", { scope = "global" })
-    local bi = get_info("textwidth", {})
+    local info_global = get_info("textwidth", { scope = "global" })
+    local info_local = get_info("textwidth", {})
 
     -- textwidth has probably been set by a modeline, autocmd or
     -- ftplugin/x.{lua.vim} deliberately
-    local is_same = textwidth_global == textwidth_buffer
-        and gi.last_set_sid == bi.last_set_sid
-        and gi.last_set_linenr == bi.last_set_linenr
+    local is_same = (
+        textwidth_global == textwidth_buffer
+        and info_global.last_set_sid == info_local.last_set_sid
+        and info_global.last_set_linenr == info_local.last_set_linenr
+    )
 
     return not is_same
 end
