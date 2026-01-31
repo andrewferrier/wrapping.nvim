@@ -55,7 +55,9 @@ local function log(str)
         if #uis > 0 then
             local channel_id = uis[1].chan
             pid = vim.api.nvim_get_chan_info(channel_id).client.attributes.pid
-        else
+        end
+
+        if pid == nil then
             pid = ""
         end
 
