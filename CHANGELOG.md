@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.1.2](https://github.com/andrewferrier/wrapping.nvim/compare/v2.1.1...v2.1.2) (2026-01-31)
+
+
+### Bug Fixes
+
+* compare sid when `global_tw == local_tw` ([3d70ad9](https://github.com/andrewferrier/wrapping.nvim/commit/3d70ad9bc36da4d30c659f0dbc0e393c01aaad40))
+* Correct package name ([25d2c24](https://github.com/andrewferrier/wrapping.nvim/commit/25d2c249b751d1e23ad5393468788051e6e50b2b))
+* Handle missing pid better ([5ac5b26](https://github.com/andrewferrier/wrapping.nvim/commit/5ac5b268de790ed96423ba4d92c9b0986ef0f7d6))
+
 ## [2.1.1](https://github.com/andrewferrier/wrapping.nvim/compare/v2.1.0...v2.1.1) (2026-01-24)
 
 
