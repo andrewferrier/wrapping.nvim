@@ -50,15 +50,20 @@ local function log(str)
         local bufname = vim.fn.bufname()
         local datetime = os.date("%FT%H:%m:%S%z")
         local uis = vim.api.nvim_list_uis()
-        local pid
+        local pid = ""
 
         if #uis > 0 then
             local channel_id = uis[1].chan
-            pid = vim.api.nvim_get_chan_info(channel_id).client.attributes.pid
-        end
-
-        if pid == nil then
-            pid = ""
+            local channel_info = vim.api.nvim_get_chan_info(channel_id)
+            if channel_info.client then
+                local client = channel_info.client
+                if client.attributes then
+                    local attributes = client.attributes
+                    if attributes.pid then
+                        pid = attributes.pid
+                    end
+                end
+            end
         end
 
         if bufname == nil or bufname == "" then
