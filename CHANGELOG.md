@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.3](https://github.com/andrewferrier/wrapping.nvim/compare/v2.1.2...v2.1.3) (2026-02-06)
+
+
+### Bug Fixes
+
+* Handle missing channel info - closes [#59](https://github.com/andrewferrier/wrapping.nvim/issues/59) ([79ac336](https://github.com/andrewferrier/wrapping.nvim/commit/79ac336d3f790feb40629e3de2d5f1ca10d8ff7c))
+
 ## [2.1.2](https://github.com/andrewferrier/wrapping.nvim/compare/v2.1.1...v2.1.2) (2026-01-31)
 
 
