@@ -21,12 +21,10 @@ M.setup = function(o)
 end
 
 M.teardown = function()
-    -- Try to delete default keymaps (they may not exist if create_keymaps was false)
     pcall(vim.keymap.del, "n", "yow")
     pcall(vim.keymap.del, "n", "[ow")
     pcall(vim.keymap.del, "n", "]ow")
 
-    -- Try to delete <Plug> mappings (use pcall for defensive programming)
     pcall(vim.keymap.del, "n", "<Plug>(wrapping-soft-wrap-mode)")
     pcall(vim.keymap.del, "n", "<Plug>(wrapping-hard-wrap-mode)")
     pcall(vim.keymap.del, "n", "<Plug>(wrapping-toggle-wrap-mode)")

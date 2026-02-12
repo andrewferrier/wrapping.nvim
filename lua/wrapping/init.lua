@@ -445,19 +445,6 @@ M.setup = function(o)
         })
     end
 
-    -- Create <Plug> mappings unconditionally (always available for users to map to)
-    -- These are created regardless of the create_keymaps option
-    vim.keymap.set("n", "<Plug>(wrapping-soft-wrap-mode)", function()
-        M.soft_wrap_mode()
-    end, { desc = "Soft wrap mode", unique = true })
-    vim.keymap.set("n", "<Plug>(wrapping-hard-wrap-mode)", function()
-        M.hard_wrap_mode()
-    end, { desc = "Hard wrap mode", unique = true })
-    vim.keymap.set("n", "<Plug>(wrapping-toggle-wrap-mode)", function()
-        M.toggle_wrap_mode()
-    end, { desc = "Toggle wrap mode", unique = true })
-
-    -- Create default keymaps if requested
     if opts.create_keymaps then
         vim.keymap.set(
             "n",
@@ -506,5 +493,15 @@ if vim.fn.has("nvim-0.10.0") ~= 1 then
 
     return
 end
+
+vim.keymap.set("n", "<Plug>(wrapping-soft-wrap-mode)", function()
+    M.soft_wrap_mode()
+end, { desc = "Soft wrap mode", unique = true })
+vim.keymap.set("n", "<Plug>(wrapping-hard-wrap-mode)", function()
+    M.hard_wrap_mode()
+end, { desc = "Hard wrap mode", unique = true })
+vim.keymap.set("n", "<Plug>(wrapping-toggle-wrap-mode)", function()
+    M.toggle_wrap_mode()
+end, { desc = "Toggle wrap mode", unique = true })
 
 return M
