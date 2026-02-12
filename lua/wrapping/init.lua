@@ -87,6 +87,19 @@ local function log(str)
     end
 end
 
+---@param mode string
+---@return nil
+local function emit_wrapping_set_event(mode)
+    vim.api.nvim_exec_autocmds("User", {
+        pattern = "WrappingSet",
+        data = {
+            buf = vim.api.nvim_get_current_buf(),
+            win = vim.api.nvim_get_current_win(),
+            mode = mode,
+        },
+    })
+end
+
 ---@return boolean
 local function soft_wrap_mode_quiet()
     if vim.b.wrapmode == "soft" then
@@ -122,6 +135,8 @@ local function soft_wrap_mode_quiet()
     vim.b.wrap_mappings_initialized = true
     vim.b.wrapmode = "soft"
 
+    emit_wrapping_set_event("soft")
+
     return true
 end
 
@@ -149,6 +164,8 @@ local function hard_wrap_mode_quiet()
 
     vim.b.wrap_mappings_initialized = false
     vim.b.wrapmode = "hard"
+
+    emit_wrapping_set_event("hard")
 
     return true
 end
