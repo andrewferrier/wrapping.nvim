@@ -445,7 +445,8 @@ M.setup = function(o)
         })
     end
 
-    -- Create <Plug> mappings (always available for users to map to)
+    -- Create <Plug> mappings unconditionally (always available for users to map to)
+    -- These are created regardless of the create_keymaps option
     vim.keymap.set("n", "<Plug>(wrapping-soft-wrap-mode)", function()
         M.soft_wrap_mode()
     end, { desc = "Soft wrap mode" })

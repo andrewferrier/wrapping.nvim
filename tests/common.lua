@@ -26,7 +26,7 @@ M.teardown = function()
     pcall(vim.keymap.del, "n", "[ow")
     pcall(vim.keymap.del, "n", "]ow")
 
-    -- Try to delete <Plug> mappings (they should always be created, but use pcall for safety)
+    -- Try to delete <Plug> mappings (use pcall in case setup() failed or wasn't called)
     pcall(vim.keymap.del, "n", "<Plug>(wrapping-soft-wrap-mode)")
     pcall(vim.keymap.del, "n", "<Plug>(wrapping-hard-wrap-mode)")
     pcall(vim.keymap.del, "n", "<Plug>(wrapping-toggle-wrap-mode)")
