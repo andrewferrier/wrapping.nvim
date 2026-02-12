@@ -127,7 +127,21 @@ opts = {
 }
 ```
 
-You can create your own instead by invoking these functions:
+You can create your own key mappings instead by mapping to the `<Plug>` mappings:
+
+- `<Plug>(wrapping-soft-wrap-mode)` (soft wrap mode)
+- `<Plug>(wrapping-hard-wrap-mode)` (hard wrap mode)
+- `<Plug>(wrapping-toggle-wrap-mode)` (toggle wrap mode)
+
+For example:
+
+```lua
+vim.keymap.set("n", "<leader>ws", "<Plug>(wrapping-soft-wrap-mode)")
+vim.keymap.set("n", "<leader>wh", "<Plug>(wrapping-hard-wrap-mode)")
+vim.keymap.set("n", "<leader>wt", "<Plug>(wrapping-toggle-wrap-mode)")
+```
+
+Alternatively, you can invoke these functions directly:
 
 - `require('wrapping').hard_wrap_mode()`
 - `require('wrapping').soft_wrap_mode()`

@@ -21,9 +21,13 @@ M.setup = function(o)
 end
 
 M.teardown = function()
-    vim.keymap.del("n", "yow")
-    vim.keymap.del("n", "[ow")
-    vim.keymap.del("n", "]ow")
+    pcall(vim.keymap.del, "n", "yow")
+    pcall(vim.keymap.del, "n", "[ow")
+    pcall(vim.keymap.del, "n", "]ow")
+
+    pcall(vim.keymap.del, "n", "<Plug>(wrapping-soft-wrap-mode)")
+    pcall(vim.keymap.del, "n", "<Plug>(wrapping-hard-wrap-mode)")
+    pcall(vim.keymap.del, "n", "<Plug>(wrapping-toggle-wrap-mode)")
 end
 
 return M
