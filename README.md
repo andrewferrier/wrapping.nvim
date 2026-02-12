@@ -127,7 +127,7 @@ opts = {
 }
 ```
 
-You can create your own keymappings instead by mapping to the `<Plug>` mappings:
+You can create your own key mappings instead by mapping to the `<Plug>` mappings:
 
 - `<Plug>(wrapping-soft-wrap-mode)` (soft wrap mode)
 - `<Plug>(wrapping-hard-wrap-mode)` (hard wrap mode)
