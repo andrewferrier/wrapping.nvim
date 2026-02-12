@@ -462,19 +462,19 @@ M.setup = function(o)
             "n",
             "[ow",
             "<Plug>(wrapping-soft-wrap-mode)",
-            { desc = "Soft wrap mode" }
+            { desc = "Soft wrap mode", unique = true }
         )
         vim.keymap.set(
             "n",
             "]ow",
             "<Plug>(wrapping-hard-wrap-mode)",
-            { desc = "Hard wrap mode" }
+            { desc = "Hard wrap mode", unique = true }
         )
         vim.keymap.set(
             "n",
             "yow",
             "<Plug>(wrapping-toggle-wrap-mode)",
-            { desc = "Toggle wrap mode" }
+            { desc = "Toggle wrap mode", unique = true }
         )
     end
 
