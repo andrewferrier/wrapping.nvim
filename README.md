@@ -282,3 +282,29 @@ opts = {
 If you have a custom status line, you can get the current mode for a file -
 `'hard'`, `'soft'`, or `''` (`wrapping.nvim` not activated for that file) by
 invoking `require('wrapping').get_current_mode()`.
+
+## User Events
+
+`wrapping.nvim` emits a `User` event called `WrappingSet` whenever the wrapping
+mode is changed (either automatically via heuristics or manually via commands).
+This allows you to hook into mode changes for custom integrations.
+
+The event includes the following data:
+
+- `buf`: The buffer number where the mode was set
+- `win`: The window number where the mode was set
+- `mode`: The wrapping mode that was set (`'hard'` or `'soft'`)
+
+Example usage:
+
+```lua
+vim.api.nvim_create_autocmd("User", {
+    pattern = "WrappingSet",
+    callback = function(args)
+        local mode = args.data.mode
+        local buf = args.data.buf
+        local win = args.data.win
+        print(string.format("Wrapping mode set to %s in buffer %d, window %d", mode, buf, win))
+    end,
+})
+```
