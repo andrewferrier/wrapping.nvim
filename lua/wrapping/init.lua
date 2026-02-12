@@ -448,13 +448,13 @@ M.setup = function(o)
     -- Create <Plug> mappings (always available for users to map to)
     vim.keymap.set("n", "<Plug>(wrapping-soft-wrap-mode)", function()
         M.soft_wrap_mode()
-    end, { desc = "Soft wrap mode", noremap = true })
+    end, { desc = "Soft wrap mode" })
     vim.keymap.set("n", "<Plug>(wrapping-hard-wrap-mode)", function()
         M.hard_wrap_mode()
-    end, { desc = "Hard wrap mode", noremap = true })
+    end, { desc = "Hard wrap mode" })
     vim.keymap.set("n", "<Plug>(wrapping-toggle-wrap-mode)", function()
         M.toggle_wrap_mode()
-    end, { desc = "Toggle wrap mode", noremap = true })
+    end, { desc = "Toggle wrap mode" })
 
     -- Create default keymaps if requested
     if opts.create_keymaps then
