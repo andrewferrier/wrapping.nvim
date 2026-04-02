@@ -23,7 +23,7 @@ local OPTION_DEFAULTS = {
         "rst",
         "tex",
         "text",
-        "typst", -- Supported from NeoVim 0.10+
+        "typst",
     },
     auto_set_mode_filetype_denylist = {},
     buftype_allowlist = {},
@@ -512,9 +512,9 @@ M.setup = function(o)
     end
 end
 
-if vim.fn.has("nvim-0.10.0") ~= 1 then
+if vim.fn.has("nvim-0.11.0") ~= 1 then
     vim.notify(
-        "WARNING: wrapping.nvim is only compatible with NeoVim 0.10+",
+        "WARNING: wrapping.nvim is only compatible with NeoVim 0.11+",
         vim.log.levels.WARN
     )
 

@@ -298,51 +298,43 @@ describe("handle treesitter blocks", function()
         assert.are.same("hard", wrapping.get_current_mode())
     end)
 
-    if
-        vim.fn.has("nvim-0.10") == 1
-        or (vim.fn.has("nvim-0.8") == 1 and vim.fn.has("nvim-0.9") ~= 1)
-    then
-        -- These tests seem to fail on NeoVim 0.9.x - I think there's some kind
-        -- of parser issue
+    it("can exclude fenced code blocks - soft", function()
+        common.setup()
+        vim.opt.textwidth = 80
 
-        it("can exclude fenced code blocks - soft", function()
-            common.setup()
-            vim.opt.textwidth = 80
+        common.set_lines({
+            string.rep("x", 81),
+            "```lua",
+            "function x()",
+            "end",
+            "```",
+        })
 
-            common.set_lines({
-                string.rep("x", 81),
-                "```lua",
-                "function x()",
-                "end",
-                "```",
-            })
+        vim.opt_local.filetype = "markdown"
+        wrapping.set_mode_heuristically()
+        assert.are.same("soft", wrapping.get_current_mode())
+    end)
 
-            vim.opt_local.filetype = "markdown"
-            wrapping.set_mode_heuristically()
-            assert.are.same("soft", wrapping.get_current_mode())
-        end)
+    it("can exclude 2 fenced code blocks", function()
+        common.setup()
+        vim.opt.textwidth = 80
 
-        it("can exclude 2 fenced code blocks", function()
-            common.setup()
-            vim.opt.textwidth = 80
+        common.set_lines({
+            "```lua",
+            "function x()",
+            "end",
+            "```",
+            string.rep("x", 120),
+            "```lua",
+            "function x()",
+            "end",
+            "```",
+        })
 
-            common.set_lines({
-                "```lua",
-                "function x()",
-                "end",
-                "```",
-                string.rep("x", 120),
-                "```lua",
-                "function x()",
-                "end",
-                "```",
-            })
-
-            vim.opt_local.filetype = "markdown"
-            wrapping.set_mode_heuristically()
-            assert.are.same("soft", wrapping.get_current_mode())
-        end)
-    end
+        vim.opt_local.filetype = "markdown"
+        wrapping.set_mode_heuristically()
+        assert.are.same("soft", wrapping.get_current_mode())
+    end)
 
     it("wide tables make hard mode more likely", function()
         common.setup()
@@ -388,9 +380,11 @@ describe("WrappingSet User event", function()
 
         assert.is_true(event_fired)
         assert.is_not_nil(event_data)
+        ---@diagnostic disable: need-check-nil
         assert.are.same("soft", event_data.mode)
         assert.are.same(vim.api.nvim_get_current_buf(), event_data.buf)
         assert.are.same(vim.api.nvim_get_current_win(), event_data.win)
+        ---@diagnostic enable: need-check-nil
     end)
 
     it("emits event when mode is set heuristically to hard", function()
@@ -418,8 +412,10 @@ describe("WrappingSet User event", function()
 
         assert.is_true(event_fired)
         assert.is_not_nil(event_data)
+        ---@diagnostic disable: need-check-nil
         assert.are.same("hard", event_data.mode)
         assert.are.same(vim.api.nvim_get_current_buf(), event_data.buf)
         assert.are.same(vim.api.nvim_get_current_win(), event_data.win)
+        ---@diagnostic enable: need-check-nil
     end)
 end)
