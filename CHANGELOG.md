@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.4](https://github.com/andrewferrier/wrapping.nvim/compare/v2.1.3...v2.1.4) (2026-04-02)
+
+
+### Bug Fixes
+
+* Bump minimum version of NeoVim to 0.11 ([6045aff](https://github.com/andrewferrier/wrapping.nvim/commit/6045aff772e15753ff2938847a8375cb20d8f7be))
+
 ## [2.1.3](https://github.com/andrewferrier/wrapping.nvim/compare/v2.1.2...v2.1.3) (2026-02-06)
 
 
