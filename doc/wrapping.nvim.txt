@@ -1,4 +1,4 @@
-*wrapping.nvim.txt*        For NVIM v0.8.0       Last change: 2026 February 12
+*wrapping.nvim.txt*         For NVIM v0.8.0         Last change: 2026 April 02
 
 ==============================================================================
 Table of Contents                            *wrapping.nvim-table-of-contents*
@@ -52,7 +52,7 @@ other settings that would be useful to alter under these different modes.
 
 INSTALLATION                        *wrapping.nvim-wrapping.nvim-installation*
 
-**Requires NeoVim 0.10+.**
+**Requires NeoVim 0.11+.**
 
 `wrapping.nvim` is a standard NeoVim plugin and can be installed using any
 standard package manager.
