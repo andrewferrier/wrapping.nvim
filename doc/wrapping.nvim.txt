@@ -1,4 +1,5 @@
-*wrapping.nvim.txt*         For NVIM v0.8.0         Last change: 2026 April 02
+*wrapping.nvim.txt*
+                                   For NVIM v0.8.0    Last change: 2026 May 09
 
 ==============================================================================
 Table of Contents                            *wrapping.nvim-table-of-contents*
@@ -15,7 +16,7 @@ Table of Contents                            *wrapping.nvim-table-of-contents*
 1. wrapping.nvim                                 *wrapping.nvim-wrapping.nvim*
 
 This is a NeoVim plugin designed to make it easy to use appropriate settings
-for 'soft' and 'hard' wrapping modes when editing text-like files (e.g. text,
+for 'soft' and 'hard' wrapping modes when editing text-like files (e.g. text,
 Markdown, LaTeX, AsciiDoc, etc.). Some "soft" text-like files have no hard
 carriage returns to wrap text - each paragraph is one long line (some Markdown
 files are like this). Other files use "hard" wrapping (like this README, for
