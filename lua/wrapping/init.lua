@@ -1,7 +1,6 @@
 local M = {}
 
 local utils = require("wrapping.utils")
-local treesitter = require("wrapping.treesitter")
 
 ---@type Options
 local OPTION_DEFAULTS = {
@@ -259,7 +258,10 @@ local function get_excluded_treesitter()
     if exclusions then
         for _, exclusion in pairs(exclusions) do
             local lines, chars =
-                treesitter.count_lines_of_query(filetype, exclusion)
+                require("wrapping.treesitter").count_lines_of_query(
+                    filetype,
+                    exclusion
+                )
             tree_lines = tree_lines + lines
             tree_chars = tree_chars + chars
         end
