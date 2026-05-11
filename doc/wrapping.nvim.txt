@@ -1,5 +1,5 @@
 *wrapping.nvim.txt*
-                                   For NVIM v0.8.0    Last change: 2026 May 09
+                                   For NVIM v0.8.0    Last change: 2026 May 11
 
 ==============================================================================
 Table of Contents                            *wrapping.nvim-table-of-contents*
