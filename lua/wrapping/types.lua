@@ -2,10 +2,10 @@
 
 ---@meta types
 
----@class wrapping.Softener
+---@class (exact) wrapping.Softener
 ---@field default number
 
----@class wrapping.Options
+---@class (exact) wrapping.Options
 ---@field set_nvim_opt_defaults boolean
 ---@field softener wrapping.Softener
 ---@field create_commands boolean
