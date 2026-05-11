@@ -2,7 +2,7 @@ local M = {}
 
 local utils = require("wrapping.utils")
 
----@type Options
+---@type wrapping.Options
 local OPTION_DEFAULTS = {
     set_nvim_opt_defaults = true,
     softener = {
@@ -403,7 +403,7 @@ vim.keymap.set("n", "<Plug>(wrapping-toggle-wrap-mode)", function()
     M.toggle_wrap_mode()
 end, { desc = "Toggle wrap mode", unique = true })
 
----@param o Options
+---@param o wrapping.Options
 ---@return nil
 M.setup = function(o)
     opts = vim.tbl_deep_extend("force", OPTION_DEFAULTS, o or {})

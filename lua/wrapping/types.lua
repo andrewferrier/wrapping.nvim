@@ -2,12 +2,12 @@
 
 ---@meta types
 
----@class Softener
+---@class wrapping.Softener
 ---@field default number
 
----@class Options
+---@class wrapping.Options
 ---@field set_nvim_opt_defaults boolean
----@field softener Softener
+---@field softener wrapping.Softener
 ---@field create_commands boolean
 ---@field create_keymaps boolean
 ---@field auto_set_mode_heuristically boolean
