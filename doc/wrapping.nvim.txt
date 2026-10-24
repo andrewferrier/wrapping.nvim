@@ -1,5 +1,5 @@
 *wrapping.nvim.txt*
-                                   For NVIM v0.8.0    Last change: 2026 May 11
+                               For NVIM v0.8.0    Last change: 2026 October 24
 
 ==============================================================================
 Table of Contents                            *wrapping.nvim-table-of-contents*
@@ -101,7 +101,7 @@ To do this, add an `opts` object to the setup method:
 
 >lua
     opts = { ... }
-    
+
     use({
         "andrewferrier/wrapping.nvim",
         config = function()
