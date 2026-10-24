@@ -414,7 +414,7 @@ M.setup = function(o)
         set_nvim_opt_defaults = { opts.set_nvim_opt_defaults, "boolean" },
         softener = { opts.softener, "table" },
         create_commands = { opts.create_commands, "boolean" },
-        create_keymaps = { opts.create_commands, "boolean" },
+        create_keymaps = { opts.create_keymaps, "boolean" },
         auto_set_mode_heuristically = {
             opts.auto_set_mode_heuristically,
             "boolean",
